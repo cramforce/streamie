@@ -7,8 +7,22 @@
       body { margin:1em; background-color:black; color:white }
     </style> 
 </head> 
-<body> 
-  <script src=ext/socket.io/socket.io.js></script>
-  <script src=client.js></script> 
+<body>
+  <ol id="canvas"></ol>
+  <script src="ext/socket.io/socket.io.js"></script>
+  <script src="ext/require.js"></script>
+  <script>
+    require({
+              baseUrl: "/",
+              paths: {
+                "stream": "/lib/stream"
+              },
+          },
+          ["stream/app"],
+          function(app) {
+            app.start();
+          }
+      );
+  </script> 
 </body> 
 </html>

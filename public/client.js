@@ -11,7 +11,7 @@
   socket.send('client connect');
   socket.on('message', function(data) {
     data = JSON.parse(data);
-    // console.log(data);
+    console.log(data);
     var li = document.createElement("li");
     li.textContent = data.text || JSON.stringify(data, null, " ");
     ol.appendChild(li);
