@@ -1,1 +1,8 @@
-<li><%= tweet.data.text %></li>
+<li class="status">
+  <a href="http://twitter.com/<%= tweet.data.user.screen_name %>" class="user-href"><img class="user-profile_image" src="<%= tweet.data.user.profile_image_url %>" width="48" height="48" /></a>
+  <a href="http://twitter.com/<%= tweet.data.user.screen_name %>" class="user-href"><div class="user-name"><%= tweet.data.user.name %></div></a>
+  <p class="text"><%= tweet.textHTML %></p>
+  <% if(tweet.data.in_reply_to_status_id) { %>
+    <a class="in_reply_to" href="http://twitter.com/<%= tweet.data.in_reply_to_screen_name %>/status/<%= tweet.data.in_reply_to_status_id %>">In reply to <%= tweet.data.in_reply_to_screen_name %></a>
+  <% } %>
+</li>

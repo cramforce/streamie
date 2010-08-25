@@ -1,7 +1,15 @@
 require.def("stream/app",
   ["stream/tweetstream", "stream/tweet", "stream/plugins", "stream/client", "/ext/underscore.js", "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"],
   function(tweetstream, tweetModule, basePlugins, client) {
-    var plugins = [basePlugins.tweetsOnly, basePlugins.template, basePlugins.renderTemplate, basePlugins.prepend];
+    var plugins = [
+      basePlugins.tweetsOnly, 
+      basePlugins.template,
+      basePlugins.htmlEncode,
+      basePlugins.formatTweetText,
+      basePlugins.renderTemplate, 
+      basePlugins.prepend,
+      basePlugins.keepScrollState
+    ];
     
     var stream = new tweetstream.Stream();
     

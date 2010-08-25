@@ -16,15 +16,15 @@ require.def("stream/tweetstream",
       },
       
       process: function (tweet) {
-        for(var i = 0, len = this.plugins.length; i < len; ++i) {
-          var plugin = this.plugins[i];
-          var cont = plugin.func.call(plugin, tweet, this);
-          if(cont === false) {
-            return null;
+        var self = this;
+        var i = 0;
+        function next () {
+          var plugin = self.plugins[i++];
+          if(plugin) {
+            plugin.func.call(next, tweet, self)
           }
         }
-        
-        return tweet;
+        next();
       }
     };
     
