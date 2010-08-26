@@ -30,7 +30,7 @@ require.def("stream/app",
             else if(data.tweet) {
               stream.process(tweetModule.make(JSON.parse(data.tweet)));
             } else {
-              console.log(data);
+              //console.log(data);
             }
           });
         })
