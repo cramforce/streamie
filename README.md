@@ -8,6 +8,7 @@ This is based on a hack posted by @cramforce.
 ## Setup ##
 
 * npm install socket.io 
+* npm install oauth
 * npm install node-static 
 * REPL node> (new Buffer("twitterusername:password")).toString("base64"); 
 * cd lib/
