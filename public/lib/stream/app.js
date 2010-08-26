@@ -22,7 +22,7 @@ require.def("stream/app",
           client.connect(function(data) {
             data = JSON.parse(data);
             if(data.error) {
-              console.log("Error: "+data.error)
+              //console.log("Error: "+data.error)
               if(data.error == "no_auth") {
                 location.href = "/access"
               }
