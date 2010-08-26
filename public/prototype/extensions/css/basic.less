@@ -1,0 +1,172 @@
+/***basics***/
+* html *{display:none;}
+html{overflow:auto;}
+body{
+	margin:0;
+	padding:20px 0 0 0;
+	font-size:12px;
+	line-height:normal;
+	#client-font > .HelveticaNeue;
+	color:#888;
+	text-rendering:optimizeLegibility;
+	background:#efefef;
+	//background:#F4E7DE -webkit-gradient(linear, 0% 0%, 0% 100%, from(#F4E7DE), to(#F4E7DE), color-stop(.4,#BAA89A),color-stop(.6,#BAA89A)) no-repeat 0 center;
+	//background:-moz-linear-gradient(center top,rgb(244,231,222) 30%,rgb(186,168,154) 50%,rgb(224,202,185) 70%);
+}
+a{
+	text-decoration:none;
+	color:inherit;
+	#client-transition-time > .short;
+}
+h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6{
+	margin:0;
+	padding:0;
+	font-weight:normal;
+	font-size:100%;
+	line-height:100%;
+}
+p{
+	margin:0;
+	padding:0;
+	line-height:18px;
+}
+
+form{
+	margin:0;
+	padding:0;
+}
+fieldset{
+	border:none;
+	margin:0;
+	padding:0;
+}
+legend {
+	padding:0;
+	margin:0;
+}
+dl,ul,ol,li{
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+img{border:none;}
+b,strong{font-weight:bold;}
+
+.h1,
+.h2{
+	clear:both;
+	color:#555;
+	margin:0 0 40px 0;
+	font-size:23px;
+}
+
+#container{
+}
+
+/*header*/
+#header{
+	position:fixed;
+	top:0;
+	left:0;
+	z-index:1;
+	width:100%;
+	background:#111;
+	#logo{
+		float:left;
+		margin:0 9px;
+		color:#fff;
+		font-size:11px;
+		font-weight:bold;
+		text-transform:uppercase;
+		padding:5px;
+		&:after,
+		&:before{
+			content:" // ";
+		}
+	}
+	#mainnav{
+		li{
+			float:left;
+			margin:0 9px;
+			font-size:11px;
+			font-weight:bold;
+			text-transform:uppercase;
+			padding:5px;
+			a{
+				color:#fff;
+			}		
+			a:hover,
+			&.active a{color:#999;}
+		}
+	}
+	
+}
+
+#content{
+	padding:20px;
+	
+	#stream{
+		height:100%;
+
+		li{
+			position:relative;
+			clear:both;
+			margin:0 0 20px 0;
+			> a{
+				position:absolute;
+				top:0;
+				left:0;
+				img{
+					#client-border-radius > .small;
+				}
+			}
+			.status{
+				position:relative;
+				padding:10px;
+				min-height:30px;
+				margin:0 0 0 65px;
+				display:block;
+				background:#fff;
+				#client-border-radius > .middle;
+				#client-shadow > .small;
+				h3{
+					float:left;
+					font-weight:bold;
+					margin:0 0 10px 0;
+				}
+				.time{
+					position:absolute;
+					top:10px;
+					right:10px;
+				}
+				.text{
+					clear:both;
+					color:#111;
+					margin:0 0 10px;
+					a{
+					color:#900;
+					&:hover{
+						color:#111;
+					}
+				}
+				}
+				.reply{
+					
+				}
+				&:after{
+					position:absolute;
+					top:10px;
+					left:-16px;
+					display:block;
+					width:0;
+					height:0;
+					content:"\00a0";
+					border-color:transparent #fff transparent transparent;
+					border-style:solid;
+					border-width:8px 8px;
+				}
+			}
+		}
+	}
+	
+}
