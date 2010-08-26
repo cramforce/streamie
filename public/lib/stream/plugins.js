@@ -79,7 +79,7 @@ require.def("stream/plugins",
           text = text.replace(/(^|\s)(www\.\S+)/ig, function (all, pre,www) {
             return pre+'<a href="http://'+www+'">'+www+'</a>';
           });
-          text = text.replace(/(^|\W)\@([a-zA-Z0-9]+)/g, function (all, pre, name) {
+          text = text.replace(/(^|\W)\@([a-zA-Z0-9_]+)/g, function (all, pre, name) {
             return pre+'<a href="http://twitter.com/'+name+'" class="user-href">@'+name+'</a>';
           });
           text = text.replace(/(^|\s)\#(\S+)/g, function (all, pre, tag) {
