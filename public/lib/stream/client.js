@@ -10,7 +10,9 @@ require.def("stream/client",
           transports: ['websocket', 'htmlfile', 'xhr-multipart', 'xhr-polling']
         });
         socket.connect();
-        socket.send('client connect');
+        socket.send(JSON.stringify({
+          token: location.hash.substr(1)
+        }));
         socket.on('message', cb);
         // todo: auto reconnect
         

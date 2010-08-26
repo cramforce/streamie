@@ -20,7 +20,13 @@ require.def("stream/app",
           stream.addPlugins(plugins)
           client.connect(function(data) {
             data = JSON.parse(data);
-            if(data.tweet) {
+            if(data.error) {
+              console.log("Error: "+data.error)
+              if(data.error == "no_auth") {
+                location.href = "/access"
+              }
+            }
+            else if(data.tweet) {
               stream.process(tweetModule.make(JSON.parse(data.tweet)));
             } else {
               console.log(data);
