@@ -5,8 +5,8 @@ require.def("stream/client",
     return {
       connect: function (cb) {
         io.setPath('/ext/socket.io/');
-        var socket = new io.Socket('localhost', { 
-          port: 8888,
+        var socket = new io.Socket(location.hostname, { 
+          port: location.port || 80,
           transports: ['websocket', 'htmlfile', 'xhr-multipart', 'xhr-polling']
         });
         socket.connect();
