@@ -13,7 +13,6 @@
 		-moz-box-shadow: 0 0 @shadow-width @shadow-color;
 		-ms-box-shadow: 0 0 @shadow-width @shadow-color;
 		-o-box-shadow: 0 0 @shadow-width @shadow-color;
-		//-ms-filter: "progid:DXImageTransform.Microsoft.dropShadow(color=@shadow-color, offX=@shadow-width, offY=@shadow-width, positive=true)";
 		box-shadow: 0 0 @shadow-width @shadow-color;
 	}
 
@@ -24,8 +23,17 @@
 		-moz-box-shadow: 0 0 @shadow-width @shadow-color;
 		-ms-box-shadow: 0 0 @shadow-width @shadow-color;
 		-o-box-shadow: 0 0 @shadow-width @shadow-color;
-		//-ms-filter: "progid:DXImageTransform.Microsoft.dropShadow(color=@shadow-color, offX=@shadow-width, offY=@shadow-width, positive=true)";
 		box-shadow: 0 0 @shadow-width @shadow-color;
+	}
+
+	.inset{
+		@shadow-color:#333;
+		@shadow-width:5px;
+		-webkit-box-shadow: 0 0 @shadow-width @shadow-color inset;
+		-moz-box-shadow: 0 0 @shadow-width @shadow-color inset;
+		-ms-box-shadow: 0 0 @shadow-width @shadow-color inset;
+		-o-box-shadow: 0 0 @shadow-width @shadow-color inset;
+		box-shadow: 0 0 @shadow-width @shadow-color inset;
 	}
 }
 
@@ -57,8 +65,8 @@
 		border-radius:@radius;
 	}
 
-	.circle{
-		@radius:23px;
+	.big{
+		@radius:10px;
 		-webkit-border-radius:@radius;
 		-moz-border-radius:@radius;
 		-o-border-radius:@radius;
@@ -68,44 +76,22 @@
 }
 
 #client-gradient{	
-	.soft{
-		@gradient-start:#f5efec;
-		@gradient-end:#f5f5f2;
-		background:@gradient-end;
-		background:-webkit-gradient(linear, left top, left bottom, from(@gradient-start), to(@gradient-end));
-		background:-moz-linear-gradient(top, @gradient-start, @gradient-end);
-		background:-o-linear-gradient(top, @gradient-start, @gradient-end);
-		background:-ms-linear-gradient(top, @gradient-start, @gradient-end);
-		-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=@gradient-start, endColorstr=@gradient-end)";
-		background:linear-gradient(top, @gradient-start, @gradient-end);
-	}	
 	.body{
-		@gradient-start:#f5efec;
-		@gradient-end:#f5f5f2;
+		@gradient-start:#fff;
+		@gradient-end:#dadada;
 		background:@gradient-end;
-		background:-webkit-gradient(linear, left top, left bottom, from(@gradient-start), to(@gradient-end));
-		background:-moz-linear-gradient(top, @gradient-start, @gradient-end);
-		background:-o-linear-gradient(top, @gradient-start, @gradient-end);
-		background:-ms-linear-gradient(top, @gradient-start, @gradient-end);
+		background:@gradient-start -webkit-gradient(linear, left top, left bottom, from(@gradient-start), to(@gradient-start), color-stop(.4,@gradient-end),color-stop(.6,@gradient-end));
+		background:-moz-linear-gradient(top, @gradient-start 30%, @gradient-end 50%, @gradient-start 30%);
+		background:-o-linear-gradient(top, @gradient-start 30%, @gradient-end 50%, @gradient-start 30%);
+		background:-ms-linear-gradient(top, @gradient-start 30%, @gradient-end 50%, @gradient-start 30%);
 		-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=@gradient-start, endColorstr=@gradient-end)";
-		background:linear-gradient(top, @gradient-start, @gradient-end);
-	}	
-	.light{
-		@gradient-start:#ededed	;
-		@gradient-end:#f9f9f9;
-		background:@gradient-end;
-		background:-webkit-gradient(linear, left top, left bottom, from(@gradient-start), to(@gradient-end));
-		background:-moz-linear-gradient(top, @gradient-start, @gradient-end);
-		background:-o-linear-gradient(top, @gradient-start, @gradient-end);
-		background:-ms-linear-gradient(top, @gradient-start, @gradient-end);
-		-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=@gradient-start, endColorstr=@gradient-end)";
-		background:linear-gradient(top, @gradient-start, @gradient-end);
+		background:linear-gradient(top, @gradient-start 30%, @gradient-end 50%, @gradient-start 30%);
 	}
 }
 
 
 #client-transition-time {
-@style:color,border-color,opacity ease-out,ease-out,ease-out;
+@style:color,border,opacity ease-out,ease-out,ease-out;
 	
 	.no {
 		@timer:none;
