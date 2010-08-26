@@ -1,0 +1,151 @@
+//@client-red: #ee0401;
+@client-grey:#666;
+@client-beige:#f0e6dd;
+@client-light:#f9f8f6;
+@client-error:#5a1d1c;
+@client-notice:#fafad1;
+
+#client-shadow {
+	.small{
+		@shadow-color:#999;
+		@shadow-width:16px;
+		-webkit-box-shadow: 0 0 @shadow-width @shadow-color;
+		-moz-box-shadow: 0 0 @shadow-width @shadow-color;
+		-ms-box-shadow: 0 0 @shadow-width @shadow-color;
+		-o-box-shadow: 0 0 @shadow-width @shadow-color;
+		//-ms-filter: "progid:DXImageTransform.Microsoft.dropShadow(color=@shadow-color, offX=@shadow-width, offY=@shadow-width, positive=true)";
+		box-shadow: 0 0 @shadow-width @shadow-color;
+	}
+
+	.big{
+		@shadow-color:#333;
+		@shadow-width:32px;
+		-webkit-box-shadow: 0 0 @shadow-width @shadow-color;
+		-moz-box-shadow: 0 0 @shadow-width @shadow-color;
+		-ms-box-shadow: 0 0 @shadow-width @shadow-color;
+		-o-box-shadow: 0 0 @shadow-width @shadow-color;
+		//-ms-filter: "progid:DXImageTransform.Microsoft.dropShadow(color=@shadow-color, offX=@shadow-width, offY=@shadow-width, positive=true)";
+		box-shadow: 0 0 @shadow-width @shadow-color;
+	}
+}
+
+#client-border-radius {
+	.none{
+		@radius:0;
+		-webkit-border-radius:@radius;
+		-moz-border-radius:@radius;
+		-o-border-radius:@radius;
+		-ms-border-radius:@radius;
+		border-radius:@radius;
+	}
+
+	.small{
+		@radius:2px;
+		-webkit-border-radius:@radius;
+		-moz-border-radius:@radius;
+		-o-border-radius:@radius;
+		-ms-border-radius:@radius;
+		border-radius:@radius;
+	}
+
+	.middle{
+		@radius:5px;
+		-webkit-border-radius:@radius;
+		-moz-border-radius:@radius;
+		-o-border-radius:@radius;
+		-ms-border-radius:@radius;
+		border-radius:@radius;
+	}
+
+	.circle{
+		@radius:23px;
+		-webkit-border-radius:@radius;
+		-moz-border-radius:@radius;
+		-o-border-radius:@radius;
+		-ms-border-radius:@radius;
+		border-radius:@radius;
+	}
+}
+
+#client-gradient{	
+	.soft{
+		@gradient-start:#f5efec;
+		@gradient-end:#f5f5f2;
+		background:@gradient-end;
+		background:-webkit-gradient(linear, left top, left bottom, from(@gradient-start), to(@gradient-end));
+		background:-moz-linear-gradient(top, @gradient-start, @gradient-end);
+		background:-o-linear-gradient(top, @gradient-start, @gradient-end);
+		background:-ms-linear-gradient(top, @gradient-start, @gradient-end);
+		-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=@gradient-start, endColorstr=@gradient-end)";
+		background:linear-gradient(top, @gradient-start, @gradient-end);
+	}	
+	.body{
+		@gradient-start:#f5efec;
+		@gradient-end:#f5f5f2;
+		background:@gradient-end;
+		background:-webkit-gradient(linear, left top, left bottom, from(@gradient-start), to(@gradient-end));
+		background:-moz-linear-gradient(top, @gradient-start, @gradient-end);
+		background:-o-linear-gradient(top, @gradient-start, @gradient-end);
+		background:-ms-linear-gradient(top, @gradient-start, @gradient-end);
+		-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=@gradient-start, endColorstr=@gradient-end)";
+		background:linear-gradient(top, @gradient-start, @gradient-end);
+	}	
+	.light{
+		@gradient-start:#ededed	;
+		@gradient-end:#f9f9f9;
+		background:@gradient-end;
+		background:-webkit-gradient(linear, left top, left bottom, from(@gradient-start), to(@gradient-end));
+		background:-moz-linear-gradient(top, @gradient-start, @gradient-end);
+		background:-o-linear-gradient(top, @gradient-start, @gradient-end);
+		background:-ms-linear-gradient(top, @gradient-start, @gradient-end);
+		-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=@gradient-start, endColorstr=@gradient-end)";
+		background:linear-gradient(top, @gradient-start, @gradient-end);
+	}
+}
+
+
+#client-transition-time {
+@style:color,border-color,opacity ease-out,ease-out,ease-out;
+	
+	.no {
+		@timer:none;
+		-webkit-transition: @timer;
+		-moz-transition: @timer;
+		-o-transition: @timer;
+		-ms-transition: @timer;
+		transition: @timer;
+	}
+	.short {
+		@timer:0.2s;
+		-webkit-transition: @style @timer;
+		-moz-transition: @style @timer;
+		-o-transition: @style @timer;
+		-ms-transition: @style @timer;
+		transition: @style @timer;
+	}
+	
+	.long {
+		@timer:0.3s;
+		-webkit-transition: @style @timer;
+		-moz-transition: @style @timer;
+		-o-transition: @style @timer;
+		-ms-transition: @style @timer;
+		transition: @style @timer;
+	}
+	
+	.opacity {
+		@timer:0.3s;
+		-webkit-transition: opacity @timer;
+		-moz-transition: opacity @timer;
+		-o-transition:opacity  @timer;
+		-ms-transition:opacity  @timer;
+		transition: opacity @timer;
+	}
+}
+
+
+
+#client-font {
+	.Helvetica{font-family:Helvetica,Arial,sans-serif;}
+	.HelveticaNeue{font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
+}

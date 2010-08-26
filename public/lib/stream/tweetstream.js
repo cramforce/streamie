@@ -12,7 +12,7 @@ require.def("stream/tweetstream",
       },
       
       canvas: function () {
-        return $("#canvas")
+        return $("#stream")
       },
       
       process: function (tweet) {

@@ -8,7 +8,8 @@ require.def("stream/app",
       basePlugins.formatTweetText,
       basePlugins.renderTemplate, 
       basePlugins.prepend,
-      basePlugins.keepScrollState
+      basePlugins.keepScrollState,
+      basePlugins.age
     ];
     
     var stream = new tweetstream.Stream();

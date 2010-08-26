@@ -54,21 +54,35 @@ require.def("stream/plugins",
         }
       },
       
+      age: {
+        name: "age",
+        func: function (tweet) {
+          tweet.created_at = new Date(tweet.data.created_at);
+          function update () {
+            tweet.age = (new Date()).getTime() - tweet.created_at.getTime();
+            tweet.node.find(".created_at").text(Math.round(tweet.age / 1000) + " seconds ago")
+          }
+          update();
+          setInterval(update, 1000)
+          this();
+        }
+      },
+      
       formatTweetText: {
         name: "formatTweetText",
         func: function (tweet, stream) {
           var text = tweet.textHTML;
           
-          text = text.replace(/https?:\/\/\S+/i, function (href) {
+          text = text.replace(/https?:\/\/\S+/ig, function (href) {
             return '<a href="'+href+'">'+href+'</a>';
           });
-          text = text.replace(/(^|\s)(www\.\S+)/i, function (all, pre,www) {
+          text = text.replace(/(^|\s)(www\.\S+)/ig, function (all, pre,www) {
             return pre+'<a href="http://'+www+'">'+www+'</a>';
           });
-          text = text.replace(/(^|\W)\@([a-zA-Z0-9]+)/, function (all, pre, name) {
+          text = text.replace(/(^|\W)\@([a-zA-Z0-9]+)/g, function (all, pre, name) {
             return pre+'<a href="http://twitter.com/'+name+'" class="user-href">@'+name+'</a>';
           });
-          text = text.replace(/(^|\s)\#(\S+)/, function (all, pre, tag) {
+          text = text.replace(/(^|\s)\#(\S+)/g, function (all, pre, tag) {
             return pre+'<a href="http://search.twitter.com/search?q='+encodeURIComponent(tag)+'" class="tag">#'+tag+'</a>';
           });
           
