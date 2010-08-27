@@ -4,9 +4,10 @@ if(typeof console == "undefined") {
   }
 }
 require.def("stream/app",
-  ["stream/tweetstream", "stream/tweet", "stream/plugins", "stream/client", "/ext/underscore.js", "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"],
-  function(tweetstream, tweetModule, basePlugins, client) {
+  ["stream/tweetstream", "stream/tweet", "stream/plugins", "stream/client", "stream/status", "/ext/underscore.js", "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"],
+  function(tweetstream, tweetModule, basePlugins, client, status) {
     var plugins = [
+      basePlugins.handleRetweet,
       basePlugins.tweetsOnly,
       basePlugins.mentions,
       basePlugins.template,
@@ -19,8 +20,11 @@ require.def("stream/app",
     ];
     
     var initPlugins = [
-      basePlugins.prefillTimeline
-    ]
+      basePlugins.prefillTimeline,
+      basePlugins.hashState,
+      basePlugins.navigation,
+      status.observe
+    ];
     
     var stream = new tweetstream.Stream();
     window.stream = stream;

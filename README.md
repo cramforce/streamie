@@ -7,6 +7,7 @@
 * npm install oauth
 * npm install node-static 
 * npm install nStore
+* npm install node-proxy
 * REPL node> (new Buffer("twitterusername:password")).toString("base64");
 * cd lib/
 * mkdir data

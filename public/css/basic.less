@@ -81,10 +81,10 @@ b,strong{font-weight:bold;}
 		text-align:center;
 		background:#111;
 		text-shadow: 0 0 2px #fff;
-		&:after,
+		/*&:after,
 		&:before{
 			content:" // ";
-		}
+		}*/
 	}
 	#mainnav{
 		overflow:hidden;
@@ -123,6 +123,19 @@ b,strong{font-weight:bold;}
 		}
 	}
 	
+}
+
+body.mention {
+  #content{
+    #stream{
+      li{
+        display:none;
+      }
+      li.mention{
+        display:list-item;
+      }
+    }
+  }
 }
 
 #content{
