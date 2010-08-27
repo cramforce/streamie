@@ -104,6 +104,45 @@ require.def("stream/plugins",
           }
           this();
         }
+      },
+      
+      // init plugins
+      
+      prefillTimeline: {
+        name: "prefillTimeline",
+        func: function (stream) {
+          var all;
+          var handle = function (tweets) {
+            if(all) {
+              all = all.concat(tweets)
+              var seen = {};
+              all = all.filter(function (tweet) {
+                var ret = !seen[tweet.id];
+                seen[tweet.id] = true;
+                return ret;
+              });
+              all = _(all).sortBy(function (tweet) {
+                return (new Date(tweet.created_at)).getTime();
+              });
+              all.forEach(function (tweet) {
+                stream.process(tweetModule.make(tweet));
+              })
+            } else {
+              all = tweets;
+            }
+            
+          }
+          $.get("/twitter/1/statuses/friends_timeline.json?count=20", function (tweets, status) {
+            if(status == "success") {
+              handle(tweets)
+            }
+          });
+          $.get("/twitter/1/statuses/mentions.json?count=20", function (tweets, status) {
+            if(status == "success") {
+              handle(tweets)
+            }
+          });
+        }
       }
       
     }
