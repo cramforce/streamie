@@ -165,7 +165,8 @@ b,strong{font-weight:bold;}
 				background:#fff;
 				#client-border-radius > .middle;
 				#client-shadow > .small;
-				h3{
+				#client-transition-time > .short;
+				.h{
 					float:left;
 					font-weight:bold;
 					margin:0 0 10px 0;
@@ -214,6 +215,42 @@ b,strong{font-weight:bold;}
 					border-color:transparent #fff transparent transparent;
 					border-style:solid;
 					border-width:8px 8px;
+				}
+			}
+			form.status{
+				position:absolute;
+				margin:0;
+				top:0;
+				right:0;
+				bottom:0;
+				left:65px;
+				display:block;
+				background:#fff;
+				opacity:0;
+				//z-index:-1;
+				overflow:hidden;
+				textarea{
+					position:absolute;
+					left:10px;
+					top:30px;
+					bottom:10px;
+					font-size:16px;
+					right:100px;
+				}
+				input{
+					position:absolute;
+					right:10px;
+					bottom:10px;
+				}
+			}
+			&.reply{
+				-webkit-transition-duration: 1.5s;
+				div.status{
+					opacity:0;
+				}
+				form.status{
+					opacity:1;
+					//z-index:1;
 				}
 			}
 		}
