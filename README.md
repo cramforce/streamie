@@ -1,8 +1,4 @@
-# twitter-steam-proxy #
-
-This is based on a hack posted by @cramforce.
-
-@dshaw
+# Streamie #
 
 
 ## Setup ##
@@ -10,8 +6,10 @@ This is based on a hack posted by @cramforce.
 * npm install socket.io 
 * npm install oauth
 * npm install node-static 
-* REPL node> (new Buffer("twitterusername:password")).toString("base64"); 
+* npm install nStore
+* REPL node> (new Buffer("twitterusername:password")).toString("base64");
 * cd lib/
+* mkdir data
 * node server.js [AuthHeaderValue]
 * http://localhost:8888
 * Now post anything, favorite, etc. Comes up almost before the UI finishes processing.

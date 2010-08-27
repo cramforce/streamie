@@ -1,5 +1,5 @@
 require.def("stream/client",
-  ["stream/tweetstream", "stream/tweet"],
+  ["stream/tweetstream", "stream/tweet", "ext/cookie.js"],
   function(tweetstream, tweetModule) {
     
     return {
@@ -10,7 +10,7 @@ require.def("stream/client",
           transports: ['websocket', 'htmlfile', 'xhr-multipart', 'xhr-polling']
         });
         socket.connect();
-        var token = location.hash ? location.hash.substr(1) : "EMPTY";
+        var token = cookie.get("token") || "EMPTY";
         socket.send(JSON.stringify({
           token: token
         }));

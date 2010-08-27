@@ -5,13 +5,13 @@
 	<meta charset="UTF-8" />
 	<meta name="language" content="en-US" />
 	<link rel="stylesheet/less" type="text/css" href="css/client.less" media="screen,projection,print" />
-	<script type="text/javascript" src="ext/less-1.0.33.min.js"></script>
-	<script type="text/javascript">
-	    less.refresh(true);
+	<script src="ext/less-1.0.33.min.js"></script>
+	<script>
+	less.refresh(true);
 	</script>
 </head>
 
-<body id="twitter-stream-proxy">
+<body id="streamy">
 	<div id="container">
 		<div id="header">
 			<h1 id="logo"><a href="#">Streamie</a></h1>
@@ -28,20 +28,19 @@
 			</ol>
 		</div>
 	</div>
-  <script src="ext/socket.io/socket.io.js"></script>
   <script src="ext/require.js"></script>
   <script>
     require({
-              baseUrl: "/",
+              baseUrl: "./",
               paths: {
                 "stream": "/lib/stream"
               },
           },
-          ["stream/app"],
+          ["stream/app", "ext/socket.io/socket.io.js"],
           function(app) {
             app.start();
           }
       );
-  </script> 
+  </script>
 </body> 
 </html>
