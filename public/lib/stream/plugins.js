@@ -141,6 +141,7 @@ require.def("stream/plugins",
               all = all.filter(function (tweet) {
                 var ret = !seen[tweet.id];
                 seen[tweet.id] = true;
+                tweet.prefill = true;
                 return ret;
               });
               all = _(all).sortBy(function (tweet) {
