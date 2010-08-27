@@ -7,7 +7,8 @@ require.def("stream/app",
   ["stream/tweetstream", "stream/tweet", "stream/plugins", "stream/client", "/ext/underscore.js", "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"],
   function(tweetstream, tweetModule, basePlugins, client) {
     var plugins = [
-      basePlugins.tweetsOnly, 
+      basePlugins.tweetsOnly,
+      basePlugins.mentions,
       basePlugins.template,
       basePlugins.htmlEncode,
       basePlugins.formatTweetText,
@@ -40,6 +41,7 @@ require.def("stream/app",
               }
             }
             else if(data.action == "auth_ok") {
+              stream.user = data.info;
               if(initial) {
                 initial = false;
                 initPlugins.forEach(function (plugin) {

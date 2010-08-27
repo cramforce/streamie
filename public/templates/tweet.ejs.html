@@ -1,4 +1,4 @@
-<li>
+<li class="<%= tweet.mentioned ? 'mention' : ''%>" data-tweet="<%= html(JSON.stringify(tweet)) %>">
 	<a href="http://twitter.com/<%= tweet.data.user.screen_name %>" class="user-href"><img src="<%= tweet.data.user.profile_image_url %>" alt="<%= tweet.data.user.name %>" width="48" height="48" class="profile_image_url" /></a>
 	<div class="status">
 		<h3 class="user-name"><a href="http://twitter.com/<%= tweet.data.user.screen_name %>" class="user-href"><%= tweet.data.user.name %></a></h3>

@@ -7,6 +7,9 @@ require.def("stream/tweetstream",
     }
     
     Stream.prototype = {
+      
+      user: {},
+      
       addPlugins: function (plugins) {
         this.plugins.push.apply(this.plugins, plugins);
       },

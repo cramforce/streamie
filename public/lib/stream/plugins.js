@@ -3,6 +3,15 @@ require.def("stream/plugins",
   function(tweetModule, templateText) {
     var template = _.template(templateText);
     
+    function html(text) {
+      text = text.toString().replace(/&/g, "&amp;");
+      text = text.replace(/</g, "&lt;");
+      text = text.replace(/>/g, "&gt;");
+      text = text.replace(/"/g, "&quot;");
+      text = text.replace(/'/g, "&#39;");
+      return text;
+    }
+    
     return {
       tweetsOnly: {
         name: "tweetsOnly",
@@ -10,6 +19,22 @@ require.def("stream/plugins",
           if(tweet.data.text != null) {
             this();
           }
+        }
+      },
+      
+      mentions: {
+        name: "mentions",
+        func: function (tweet, stream) {
+          var screen_name = stream.user.screen_name;
+          tweet.mentions = [];
+          tweet.data.text.replace(/(^|\W)\@([a-zA-Z0-9_]+)/g, function (match, pre, name) {
+            if(name == screen_name) {
+              tweet.mentioned = true;
+              tweet.mentions.push(name);
+            }
+            return match;
+          });
+          this();
         }
       },
       
@@ -25,7 +50,8 @@ require.def("stream/plugins",
         name: "renderTemplate",
         func: function (tweet) {
           tweet.html = tweet.template({
-            tweet: tweet
+            tweet: tweet,
+            html: html
           });
           this();
         }
@@ -44,11 +70,7 @@ require.def("stream/plugins",
         name: "htmlEncode",
         func: function (tweet, stream) {
           var text = tweet.data.text;
-          text = text.toString().replace(/&/g, "&amp;");
-          text = text.replace(/</g, "&lt;");
-          text = text.replace(/>/g, "&gt;");
-          text = text.replace(/"/g, "&quot;");
-          text = text.replace(/'/g, "&#39;");
+          text = html(text);
           tweet.textHTML = text;
           this();
         }
