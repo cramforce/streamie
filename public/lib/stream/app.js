@@ -19,7 +19,9 @@ require.def("stream/app",
     ];
     
     var initPlugins = [
-      basePlugins.prefillTimeline
+      basePlugins.prefillTimeline,
+      basePlugins.hashState,
+      basePlugins.navigation
     ]
     
     var stream = new tweetstream.Stream();

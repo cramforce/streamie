@@ -130,6 +130,30 @@ require.def("stream/plugins",
       
       // init plugins
       
+      hashState: {
+        name: "hashState",
+        func: function (stream) {
+          function change() {
+            var val = location.hash.replace(/^\#/, "");
+            $("body").attr("class", val);
+            $(document).trigger("state:"+val);
+          }
+          $(window).bind("hashchange", change);
+          change();
+        }
+      },
+      
+      navigation: {
+        name: "navigation",
+        func: function (stream) {
+          $("#header").delegate("#mainnav a", "click", function () {
+            var a = $(this);
+            a.closest("#mainnav").find("li").removeClass("active");
+            a.closest("li").addClass("active")
+          })
+        }
+      },
+      
       prefillTimeline: {
         name: "prefillTimeline",
         func: function (stream) {
