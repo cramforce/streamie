@@ -8,7 +8,10 @@ require.def("stream/tweetstream",
     
     Stream.prototype = {
       
-      user: {},
+      user: {
+        screen_name: null, // will be populated after auth
+        user_id: null
+      },
       
       addPlugins: function (plugins) {
         this.plugins.push.apply(this.plugins, plugins);

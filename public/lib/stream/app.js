@@ -23,6 +23,7 @@ require.def("stream/app",
     ]
     
     var stream = new tweetstream.Stream();
+    window.stream = stream;
     
     var initial = true;
     
