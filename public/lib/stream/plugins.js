@@ -13,6 +13,19 @@ require.def("stream/plugins",
     }
     
     return {
+      
+      handleRetweet: { // turns retweets into something similar to tweets
+        name: "handleRetweet",
+        func: function (tweet) {
+          if(tweet.data.retweeted_status) {
+            var orig = tweet.data;
+            tweet.data = tweet.data.retweeted_status;
+            tweet.retweet = orig;
+          }
+          this();
+        }
+      },
+      
       tweetsOnly: {
         name: "tweetsOnly",
         func: function (tweet) {
@@ -157,10 +170,11 @@ require.def("stream/plugins",
       prefillTimeline: {
         name: "prefillTimeline",
         func: function (stream) {
-          var all;
+          var all = [];
+          var returns = 0;
           var handle = function (tweets) {
-            if(all) {
-              all = all.concat(tweets)
+            all = all.concat(tweets)
+            if(returns == 3) {
               var seen = {};
               all = all.filter(function (tweet) {
                 var ret = !seen[tweet.id];
@@ -179,13 +193,21 @@ require.def("stream/plugins",
             }
             
           }
+          rest.get("/1/statuses/retweeted_to_me.json?count=20", function (tweets, status) {
+            if(status == "success") {
+              returns++;
+              handle(tweets)
+            }
+          });
           rest.get("/1/statuses/friends_timeline.json?count=20", function (tweets, status) {
             if(status == "success") {
+              returns++
               handle(tweets)
             }
           });
           rest.get("/1/statuses/mentions.json?count=20", function (tweets, status) {
             if(status == "success") {
+              returns++
               handle(tweets)
             }
           });
