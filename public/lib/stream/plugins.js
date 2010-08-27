@@ -1,6 +1,6 @@
 require.def("stream/plugins",
-  ["stream/tweet", "text!../templates/tweet.ejs.html"],
-  function(tweetModule, templateText) {
+  ["stream/tweet", "stream/twitterRestAPI", "text!../templates/tweet.ejs.html"],
+  function(tweetModule, rest, templateText) {
     var template = _.template(templateText);
     
     function html(text) {
@@ -179,12 +179,12 @@ require.def("stream/plugins",
             }
             
           }
-          $.get("/twitter/1/statuses/friends_timeline.json?count=20", function (tweets, status) {
+          rest.get("/1/statuses/friends_timeline.json?count=20", function (tweets, status) {
             if(status == "success") {
               handle(tweets)
             }
           });
-          $.get("/twitter/1/statuses/mentions.json?count=20", function (tweets, status) {
+          rest.get("/1/statuses/mentions.json?count=20", function (tweets, status) {
             if(status == "success") {
               handle(tweets)
             }

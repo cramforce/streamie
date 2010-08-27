@@ -22,6 +22,13 @@
 			</ul>
 		</div>
 		<div id="content">
+		  <form action="/1/statuses/update.json" method="post" class="status" class="tweet">
+		    <input type="hidden" name="in_reply_to_status_id" value="">
+				<fieldset>
+					<textarea name="status" rows="5" cols="40" placeholder="Your Tweet…"></textarea>
+					<input type="submit" value="Submit" /> <span class="characters">0 characters</span>
+				</fieldset>
+			</form>
 			<h2 class="h1">Timeline</h2>
 			<ol id="stream">
 			</ol>
