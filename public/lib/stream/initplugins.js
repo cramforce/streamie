@@ -64,6 +64,13 @@ require.def("stream/initplugins",
         }
       },
       
+      personalizeForCurrentUser: {
+        name: "personalizeForCurrentUser",
+        func: function (stream) {
+          $("#currentuser-screen_name").text("@"+stream.user.screen_name)
+        }
+      },
+      
       // Use the REST API to load the users's friends timeline, mentions and friends's retweets into the stream
       prefillTimeline: {
         name: "prefillTimeline",
