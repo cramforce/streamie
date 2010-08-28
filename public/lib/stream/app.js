@@ -23,7 +23,8 @@ require.def("stream/app",
       basePlugins.prefillTimeline,
       basePlugins.hashState,
       basePlugins.navigation,
-      status.observe
+      status.observe,
+      status.replyForm
     ];
     
     var stream = new tweetstream.Stream();

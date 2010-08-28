@@ -1,16 +1,7 @@
 require.def("stream/plugins",
-  ["stream/tweet", "stream/twitterRestAPI", "text!../templates/tweet.ejs.html"],
-  function(tweetModule, rest, templateText) {
+  ["stream/tweet", "stream/twitterRestAPI", "stream/helpers", "text!../templates/tweet.ejs.html"],
+  function(tweetModule, rest, helpers, templateText) {
     var template = _.template(templateText);
-    
-    function html(text) {
-      text = text.toString().replace(/&/g, "&amp;");
-      text = text.replace(/</g, "&lt;");
-      text = text.replace(/>/g, "&gt;");
-      text = text.replace(/"/g, "&quot;");
-      text = text.replace(/'/g, "&#39;");
-      return text;
-    }
     
     return {
       
@@ -64,7 +55,7 @@ require.def("stream/plugins",
         func: function (tweet) {
           tweet.html = tweet.template({
             tweet: tweet,
-            html: html
+            helpers: helpers
           });
           this();
         }
@@ -74,6 +65,7 @@ require.def("stream/plugins",
         name: "prepend",
         func: function (tweet, stream) {
           tweet.node = $(tweet.html);
+          tweet.node.data("tweet", tweet); // give node access to its tweet
           stream.canvas().prepend(tweet.node);
           this();
         }
@@ -83,7 +75,7 @@ require.def("stream/plugins",
         name: "htmlEncode",
         func: function (tweet, stream) {
           var text = tweet.data.text;
-          text = html(text);
+          text = helpers.html(text);
           tweet.textHTML = text;
           this();
         }
@@ -174,10 +166,10 @@ require.def("stream/plugins",
           var returns = 0;
           var calls   = 3;
           var handle = function (tweets, status) {
-            if(status != "success") {
-              return calls--;
-            };
             returns++;
+            if(status != "success") {
+              return
+            };
             all = all.concat(tweets)
             if(returns == 3) {
               var seen = {};
