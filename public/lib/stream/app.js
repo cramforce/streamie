@@ -7,7 +7,8 @@
 // we really do not want to break if somebody leaves a console.log in the code
 if(typeof console == "undefined") {
   var console = {
-    log: function () {}
+    log: function () {},
+    error: function () {}
   }
 }
 require.def("stream/app",
