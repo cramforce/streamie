@@ -1,10 +1,24 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+
+<!-- Streamie.org 
+     Thank you for viewing source. For more see http://github.com/cramforce/streamie
+     
+     We use all the hot stuff
+     - Backend is built on node.js
+     - Web sockets via socket.io
+     - CSS via less.js
+     - Loading via require.js
+     - underscore.js to make the JavaScript saner
+     - yes, also jQuery for DOM manipulation
+-->
+
 <head>
 	<title>Streamie</title>
 	<meta charset="UTF-8" />
 	<meta name="language" content="en-US" />
 	<link rel="stylesheet/less" type="text/css" href="css/client.less" media="screen,projection,print" />
+	<!-- We use less.js: http://github.com/cloudhead/less.js/tree/ -->
 	<script src="ext/less-1.0.33.min.js"></script>
 	<script>
 	less.refresh(true);
@@ -16,9 +30,9 @@
 		<div id="header">
 			<h1 id="logo"><a href="#">CRAMFORCE</a></h1>
 			<ul id="mainnav">
-				<li class="active"><a href="#all">⚛</a></li>
 				<li class=""><a href="#mention">@</a></li>
-				<li><a href="#direct">✉</a></li>
+				<li class="active"><a href="#all">⚛</a></li>
+				<li><a href="#retweet">♻</a></li>
 			</ul>
 		</div>
 		<div id="content">
@@ -34,6 +48,7 @@
 			</ol>
 		</div>
 	</div>
+	<!-- We use require.js for loading dependencies http://requirejs.org/ -->
   <script src="ext/require.js"></script>
   <script>
     require({

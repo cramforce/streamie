@@ -138,6 +138,19 @@ body.mention {
   }
 }
 
+body.retweet {
+  #content{
+    #stream{
+      li{
+        display:none;
+      }
+      li.retweet{
+        display:list-item;
+      }
+    }
+  }
+}
+
 #content{
 	margin:60px 5px 20px;
 	padding:10px;
@@ -152,8 +165,13 @@ body.mention {
 	#stream{
 		height:100%;
     li.mention{
-      .status{
+      div.status{
         background:#DEF4FF;
+      }
+    }
+    li.retweet{
+      div.status{
+        background:#FEFFE8;
       }
     }
 		li{
@@ -173,7 +191,7 @@ body.mention {
 					#client-border-radius > .small;
 				}
 			}
-			.status{
+			div.status{
 				position:relative;
 				padding:10px;
 				min-height:30px;
@@ -203,20 +221,48 @@ body.mention {
 						}
 					}
 				}
-				.reply{
-					opacity:0;
-					position:absolute;
+				.action{
+				  position:absolute;
 					bottom:3px;
 					right:5px;
-					font-size:17px;
-					line-height:17px;
 					color:#000;
-					&:hover{
-						opacity:1;
-					}
+					.reply{
+  					opacity:0;
+  					font-size:17px;
+  					line-height:17px;
+  					&:hover{
+  						opacity:1;
+  						color:#ff0000;
+  					}
+  				}
+  				.retweet{
+  					opacity:0;
+  					font-size:17px;
+  					line-height:17px;
+  					&:hover{
+  						opacity:1;
+  						color:#ff0000;
+  					}
+  				}
+  				.quote{
+  					opacity:0;
+  					font-size:17px;
+  					line-height:17px;
+  					&:hover{
+  						opacity:1;
+  						color:#ff0000;
+  					}
+  				}
 				}
+				
 				&:hover{
 					.reply{
+						opacity:.7;
+					}
+					.retweet{
+						opacity:.7;
+					}
+					.quote{
 						opacity:.7;
 					}
 				}
