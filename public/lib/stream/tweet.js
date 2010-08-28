@@ -1,3 +1,7 @@
+/*
+ * Class representing a tweet
+ */
+
 require.def("stream/tweet",
   function() {
     
@@ -6,11 +10,14 @@ require.def("stream/tweet",
     }
     
     function Tweet(data) {
-      this.data = data;
+      this.data = data; // a tweet has data. Nothing else
     }
     
+    // why are there no methods here?
+    // try to only use streamPlugins to deal with tweets!
+    
     return {
-      make: make
+      make: make // factory method
     }
       
   }

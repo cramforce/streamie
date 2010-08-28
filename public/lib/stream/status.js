@@ -3,6 +3,7 @@ require.def("stream/status",
   function(rest, helpers, replyFormTemplateText) {
     var replyFormTemplate = _.template(replyFormTemplateText);
     
+    // get (or make) a form the reply to a tweet
     function getReplyForm(li) { // tweet li
       var form = li.find("form.status");
       if(form.length == 0) { // no form yet, create it
@@ -26,11 +27,14 @@ require.def("stream/status",
       observe: {
         name: "oberserve",
         func: function (stream) {
+          
+          // submit event
           $(document).delegate("form.status", "submit", function (e) {
             var form = $(this);
             var status = form.find("[name=status]");
             if(status.val().length > 140) return false; // too long for Twitter
             
+            // post to twitter
             rest.post(form.attr("action"), form.serialize(), function () {
               form.find("textarea").val("");
               form.trigger("status:send");
@@ -93,6 +97,7 @@ require.def("stream/status",
         }
       },
       
+      // Click on retweet button
       retweet: {
         name: "retweet",
         func: function (stream) {
@@ -103,6 +108,8 @@ require.def("stream/status",
               var li = a.closest("li");
               var tweet = li.data("tweet");
               var id = tweet.data.id;
+              
+              // Post to twitter
               rest.post("/1/statuses/retweet/"+id+".json", function (tweetData, status) {
                 if(status == "success") {
                   a.hide();
