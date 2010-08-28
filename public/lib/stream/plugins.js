@@ -172,7 +172,12 @@ require.def("stream/plugins",
         func: function (stream) {
           var all = [];
           var returns = 0;
-          var handle = function (tweets) {
+          var calls   = 3;
+          var handle = function (tweets, status) {
+            if(status != "success") {
+              return calls--;
+            };
+            returns++;
             all = all.concat(tweets)
             if(returns == 3) {
               var seen = {};
@@ -193,24 +198,9 @@ require.def("stream/plugins",
             }
             
           }
-          rest.get("/1/statuses/retweeted_to_me.json?count=20", function (tweets, status) {
-            if(status == "success") {
-              returns++;
-              handle(tweets)
-            }
-          });
-          rest.get("/1/statuses/friends_timeline.json?count=20", function (tweets, status) {
-            if(status == "success") {
-              returns++
-              handle(tweets)
-            }
-          });
-          rest.get("/1/statuses/mentions.json?count=20", function (tweets, status) {
-            if(status == "success") {
-              returns++
-              handle(tweets)
-            }
-          });
+          rest.get("/1/statuses/retweeted_to_me.json?count=20", handle);
+          rest.get("/1/statuses/friends_timeline.json?count=20", handle);
+          rest.get("/1/statuses/mentions.json?count=20", handle);
         }
       }
       
