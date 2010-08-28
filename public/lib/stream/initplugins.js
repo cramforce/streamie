@@ -15,6 +15,7 @@ require.def("stream/initplugins",
           function change() {
             var val = location.hash.replace(/^\#/, "");
             $("body").attr("class", val);
+            // { custom-event: stat:XXX }
             $(document).trigger("state:"+val);
           }
           $(window).bind("hashchange", change); // who cares about old browsers?
@@ -30,6 +31,35 @@ require.def("stream/initplugins",
             var a = $(this);
             a.closest("#mainnav").find("li").removeClass("active");
             a.closest("li").addClass("active")
+          })
+        }
+      },
+      
+      // signals new tweets
+      signalNewTweets: {
+        name: "signalNewTweets",
+        func: function () {
+          var win = $(window);
+          var dirty = win.scrollTop() > 0;
+          var newCount = 0;
+          function redraw() { // this should do away
+            var signal = newCount > 0 ? "[NEW] " : "";
+            document.title = document.title.replace(/^(?:\[NEW\] )*/, signal); 
+          }
+          win.bind("scroll", function () {
+            dirty = win.scrollTop() > 0;
+            if(!dirty) { // we scrolled to the top. Back to 0 unread
+              newCount = 0;
+              redraw();
+              $(document).trigger("tweet:unread", [newCount])
+            }
+          });
+          $(document).bind("tweet:new", function () {
+            newCount++;
+            if(dirty) {
+              redraw()
+              $(document).trigger("tweet:unread", [newCount])
+            }
           })
         }
       },

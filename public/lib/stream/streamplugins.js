@@ -138,6 +138,20 @@ require.def("stream/streamplugins",
         }
       },
       
+      // Trigger a custom event to inform everyone about a new tweet
+      // Event is not fired for tweet from the prefill
+      newTweetEvent: {
+        name: "newTweetEvent",
+        func: function (tweet) {
+          // Do not fire for tweets
+          if(!tweet.data.prefill) {
+            // { custom-event: tweet:new }
+            tweet.node.trigger("tweet:new", [tweet])
+          }
+          this();
+        }
+      },
+      
       // when we insert a new tweet
       // adjust the scrollTop to show the same thing as before
       // we only do this, if the user was not scrolled to the very top

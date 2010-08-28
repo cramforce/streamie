@@ -37,6 +37,7 @@ require.def("stream/status",
             // post to twitter
             rest.post(form.attr("action"), form.serialize(), function () {
               form.find("textarea").val("");
+              // { custom-event: status:send }
               form.trigger("status:send");
             })
             return false;
