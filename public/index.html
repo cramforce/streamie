@@ -1,8 +1,13 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<html>
 
 <!-- Streamie.org 
-     Thank you for viewing source. For more see http://github.com/cramforce/streamie
+     Thank you for viewing source!
+     
+     For more see http://github.com/cramforce/streamie
+     
+     Learn how to make your own version of streamie without having to run your own server:
+     http://j.mp/c6EFKk
      
      We use all the hot stuff
      - Backend is built on node.js
@@ -52,16 +57,29 @@
   <script src="ext/require.js"></script>
   <script>
     require({
-              baseUrl: "./",
-              paths: {
-                "stream": "/lib/stream"
-              },
-          },
-          ["stream/app", "ext/socket.io/socket.io.js"],
-          function(app) {
-            app.start();
-          }
-      );
+      baseUrl: "./",
+      paths: {
+        "stream": "/lib/stream"
+      },
+    },
+    ["stream/app", "ext/socket.io/socket.io.js"],
+      function(app) {
+        app.start();
+      }
+    );
+  </script>
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-4656061-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
   </script>
 </body> 
 </html>

@@ -7,7 +7,8 @@
 // we really do not want to break if somebody leaves a console.log in the code
 if(typeof console == "undefined") {
   var console = {
-    log: function () {}
+    log: function () {},
+    error: function () {}
   }
 }
 require.def("stream/app",
@@ -54,12 +55,17 @@ require.def("stream/app",
           stream.addPlugins(streamPlugins);
           
           // connect to the backend system
-          client.connect(function(data) {
+          var connect = function(data) {
             data = JSON.parse(data); // data must always be JSON
             if(data.error) {
               //console.log("Error: "+data.error)
               if(data.error == "no_auth") {
-                location.href = "/access" // redirect to do oauth
+                if(confirm("Streamie.org is a Twitter client. We'll send you to Twitter to ask for access to your account now. OK?")) {
+                  location.href = "/access" // redirect to do oauth
+                } else {
+                  // No where else to go. Patches welcome;
+                  location.href = "http://www.nonblocking.io/2010/08/future-is-here-i-just-forked-running.html";
+                }
               }
             }
             else if(data.action == "auth_ok") {
@@ -76,11 +82,15 @@ require.def("stream/app",
             else if(data.tweet) {
               // We actually received a tweet. Let the stream process it
               stream.process(tweetModule.make(JSON.parse(data.tweet)));
-            } else {
-              // dunno what to do here
-              console.log(data);
             }
-          });
+            else {
+              // dunno what to do here
+              if(data != "pong") {
+                console.log(data);
+              }
+            }
+          };
+          var socket = client.connect(connect);
         })
       }
     }
