@@ -72,6 +72,7 @@ require.def("stream/status",
         name: "retweet",
         func: function (stream) {
           $(document).delegate("#stream a.retweet", "click", function (e) {
+            e.preventDefault();
             var a = $(this);
             if(confirm("Do you really want to retweet?")) {
               var li = a.closest("li");
