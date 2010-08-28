@@ -1,8 +1,13 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<html>
 
 <!-- Streamie.org 
-     Thank you for viewing source. For more see http://github.com/cramforce/streamie
+     Thank you for viewing source!
+     
+     For more see http://github.com/cramforce/streamie
+     
+     Learn how to make your own version of streamie without having to run your own server:
+     http://j.mp/c6EFKk
      
      We use all the hot stuff
      - Backend is built on node.js
@@ -52,16 +57,16 @@
   <script src="ext/require.js"></script>
   <script>
     require({
-              baseUrl: "./",
-              paths: {
-                "stream": "/lib/stream"
-              },
-          },
-          ["stream/app", "ext/socket.io/socket.io.js"],
-          function(app) {
-            app.start();
-          }
-      );
+      baseUrl: "./",
+      paths: {
+        "stream": "/lib/stream"
+      },
+    },
+    ["stream/app", "ext/socket.io/socket.io.js"],
+      function(app) {
+        app.start();
+      }
+    );
   </script>
 </body> 
 </html>
