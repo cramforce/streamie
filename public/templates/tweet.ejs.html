@@ -1,4 +1,4 @@
-<li class="<%= tweet.mentioned ? 'mention' : ''%><%= !tweet.data.prefill ? ' new' : ''%>" data-tweet="<%= helpers.html(JSON.stringify(tweet)) %>">
+<li class="<%= tweet.mentioned ? 'mention' : ''%><%= tweet.retweet ? ' retweet' : ''%><%= !tweet.data.prefill ? ' new' : ''%>" data-tweet="<%= helpers.html(JSON.stringify(tweet)) %>">
 	<a href="http://twitter.com/<%= tweet.data.user.screen_name %>" class="user-href"><img src="<%= tweet.data.user.profile_image_url %>" alt="<%= tweet.data.user.name %>" width="48" height="48" class="profile_image_url" /></a>
 	<div class="status">
 		<h3 class="user-name"><a href="http://twitter.com/<%= tweet.data.user.screen_name %>" class="user-href"><%= tweet.data.user.name %></a><% if(tweet.retweet) { %> via <a href="http://twitter.com/<%= tweet.retweet.user.screen_name %>" class="retweet-user-href"><%= tweet.retweet.user.name %></a><% }%></h3>
