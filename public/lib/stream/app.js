@@ -25,6 +25,7 @@ require.def("stream/app",
       basePlugins.navigation,
       status.observe,
       status.replyForm,
+      status.quote,
       status.retweet
     ];
     

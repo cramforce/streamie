@@ -221,36 +221,48 @@ body.retweet {
 						}
 					}
 				}
-				/* put reply and retweet into actions div?  */
-				.reply{
-					opacity:0;
-					position:absolute;
+				.action{
+				  position:absolute;
 					bottom:3px;
 					right:5px;
-					font-size:17px;
-					line-height:17px;
 					color:#000;
-					&:hover{
-						opacity:1;
-					}
+					.reply{
+  					opacity:0;
+  					font-size:17px;
+  					line-height:17px;
+  					&:hover{
+  						opacity:1;
+  						color:#ff0000;
+  					}
+  				}
+  				.retweet{
+  					opacity:0;
+  					font-size:17px;
+  					line-height:17px;
+  					&:hover{
+  						opacity:1;
+  						color:#ff0000;
+  					}
+  				}
+  				.quote{
+  					opacity:0;
+  					font-size:17px;
+  					line-height:17px;
+  					&:hover{
+  						opacity:1;
+  						color:#ff0000;
+  					}
+  				}
 				}
-				.retweet{
-					opacity:0;
-					position:absolute;
-					bottom:3px;
-					right:30px;
-					font-size:17px;
-					line-height:17px;
-					color:#000;
-					&:hover{
-						opacity:1;
-					}
-				}
+				
 				&:hover{
 					.reply{
 						opacity:.7;
 					}
 					.retweet{
+						opacity:.7;
+					}
+					.quote{
 						opacity:.7;
 					}
 				}

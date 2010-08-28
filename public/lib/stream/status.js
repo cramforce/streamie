@@ -3,6 +3,23 @@ require.def("stream/status",
   function(rest, helpers, replyFormTemplateText) {
     var replyFormTemplate = _.template(replyFormTemplateText);
     
+    function getReplyForm(li) { // tweet li
+      var form = li.find("form.status");
+      if(form.length == 0) { // no form yet, create it
+        li.find("div.status").append(replyFormTemplate({
+          tweet: li.data("tweet"),
+          helpers: helpers
+        }));
+        form = li.find("form.status");
+        form.find("[name=status]").focus();
+        form.bind("status:send", function () {
+          form.hide();
+          $(window).scrollTop(0); // Good behavior?
+        })
+      }
+      return form;
+    }
+    
     return {
       
       // observe events on status forms
@@ -50,19 +67,27 @@ require.def("stream/status",
           $(document).delegate("#stream a.reply", "click", function (e) {
             e.preventDefault();
             var li = $(this).closest("li");
-            var form = li.find("form.status");
-            if(form.length == 0) { // no form yet, create it
-              li.find("div.status").append(replyFormTemplate({
-                tweet: li.data("tweet"),
-                helpers: helpers
-              }));
-              form = li.find("form.status");
-              form.find("[name=status]").focus();
-              form.bind("status:send", function () {
-                form.hide();
-                $(window).scrollTop(0); // Good behavior?
-              })
-            }
+            var form = getReplyForm(li);
+            form.show();
+          })
+        }
+      },
+      
+      // The old style retweet, with the ability to comment on the original text
+      quote: {
+        name: "quote",
+        func: function (stream) {
+          $(document).delegate("#stream a.quote", "click", function (e) {
+            e.preventDefault();
+            var li = $(this).closest("li");
+            var tweet = li.data("tweet");
+            var form = getReplyForm(li);
+            form.find("[name=in_reply_to_status_id]").val(""); // no reply
+            
+            // make text. TODO: Style should be configurable
+            var text = tweet.data.text + " /via @"+tweet.data.user.screen_name
+            
+            form.find("[name=status]").val(text);
             form.show();
           })
         }
