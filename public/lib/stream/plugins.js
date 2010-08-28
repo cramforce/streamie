@@ -167,10 +167,9 @@ require.def("stream/plugins",
           var calls   = 3;
           var handle = function (tweets, status) {
             returns++;
-            if(status != "success") {
-              return
+            if(status == "success") {
+              all = all.concat(tweets)
             };
-            all = all.concat(tweets)
             if(returns == 3) {
               var seen = {};
               all = all.filter(function (tweet) {
@@ -185,10 +184,7 @@ require.def("stream/plugins",
               all.forEach(function (tweet) {
                 stream.process(tweetModule.make(tweet));
               })
-            } else {
-              all = tweets;
             }
-            
           }
           rest.get("/1/statuses/retweeted_to_me.json?count=20", handle);
           rest.get("/1/statuses/friends_timeline.json?count=20", handle);
