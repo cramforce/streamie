@@ -24,7 +24,8 @@ require.def("stream/app",
       basePlugins.hashState,
       basePlugins.navigation,
       status.observe,
-      status.replyForm
+      status.replyForm,
+      status.retweet
     ];
     
     var stream = new tweetstream.Stream();

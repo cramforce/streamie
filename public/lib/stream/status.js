@@ -66,6 +66,26 @@ require.def("stream/status",
             form.show();
           })
         }
+      },
+      
+      retweet: {
+        name: "retweet",
+        func: function (stream) {
+          $(document).delegate("#stream a.retweet", "click", function (e) {
+            var a = $(this);
+            if(confirm("Do you really want to retweet?")) {
+              var li = a.closest("li");
+              var tweet = li.data("tweet");
+              var id = tweet.data.id;
+              rest.post("/1/statuses/retweet/"+id+".json", function (tweetData, status) {
+                if(status == "success") {
+                  a.hide();
+                  // todo: Maybe redraw the tweet with more fancy marker?
+                }
+              })
+            }
+          })
+        }
       }
     }
       

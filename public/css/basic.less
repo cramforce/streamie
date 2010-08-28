@@ -203,6 +203,7 @@ body.mention {
 						}
 					}
 				}
+				/* put reply and retweet into actions div?  */
 				.reply{
 					opacity:0;
 					position:absolute;
@@ -215,8 +216,23 @@ body.mention {
 						opacity:1;
 					}
 				}
+				.retweet{
+					opacity:0;
+					position:absolute;
+					bottom:3px;
+					right:30px;
+					font-size:17px;
+					line-height:17px;
+					color:#000;
+					&:hover{
+						opacity:1;
+					}
+				}
 				&:hover{
 					.reply{
+						opacity:.7;
+					}
+					.retweet{
 						opacity:.7;
 					}
 				}
