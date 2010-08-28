@@ -54,7 +54,7 @@ require.def("stream/app",
           stream.addPlugins(streamPlugins);
           
           // connect to the backend system
-          client.connect(function(data) {
+          var connect = function(data) {
             data = JSON.parse(data); // data must always be JSON
             if(data.error) {
               //console.log("Error: "+data.error)
@@ -81,11 +81,15 @@ require.def("stream/app",
             else if(data.tweet) {
               // We actually received a tweet. Let the stream process it
               stream.process(tweetModule.make(JSON.parse(data.tweet)));
-            } else {
-              // dunno what to do here
-              console.log(data);
             }
-          });
+            else {
+              // dunno what to do here
+              if(data != "pong") {
+                console.log(data);
+              }
+            }
+          };
+          var socket = client.connect(connect);
         })
       }
     }
