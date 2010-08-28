@@ -59,7 +59,12 @@ require.def("stream/app",
             if(data.error) {
               //console.log("Error: "+data.error)
               if(data.error == "no_auth") {
-                location.href = "/access" // redirect to do oauth
+                if(confirm("Streamie.org is a Twitter client. We'll send you to Twitter to ask for access to your account now. OK?")) {
+                  location.href = "/access" // redirect to do oauth
+                } else {
+                  // No where else to go. Patches welcome;
+                  location.href = "http://www.nonblocking.io/2010/08/future-is-here-i-just-forked-running.html";
+                }
               }
             }
             else if(data.action == "auth_ok") {
