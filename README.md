@@ -1,5 +1,6 @@
 # Streamie #
 
+For hacking on Streamie, see: http://www.nonblocking.io/2010/08/future-is-here-i-just-forked-running.html
 
 ## Setup ##
 
@@ -14,5 +15,4 @@
 * node server.js [AuthHeaderValue]
 * http://localhost:8888
 * Now post anything, favorite, etc. Comes up almost before the UI finishes processing.
-
 
