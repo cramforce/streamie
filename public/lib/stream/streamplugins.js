@@ -71,6 +71,22 @@ require.def("stream/streamplugins",
         }
       },
       
+      // if a tweet with the name id is in the stream already, do not continue
+      avoidDuplicates: {
+        name: "avoidDuplicates",
+        func: function (tweet, stream, plugin) {
+          if(!plugin.seen) {
+            plugin.seen = {};
+          }
+          var id = tweet.data.id;
+          if(plugin.seen[id]) {
+            // duplicate detected -> do not continue;
+          } else {
+            this();
+          }
+        }
+      },
+      
       // put the tweet into the stream
       prepend: {
         name: "prepend",
