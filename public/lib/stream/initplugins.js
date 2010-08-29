@@ -179,7 +179,7 @@ require.def("stream/initplugins",
           }
           
           $(document).bind("awake", function (e, duration) { // when we awake, we might have lost some tweets
-            prefill()
+            setTimeout(prefill, 4000); // wait for network to come online
           });
           
           prefill(); // do once at start

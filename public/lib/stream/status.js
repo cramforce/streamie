@@ -173,23 +173,27 @@ require.def("stream/status",
         name: "conversation",
         func: function (stream) {
           
-          var cIndex = 0;
-          
           $(document).delegate("#stream a.conversation", "click", function (e) {
             e.preventDefault();
             var a = $(this);
             var li = a.closest("li");
             var tweet = li.data("tweet");
-            var tweets = tweet.conversation();
+            var con = tweet.conversation;
             
             $("#mainnav").find("li").removeClass("active") // evil coupling
             
             $("#stream li").removeClass("conversation");
-            window.location.hash = "#conversation";
+            var className = "conversation"+con.index;
+            window.location.hash = "#"+className;
             
-            tweets.forEach(function (t) {
-              t.node.addClass("conversation");
-            })
+            // add some dynamic style to the page to hide everything besides this conversation
+            var style = '<style type="text/css">'+
+              'body.'+className+' #content #stream li {display:none;}\n'+
+              'body.'+className+' #content #stream li.'+className+' {display:block;}\n'+
+              '</style>';
+            style = $(style);
+            $("head").append(style);
+            
           })
         }
       },

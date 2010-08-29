@@ -23,6 +23,7 @@ require.def("stream/app",
       streamPlugin.handleRetweet,
       streamPlugin.tweetsOnly,
       streamPlugin.avoidDuplicates,
+      streamPlugin.conversations,
       streamPlugin.mentions,
       streamPlugin.template,
       streamPlugin.htmlEncode,
@@ -31,8 +32,7 @@ require.def("stream/app",
       streamPlugin.prepend,
       streamPlugin.keepScrollState,
       streamPlugin.age,
-      streamPlugin.newTweetEvent,
-      streamPlugin.addConversationFinder
+      streamPlugin.newTweetEvent
     ];
     
     // initPlugins are loaded when the page is loaded and the backend web socket connection has been established
