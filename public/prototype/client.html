@@ -34,14 +34,15 @@
 <body id="twitter-stream-proxy">
 	<div id="container">
 		<div id="header">
-			<h1 id="logo"><a href="#">streamie</a></h1>
+			<h1 id="logo"><a href="#">Streamie (early ⍺) for @helgri</a></h1>
 			<ul id="mainnav">
 				<li class="timeline active"><a href="#">⚛</a></li>
 				<li><a href="#">@</a></li>
 				<li class="new"><a href="#">✉</a></li>
-				<li class="add"><a href="#">+</a></li>
+				<li class="rt"><a href="#">♻</a></li>
+				<li class="add"><a href="#">✍</a></li>
 			</ul>
-			<form action="/1/statuses/update.json" method="post" class="status show tweet" id="mainstatus"> 
+			<form action="/1/statuses/update.json" method="post" class="status tweet" id="mainstatus"> 
 				<input type="hidden" name="in_reply_to_status_id" value="" /> 
 				<input type="hidden" name="lat" value="" /> 
 				<input type="hidden" name="long" value="" /> 
@@ -149,6 +150,7 @@
 			</ol>
 		</div>
 	</div>
+<!-- 
 	<div id="oauth" class="popin show">
 		<h2 class="h">Streamie.org</h2>
 		<div class="msg">Streamie.org is a Twitter client. We'll send you to Twitter to ask for access to your account now. OK?</div>
@@ -157,6 +159,7 @@
 			<input type="submit" value="Submit" class="button" />
 		</div>
 	</div>
+ -->
 <!-- 
 	<div class="popin show">
 		<h2 class="h">System-Message</h2>
@@ -181,19 +184,3 @@
  -->
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
