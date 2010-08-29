@@ -87,6 +87,8 @@ require.def("stream/streamplugins",
         name: "htmlEncode",
         func: function (tweet, stream) {
           var text = tweet.data.text;
+          text = text.replace(/\&gt\;/g, ">"); // these are preencoded in Twitter tweets
+          text = text.replace(/\&lt\;/g, "<");
           text = helpers.html(text);
           tweet.textHTML = text;
           this();
