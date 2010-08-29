@@ -29,6 +29,7 @@ require.def("stream/initplugins",
         func: function (stream) {
           var mainstatus = $("#mainstatus");
           
+          // close mainstatus when user hits escape
           $(document).bind("key:escape", function () {
             if(mainstatus.hasClass("active")) {
               mainstatus.removeClass("active");
@@ -94,6 +95,7 @@ require.def("stream/initplugins",
         }
       },
       
+      // listen to keyboard events and translate them to semantic custom events
       keyboardShortCuts: {
         name: "keyboardShortCuts",
         func: function () {
