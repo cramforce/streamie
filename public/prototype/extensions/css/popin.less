@@ -2,14 +2,13 @@
 	position:fixed;
 	left:50%;
 	top:50%;
-	min-width:300px;
-	min-height:200px;
+	width:300px;
 	color:#333;
 	background:rgba(255,255,255,.95);
 	border:1px solid #999;
 	#client-border-radius > .middle;
 	margin:-110px 0 0 -160px;
-	padding:10px;
+	padding:10px 10px 45px;
 	#client-shadow > .big;
 	 .close{
 	 	position:absolute;
@@ -53,11 +52,33 @@
 			background: -webkit-gradient(linear, left top, left bottom, from(#aaa), to(#aaa), color-stop(0.5, #fff));
 		}
 	 }
+	.buttons{
+		position:absolute;
+		bottom:0;
+		left:10px;
+		right:10px;
+		.button{
+			width:45%;
+			-webkit-box-sizing:border-box;
+			&:first-child{
+				left:0;
+				right:auto;
+				color:#fff;
+				border-color:#555;
+				background: -webkit-gradient(linear, left top, left bottom, from(#111), to(#111), color-stop(0.5, #333));
+				&:hover{
+					background: -webkit-gradient(linear, left top, left bottom, from(#555), to(#555), color-stop(0.5, #111));
+				}
+			}
+			&:last-child{
+				right:0;
+				left:auto;
+			}
+		}
+	}
 	 
 	 &#form{
-	 	min-height:0;
 	 	fieldset{
-	 		margin-bottom:35px;
 	 		textarea{
 			 	-webkit-box-sizing:border-box;
 	 			width:100%;
@@ -68,35 +89,12 @@
 	 			#client-border-radius > .small;
 	 			#client-shadow .inset;
 	 		}
-	 	}
-	 	.buttons{
-			position:absolute;
-			bottom:0;
-			left:10px;
-			right:10px;
-			.button{
-				width:45%;
-			 	-webkit-box-sizing:border-box;
-				&:first-child{
-					left:0;
-					right:auto;
-					color:#fff;
-					border-color:#555;
-					background: -webkit-gradient(linear, left top, left bottom, from(#111), to(#111), color-stop(0.5, #333));
-					&:hover{
-						background: -webkit-gradient(linear, left top, left bottom, from(#555), to(#555), color-stop(0.5, #111));
-					}
-				}
-				&:last-child{
-					right:0;
-					left:auto;
-				}
-			}
-	 	}
-		-webkit-animation-duration: .3s;
-		-webkit-animation-direction: alternate;
-		-webkit-animation-timing-function: ease-in-out;	 	
+	 	}	
 	}
+	-webkit-animation-duration: .3s;
+	-webkit-animation-direction: alternate;
+	-webkit-animation-timing-function: ease-in-out;	 
+	
 	&.show{
 		-webkit-animation-name: popin;
 	}
