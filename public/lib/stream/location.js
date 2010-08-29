@@ -18,7 +18,7 @@ require.def("stream/location",
     var busy = false;
     function get(cb) {
       if(loc) {
-        return loc;
+        return cb(loc);
       }
       if(!busy && navigator.geolocation) {
         busy = true;
