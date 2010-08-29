@@ -15,6 +15,7 @@ require.def("stream/initplugins",
           function change() {
             var val = location.hash.replace(/^\#/, "");
             $("body").attr("class", val);
+            // { custom-event: stat:XXX }
             $(document).trigger("state:"+val);
           }
           $(window).bind("hashchange", change); // who cares about old browsers?
@@ -26,11 +27,71 @@ require.def("stream/initplugins",
       navigation: {
         name: "navigation",
         func: function (stream) {
-          $("#header").delegate("#mainnav a", "click", function () {
+          var mainstatus = $("#mainstatus");
+          
+          $("#header").delegate("#mainnav a", "click", function (e) {
             var a = $(this);
+            a.blur();
+            var li = a.closest("li");
+            
+            if(li.hasClass("add")) { // special case for new tweet
+              e.preventDefault();
+              if(mainstatus.hasClass("active")) {
+                mainstatus.removeClass("active");
+              } else {
+                mainstatus.addClass("active");
+                mainstatus.find("[name=status]").focus();
+              }
+              return;
+            }
+            
             a.closest("#mainnav").find("li").removeClass("active");
-            a.closest("li").addClass("active")
+            li.addClass("active")
+          });
+          
+          mainstatus.bind("status:send", function () {
+            mainstatus.removeClass("active");
+          });
+          
+          $("#header").delegate("#mainnav li.add", "mouseenter mouseleave", function () {
+            mainstatus.toggleClass("tease");
           })
+        }
+      },
+      
+      // signals new tweets
+      signalNewTweets: {
+        name: "signalNewTweets",
+        func: function () {
+          var win = $(window);
+          var dirty = win.scrollTop() > 0;
+          var newCount = 0;
+          function redraw() { // this should do away
+            var signal = newCount > 0 ? "[NEW] " : "";
+            document.title = document.title.replace(/^(?:\[NEW\] )*/, signal); 
+          }
+          win.bind("scroll", function () {
+            dirty = win.scrollTop() > 0;
+            if(!dirty) { // we scrolled to the top. Back to 0 unread
+              newCount = 0;
+              redraw();
+              $(document).trigger("tweet:unread", [newCount])
+            }
+          });
+          $(document).bind("tweet:new", function () {
+            newCount++;
+            if(dirty) {
+              redraw()
+              $(document).trigger("tweet:unread", [newCount])
+            }
+          })
+        }
+      },
+      
+      personalizeForCurrentUser: {
+        name: "personalizeForCurrentUser",
+        func: function (stream) {
+          $("#currentuser-screen_name").text("@"+stream.user.screen_name)
         }
       },
       

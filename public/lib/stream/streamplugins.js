@@ -87,6 +87,8 @@ require.def("stream/streamplugins",
         name: "htmlEncode",
         func: function (tweet, stream) {
           var text = tweet.data.text;
+          text = text.replace(/\&gt\;/g, ">"); // these are preencoded in Twitter tweets
+          text = text.replace(/\&lt\;/g, "<");
           text = helpers.html(text);
           tweet.textHTML = text;
           this();
@@ -134,6 +136,20 @@ require.def("stream/streamplugins",
           
           tweet.textHTML = text;
           
+          this();
+        }
+      },
+      
+      // Trigger a custom event to inform everyone about a new tweet
+      // Event is not fired for tweet from the prefill
+      newTweetEvent: {
+        name: "newTweetEvent",
+        func: function (tweet) {
+          // Do not fire for tweets
+          if(!tweet.data.prefill) {
+            // { custom-event: tweet:new }
+            tweet.node.trigger("tweet:new", [tweet])
+          }
           this();
         }
       },
