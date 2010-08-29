@@ -168,6 +168,32 @@ require.def("stream/status",
         }
       },
       
+      // show all Tweets from one conversation
+      conversation: {
+        name: "conversation",
+        func: function (stream) {
+          
+          var cIndex = 0;
+          
+          $(document).delegate("#stream a.conversation", "click", function (e) {
+            e.preventDefault();
+            var a = $(this);
+            var li = a.closest("li");
+            var tweet = li.data("tweet");
+            var tweets = tweet.conversation();
+            
+            $("#mainnav").find("li").removeClass("active") // evil coupling
+            
+            $("#stream li").removeClass("conversation");
+            window.location.hash = "#conversation";
+            
+            tweets.forEach(function (t) {
+              t.node.addClass("conversation");
+            })
+          })
+        }
+      },
+      
       // Double click on tweet text turns text into JSON;
       showJSON: {
         name: "showJSON",
