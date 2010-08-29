@@ -120,6 +120,51 @@ require.def("stream/status",
             }
           })
         }
+      },
+      
+      // Click on favorite button
+      favorite: {
+        name: "favorite",
+        func: function (stream) {
+          $(document).delegate("#stream a.favorite", "click", function (e) {
+            e.preventDefault();
+            var a = $(this);
+            var li = a.closest("li");
+            var tweet = li.data("tweet");
+            var id = tweet.data.id;
+            
+            if(!tweet.data.favorited) {
+              rest.post("/1/favorites/create/"+id+".json", function (tweetData, status) {
+                if(status == "success") {
+                  tweet.data.favorited = true;
+                  li.addClass("favorited");
+                }
+              });
+            } else {
+              rest.post("/1/favorites/destroy/"+id+".json", function (tweetData, status) {
+                if(status == "success") {
+                  tweet.data.favorited = false;
+                  li.removeClass("favorited");
+                }
+              });
+            }
+          })
+        }
+      },
+      
+      // Double click on tweet text turns text into JSON;
+      showJSON: {
+        name: "showJSON",
+        func: function (stream) {
+          $(document).delegate("#stream p.text", "dblclick", function (e) {
+            var p = $(this);
+            var li = p.closest("li");
+            var tweet = li.data("tweet");
+            var pre   = $("<pre />");
+            pre.text(JSON.stringify( tweet, null, " " ));
+            p.html("").append(pre);
+          })
+        }
       }
     }
       

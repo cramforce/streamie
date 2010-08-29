@@ -190,6 +190,12 @@ body.retweet {
         background:#FEFFE8;
       }
     }
+    li.favorited{
+      div.status .action .favorite{
+				opacity:1;
+				color:#FFFF00;
+			}
+    }
 		li{
 			position:relative;
 			clear:both;
@@ -260,6 +266,15 @@ body.retweet {
   						color:#ff0000;
   					}
   				}
+  				.favorite{
+  					opacity:0;
+  					font-size:17px;
+  					line-height:17px;
+  					&:hover{
+  						opacity:1;
+  						color:#ff0000;
+  					}
+  				}
   				.quote{
   					opacity:0;
   					font-size:17px;
@@ -279,6 +294,9 @@ body.retweet {
 						opacity:.7;
 					}
 					.quote{
+						opacity:.7;
+					}
+					.favorite{
 						opacity:.7;
 					}
 				}

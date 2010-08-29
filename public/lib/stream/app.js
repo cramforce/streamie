@@ -44,7 +44,9 @@ require.def("stream/app",
       status.observe,
       status.replyForm,
       status.quote,
-      status.retweet
+      status.retweet,
+      status.favorite,
+      status.showJSON
     ];
     
     var stream = new tweetstream.Stream();
