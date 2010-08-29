@@ -242,3 +242,43 @@ b,strong{font-weight:bold;}
 		border-color:#c00 !important;
 	}
 }
+
+form#mainstatus{
+	position:fixed;
+	z-index:-1;
+	top:-300px;
+	left:0;
+	right:0;
+	padding:10px 10px 40px;
+	color:#333;
+	opacity:0;
+	background:rgba(255,255,255,.95);
+	border-bottom:1px solid #111;
+	#client-transition-time > .slide;
+	fieldset{
+		textarea{
+			-webkit-box-sizing:border-box;
+			width:100%;
+			height:60px;
+			font-size:14px;
+			color:#333;
+			border:1px solid #aaa;
+			#client-border-radius > .small;
+			#client-shadow .inset;
+		}
+		.characters{
+			position:absolute;
+			left:15px;
+			bottom:18px;
+			
+		}
+		.button{
+			left:120px;
+			right:9px;
+		}
+	}
+	&.show{
+		top:65px;
+		opacity:1;
+	}
+}
