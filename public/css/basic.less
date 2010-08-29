@@ -86,6 +86,22 @@ b,strong{font-weight:bold;}
 			content:" // ";
 		}*/
 	}
+	#mainstatus{
+		overflow:hidden;
+		text-align:center;
+		border-bottom:1px solid #555;
+		background:rgba(0,0,0,.85);
+		padding:10px 0 5px;
+		display: none;
+		&.tease{
+		  display:block;
+		  opacity: 0.5;
+		}
+		&.active{
+		  display:block;
+		  opacity: 1;
+		}
+	}
 	#mainnav{
 		overflow:hidden;
 		text-align:center;

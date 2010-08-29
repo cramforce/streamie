@@ -27,10 +27,34 @@ require.def("stream/initplugins",
       navigation: {
         name: "navigation",
         func: function (stream) {
-          $("#header").delegate("#mainnav a", "click", function () {
+          var mainstatus = $("#mainstatus");
+          
+          $("#header").delegate("#mainnav a", "click", function (e) {
             var a = $(this);
+            a.blur();
+            var li = a.closest("li");
+            
+            if(li.hasClass("add")) { // special case for new tweet
+              e.preventDefault();
+              if(mainstatus.hasClass("active")) {
+                mainstatus.removeClass("active");
+              } else {
+                mainstatus.addClass("active");
+                mainstatus.find("[name=status]").focus();
+              }
+              return;
+            }
+            
             a.closest("#mainnav").find("li").removeClass("active");
-            a.closest("li").addClass("active")
+            li.addClass("active")
+          });
+          
+          mainstatus.bind("status:send", function () {
+            mainstatus.removeClass("active");
+          });
+          
+          $("#header").delegate("#mainnav li.add", "mouseenter mouseleave", function () {
+            mainstatus.toggleClass("tease");
           })
         }
       },
