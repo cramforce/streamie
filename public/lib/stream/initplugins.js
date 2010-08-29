@@ -29,6 +29,13 @@ require.def("stream/initplugins",
         func: function (stream) {
           var mainstatus = $("#mainstatus");
           
+          // close mainstatus when user hits escape
+          $(document).bind("key:escape", function () {
+            if(mainstatus.hasClass("active")) {
+              mainstatus.removeClass("active");
+            }
+          });
+          
           $("#header").delegate("#mainnav a", "click", function (e) {
             var a = $(this);
             a.blur();
@@ -88,6 +95,23 @@ require.def("stream/initplugins",
         }
       },
       
+      // listen to keyboard events and translate them to semantic custom events
+      keyboardShortCuts: {
+        name: "keyboardShortCuts",
+        func: function () {
+          
+          function trigger(e, name) {
+            $(e.target).trigger("key:"+name);
+          }
+          
+          $(document).keyup(function (e) {
+            if(e.keyCode == 27) { // escape
+              trigger(e, "escape")
+            }
+          })
+        }
+      },
+      
       personalizeForCurrentUser: {
         name: "personalizeForCurrentUser",
         func: function (stream) {
@@ -95,39 +119,70 @@ require.def("stream/initplugins",
         }
       },
       
+      // sends an event after user
+      notifyAfterPause: {
+        name: "notifyAfterPause",
+        func: function () {
+          
+          function now() {
+            return (new Date).getTime();
+          }
+          var last = now();
+          setInterval(function () { // setInterval will not fire when the computer is asleep
+            var time = now();
+            var duration = time - last;
+            if(duration > 4000) {
+              console.log("Awake after "+duration);
+              $(document).trigger("awake", [duration]);
+            }
+            last = time;
+          }, 2000)
+        }
+      },
+      
       // Use the REST API to load the users's friends timeline, mentions and friends's retweets into the stream
+      // this also happens when we detect that the user was offline for a while
       prefillTimeline: {
         name: "prefillTimeline",
-        func: function (stream) {
-          var all = [];
-          var returns = 0;
-          var calls   = 3;
-          var handle = function (tweets, status) {
-            returns++;
-            if(status == "success") {
-              all = all.concat(tweets)
-            };
-            if(returns == 3) { // all three APIs returned, we can start drawing
-              var seen = {};
-              all = all.filter(function (tweet) { // filter out dupes
-                var ret = !seen[tweet.id];
-                seen[tweet.id] = true;
-                tweet.prefill = true; // tweet is from the prefill
-                return ret;
-              });
-              all = _(all).sortBy(function (tweet) { // sort tweets from all 3 API calls
-                return (new Date(tweet.created_at)).getTime();
-              });
-              all.forEach(function (tweet) { // process tweets into the stream
-                stream.process(tweetModule.make(tweet));
-              })
+        func: function (stream) { 
+          
+          function prefill () {
+            var all = [];
+            var returns = 0;
+            var calls   = 3;
+            var handle = function (tweets, status) {
+              returns++;
+              if(status == "success") {
+                all = all.concat(tweets)
+              };
+              if(returns == 3) { // all three APIs returned, we can start drawing
+                var seen = {};
+                all = all.filter(function (tweet) { // filter out dupes
+                  var ret = !seen[tweet.id];
+                  seen[tweet.id] = true;
+                  tweet.prefill = true; // tweet is from the prefill
+                  return ret;
+                });
+                all = _(all).sortBy(function (tweet) { // sort tweets from all 3 API calls
+                  return (new Date(tweet.created_at)).getTime();
+                });
+                all.forEach(function (tweet) { // process tweets into the stream
+                  stream.process(tweetModule.make(tweet)); // if the tweet is already there, is will be filtered away
+                })
+              }
             }
+
+            // Make API calls
+            rest.get("/1/statuses/retweeted_to_me.json?count=20", handle);
+            rest.get("/1/statuses/friends_timeline.json?count=20", handle);
+            rest.get("/1/statuses/mentions.json?count=20", handle);
           }
           
-          // Make API calls
-          rest.get("/1/statuses/retweeted_to_me.json?count=20", handle);
-          rest.get("/1/statuses/friends_timeline.json?count=20", handle);
-          rest.get("/1/statuses/mentions.json?count=20", handle);
+          $(document).bind("awake", function (e, duration) { // when we awake, we might have lost some tweets
+            prefill()
+          });
+          
+          prefill(); // do once at start
         }
       }
       

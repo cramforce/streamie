@@ -8,6 +8,8 @@ require.def("stream/streamplugins",
   function(tweetModule, rest, helpers, templateText) {
     var template = _.template(templateText);
     
+    var Tweets = {};
+    
     return {
       
       // turns retweets into something similar to tweets
@@ -67,6 +69,48 @@ require.def("stream/streamplugins",
             tweet: tweet,
             helpers: helpers
           });
+          this();
+        }
+      },
+      
+      // if a tweet with the name id is in the stream already, do not continue
+      avoidDuplicates: {
+        name: "avoidDuplicates",
+        func: function (tweet, stream) {
+          var id = tweet.data.id;
+          if(Tweets[id]) {
+            // duplicate detected -> do not continue;
+          } else {
+            Tweets[id] = tweet
+            this();
+          }
+        }
+      },
+      
+      // adds a function called "conversation" to each tweet that returns all the predeccessors in a conversation
+      addConversationFinder: {
+        name: "addConversationFinder",
+        finder: function () {
+          var tweet = this;
+          var tweets = [];
+          var t = tweet;
+          while(true) {
+            var replyId = t.data.in_reply_to_status_id;
+            if(replyId) {
+              t = Tweets[replyId];
+              if(t) {
+                tweets.push(t);
+              } else {
+                break;
+              }
+            } else {
+              break;
+            }
+          }
+          return tweets;
+        },
+        func: function (tweet, stream, plugin) {
+          tweet.conversation = plugin.finder;
           this();
         }
       },

@@ -39,7 +39,7 @@ require.def("stream/tweetstream",
         function next () {
           var plugin = self.plugins[i++];
           if(plugin) {
-            plugin.func.call(next, tweet, self)
+            plugin.func.call(next, tweet, self, plugin)
           }
         }
         next();

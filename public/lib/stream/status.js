@@ -1,6 +1,6 @@
 require.def("stream/status",
-  ["stream/twitterRestAPI", "stream/helpers", "text!../templates/status.ejs.html"],
-  function(rest, helpers, replyFormTemplateText) {
+  ["stream/twitterRestAPI", "stream/helpers", "stream/location", "text!../templates/status.ejs.html"],
+  function(rest, helpers, location, replyFormTemplateText) {
     var replyFormTemplate = _.template(replyFormTemplateText);
     
     // get (or make) a form the reply to a tweet
@@ -118,6 +118,95 @@ require.def("stream/status",
                 }
               })
             }
+          })
+        }
+      },
+      
+      // adds geo coordinates to statusses
+      location: {
+        name: "location",
+        func: function () {
+          $(document).delegate("textarea[name=status]", "focus", function () {
+            var form = $(this).closest("form");
+            
+            location.get(function (position) {
+              form.find("[name=lat]").val(position.coords.latitude)
+              form.find("[name=long]").val(position.coords.longitude)
+              form.find("[name=display_coordinates]").val("true");
+            })
+          });
+        }
+      },
+      
+      // Click on favorite button
+      favorite: {
+        name: "favorite",
+        func: function (stream) {
+          $(document).delegate("#stream a.favorite", "click", function (e) {
+            e.preventDefault();
+            var a = $(this);
+            var li = a.closest("li");
+            var tweet = li.data("tweet");
+            var id = tweet.data.id;
+            
+            if(!tweet.data.favorited) {
+              rest.post("/1/favorites/create/"+id+".json", function (tweetData, status) {
+                if(status == "success") {
+                  tweet.data.favorited = true;
+                  li.addClass("favorited");
+                }
+              });
+            } else {
+              rest.post("/1/favorites/destroy/"+id+".json", function (tweetData, status) {
+                if(status == "success") {
+                  tweet.data.favorited = false;
+                  li.removeClass("favorited");
+                }
+              });
+            }
+          })
+        }
+      },
+      
+      // show all Tweets from one conversation
+      conversation: {
+        name: "conversation",
+        func: function (stream) {
+          
+          var cIndex = 0;
+          
+          $(document).delegate("#stream a.conversation", "click", function (e) {
+            e.preventDefault();
+            var a = $(this);
+            var li = a.closest("li");
+            var tweet = li.data("tweet");
+            var tweets = tweet.conversation();
+            
+            $("#mainnav").find("li").removeClass("active") // evil coupling
+            
+            $("#stream li").removeClass("conversation");
+            window.location.hash = "#conversation";
+            
+            tweets.forEach(function (t) {
+              t.node.addClass("conversation");
+            })
+          })
+        }
+      },
+      
+      // Double click on tweet text turns text into JSON;
+      showJSON: {
+        name: "showJSON",
+        func: function (stream) {
+          $(document).delegate("#stream p.text", "dblclick", function (e) {
+            var p = $(this);
+            var li = p.closest("li");
+            var tweet = li.data("tweet");
+            var pre   = $("<pre />");
+            tweet = _.clone(tweet);
+            delete tweet.node; // chrome hates stringifying these;
+            pre.text(JSON.stringify( tweet, null, " " ));
+            p.html("").append(pre);
           })
         }
       }

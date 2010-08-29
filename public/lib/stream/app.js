@@ -22,6 +22,7 @@ require.def("stream/app",
     var streamPlugins = [
       streamPlugin.handleRetweet,
       streamPlugin.tweetsOnly,
+      streamPlugin.avoidDuplicates,
       streamPlugin.mentions,
       streamPlugin.template,
       streamPlugin.htmlEncode,
@@ -30,7 +31,8 @@ require.def("stream/app",
       streamPlugin.prepend,
       streamPlugin.keepScrollState,
       streamPlugin.age,
-      streamPlugin.newTweetEvent
+      streamPlugin.newTweetEvent,
+      streamPlugin.addConversationFinder
     ];
     
     // initPlugins are loaded when the page is loaded and the backend web socket connection has been established
@@ -41,10 +43,16 @@ require.def("stream/app",
       initPlugin.navigation,
       initPlugin.signalNewTweets,
       initPlugin.personalizeForCurrentUser,
+      initPlugin.notifyAfterPause,
+      initPlugin.keyboardShortCuts,
       status.observe,
       status.replyForm,
+      status.location,
       status.quote,
-      status.retweet
+      status.retweet,
+      status.favorite,
+      status.conversation,
+      status.showJSON
     ];
     
     var stream = new tweetstream.Stream();
@@ -56,6 +64,8 @@ require.def("stream/app",
       start: function () {
         $(function () {
           stream.addPlugins(streamPlugins);
+          
+          location.hash = ""; // start fresh, we dont maintain any important state
           
           // connect to the backend system
           var connect = function(data) {
