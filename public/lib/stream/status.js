@@ -161,6 +161,8 @@ require.def("stream/status",
             var li = p.closest("li");
             var tweet = li.data("tweet");
             var pre   = $("<pre />");
+            tweet = _.clone(tweet);
+            delete tweet.node; // chrome hates stringifying these;
             pre.text(JSON.stringify( tweet, null, " " ));
             p.html("").append(pre);
           })
