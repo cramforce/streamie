@@ -29,6 +29,12 @@ require.def("stream/initplugins",
         func: function (stream) {
           var mainstatus = $("#mainstatus");
           
+          $(document).bind("key:escape", function () {
+            if(mainstatus.hasClass("active")) {
+              mainstatus.removeClass("active");
+            }
+          });
+          
           $("#header").delegate("#mainnav a", "click", function (e) {
             var a = $(this);
             a.blur();
@@ -83,6 +89,22 @@ require.def("stream/initplugins",
             if(dirty) {
               redraw()
               $(document).trigger("tweet:unread", [newCount])
+            }
+          })
+        }
+      },
+      
+      keyboardShortCuts: {
+        name: "keyboardShortCuts",
+        func: function () {
+          
+          function trigger(e, name) {
+            $(e.target).trigger("key:"+name);
+          }
+          
+          $(document).keyup(function (e) {
+            if(e.keyCode == 27) { // escape
+              trigger(e, "escape")
             }
           })
         }
