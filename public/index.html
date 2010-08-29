@@ -71,7 +71,10 @@
 				<li class="add"><a href="#add" title="New Tweet" target="_self">✍</a></li>
 			</ul>
 			<form action="/1/statuses/update.json" method="post" class="status" class="tweet" id="mainstatus">
-		    <input type="hidden" name="in_reply_to_status_id" value="">
+		    <input type="hidden" name="in_reply_to_status_id" value="" />
+		    <input type="hidden" name="lat" value="" />
+		    <input type="hidden" name="long" value="" />
+		    <input type="hidden" name="display_coordinates" value="" />
 				<fieldset>
 					<textarea name="status" rows="5" cols="40" placeholder="Your Tweet…"></textarea>
 					<input type="submit" value="Submit" /> <span class="characters">0 characters</span>

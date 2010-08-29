@@ -95,6 +95,27 @@ require.def("stream/initplugins",
         }
       },
       
+      // sends an event after user
+      notifyAfterPause: {
+        name: "notifyAfterPause",
+        func: function () {
+          
+          function now() {
+            return (new Date).getTime();
+          }
+          var last = now();
+          setInterval(function () { // setInterval will not fire when the computer is asleep
+            var time = now();
+            var duration = time - last;
+            if(duration > 4000) {
+              console.log("Awake after "+duration);
+              $(document).trigger("awake", [duration]);
+            }
+            last = time;
+          }, 2000)
+        }
+      },
+      
       // Use the REST API to load the users's friends timeline, mentions and friends's retweets into the stream
       prefillTimeline: {
         name: "prefillTimeline",

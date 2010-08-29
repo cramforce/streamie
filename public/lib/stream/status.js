@@ -1,6 +1,6 @@
 require.def("stream/status",
-  ["stream/twitterRestAPI", "stream/helpers", "text!../templates/status.ejs.html"],
-  function(rest, helpers, replyFormTemplateText) {
+  ["stream/twitterRestAPI", "stream/helpers", "stream/location", "text!../templates/status.ejs.html"],
+  function(rest, helpers, location, replyFormTemplateText) {
     var replyFormTemplate = _.template(replyFormTemplateText);
     
     // get (or make) a form the reply to a tweet
@@ -119,6 +119,22 @@ require.def("stream/status",
               })
             }
           })
+        }
+      },
+      
+      // adds geo coordinates to statusses
+      location: {
+        name: "location",
+        func: function () {
+          $(document).delegate("textarea[name=status]", "focus", function () {
+            var form = $(this).closest("form");
+            
+            location.get(function (position) {
+              form.find("[name=lat]").val(position.coords.latitude)
+              form.find("[name=long]").val(position.coords.longitude)
+              form.find("[name=display_coordinates]").val("true");
+            })
+          });
         }
       },
       
