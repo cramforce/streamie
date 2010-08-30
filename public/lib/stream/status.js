@@ -198,7 +198,7 @@ require.def("stream/status",
         }
       },
       
-      // Double click on tweet text turns text into JSON;
+      // Double click on tweet text turns text into JSON; Hackability FTW!
       showJSON: {
         name: "showJSON",
         func: function (stream) {
@@ -206,11 +206,15 @@ require.def("stream/status",
             var p = $(this);
             var li = p.closest("li");
             var tweet = li.data("tweet");
-            var pre   = $("<pre />");
+            var pre   = $("<pre class='text'/>");
             tweet = _.clone(tweet);
             delete tweet.node; // chrome hates stringifying these;
             pre.text(JSON.stringify( tweet, null, " " ));
-            p.html("").append(pre);
+            p.hide().after(pre);
+            pre.bind("dblclick", function () {
+              pre.remove();
+              p.show();
+            });
           })
         }
       }
