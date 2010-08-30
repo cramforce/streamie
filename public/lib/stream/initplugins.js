@@ -74,8 +74,8 @@ require.def("stream/initplugins",
           var dirty = win.scrollTop() > 0;
           var newCount = 0;
           function redraw() { // this should do away
-            var signal = newCount > 0 ? "[NEW] " : "";
-            document.title = document.title.replace(/^(?:\[NEW\] )*/, signal); 
+            var signal = newCount > 0 ? "("+newCount+") " : "";
+            document.title = document.title.replace(/^(?:\(\d+\) )*/, signal); 
           }
           win.bind("scroll", function () {
             dirty = win.scrollTop() > 0;
