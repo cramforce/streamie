@@ -194,14 +194,13 @@ require.def("stream/streamplugins",
       
       // when we insert a new tweet
       // adjust the scrollTop to show the same thing as before
-      // we only do this, if the user was not scrolled to the very top
       keepScrollState: {
         name: "keepScrollState",
         func: function (tweet, stream) {
           var win = $(window);
           var cur = win.scrollTop();
-          if(cur != 0) {
-            var next = tweet.node.next()
+          var next = tweet.node.next();
+          if(next.length > 0) {
             var top = cur + next.offset().top - tweet.node.offset().top;
             win.scrollTop( top );
           }
