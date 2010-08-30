@@ -160,14 +160,15 @@ require.def("stream/initplugins",
                 all = all.filter(function (tweet) { // filter out dupes
                   var ret = !seen[tweet.id];
                   seen[tweet.id] = true;
-                  tweet.prefill = true; // tweet is from the prefill
                   return ret;
                 });
                 all = _(all).sortBy(function (tweet) { // sort tweets from all 3 API calls
                   return (new Date(tweet.created_at)).getTime();
                 });
                 all.forEach(function (tweet) { // process tweets into the stream
-                  stream.process(tweetModule.make(tweet)); // if the tweet is already there, is will be filtered away
+                  var t = tweetModule.make(tweet);
+                  t.prefill = true;
+                  stream.process(t); // if the tweet is already there, is will be filtered away
                 })
               }
             }
