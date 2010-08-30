@@ -1,8 +1,9 @@
 require.def("stream/status",
-  ["stream/twitterRestAPI", "stream/helpers", "text!../templates/status.ejs.html"],
-  function(rest, helpers, replyFormTemplateText) {
+  ["stream/twitterRestAPI", "stream/helpers", "stream/location", "text!../templates/status.ejs.html"],
+  function(rest, helpers, location, replyFormTemplateText) {
     var replyFormTemplate = _.template(replyFormTemplateText);
     
+    // get (or make) a form the reply to a tweet
     function getReplyForm(li) { // tweet li
       var form = li.find("form.status");
       if(form.length == 0) { // no form yet, create it
@@ -26,13 +27,17 @@ require.def("stream/status",
       observe: {
         name: "oberserve",
         func: function (stream) {
+          
+          // submit event
           $(document).delegate("form.status", "submit", function (e) {
             var form = $(this);
             var status = form.find("[name=status]");
             if(status.val().length > 140) return false; // too long for Twitter
             
+            // post to twitter
             rest.post(form.attr("action"), form.serialize(), function () {
               form.find("textarea").val("");
+              // { custom-event: status:send }
               form.trigger("status:send");
             })
             return false;
@@ -93,6 +98,7 @@ require.def("stream/status",
         }
       },
       
+      // Click on retweet button
       retweet: {
         name: "retweet",
         func: function (stream) {
@@ -103,6 +109,8 @@ require.def("stream/status",
               var li = a.closest("li");
               var tweet = li.data("tweet");
               var id = tweet.data.id;
+              
+              // Post to twitter
               rest.post("/1/statuses/retweet/"+id+".json", function (tweetData, status) {
                 if(status == "success") {
                   a.hide();
@@ -110,6 +118,107 @@ require.def("stream/status",
                 }
               })
             }
+          })
+        }
+      },
+      
+      // adds geo coordinates to statusses
+      location: {
+        name: "location",
+        func: function () {
+          $(document).delegate("textarea[name=status]", "focus", function () {
+            var form = $(this).closest("form");
+            
+            location.get(function (position) {
+              form.find("[name=lat]").val(position.coords.latitude)
+              form.find("[name=long]").val(position.coords.longitude)
+              form.find("[name=display_coordinates]").val("true");
+            })
+          });
+        }
+      },
+      
+      // Click on favorite button
+      favorite: {
+        name: "favorite",
+        func: function (stream) {
+          $(document).delegate("#stream a.favorite", "click", function (e) {
+            e.preventDefault();
+            var a = $(this);
+            var li = a.closest("li");
+            var tweet = li.data("tweet");
+            var id = tweet.data.id;
+            
+            if(!tweet.data.favorited) {
+              rest.post("/1/favorites/create/"+id+".json", function (tweetData, status) {
+                if(status == "success") {
+                  tweet.data.favorited = true;
+                  li.addClass("favorited");
+                }
+              });
+            } else {
+              rest.post("/1/favorites/destroy/"+id+".json", function (tweetData, status) {
+                if(status == "success") {
+                  tweet.data.favorited = false;
+                  li.removeClass("favorited");
+                }
+              });
+            }
+          })
+        }
+      },
+      
+      // show all Tweets from one conversation
+      conversation: {
+        name: "conversation",
+        func: function (stream) {
+          
+          $(document).delegate("#stream a.conversation", "click", function (e) {
+            e.preventDefault();
+            var a = $(this);
+            var li = a.closest("li");
+            var tweet = li.data("tweet");
+            var con = tweet.conversation;
+            
+            $("#mainnav").find("li").removeClass("active") // evil coupling
+            
+            $("#stream li").removeClass("conversation");
+            var className = "conversation"+con.index;
+            window.location.hash = "#"+className;
+            
+            if(!con.styleAppended) {
+              con.styleAppended = true;
+              // add some dynamic style to the page to hide everything besides this conversation
+              var style = '<style type="text/css" id>'+
+                'body.'+className+' #content #stream li {display:none;}\n'+
+                'body.'+className+' #content #stream li.'+className+' {display:block;}\n'+
+                '</style>';
+            
+                style = $(style);
+                $("head").append(style);
+            }
+            
+          })
+        }
+      },
+      
+      // Double click on tweet text turns text into JSON; Hackability FTW!
+      showJSON: {
+        name: "showJSON",
+        func: function (stream) {
+          $(document).delegate("#stream p.text", "dblclick", function (e) {
+            var p = $(this);
+            var li = p.closest("li");
+            var tweet = li.data("tweet");
+            var pre   = $("<pre class='text'/>");
+            tweet = _.clone(tweet);
+            delete tweet.node; // chrome hates stringifying these;
+            pre.text(JSON.stringify( tweet, null, " " ));
+            p.hide().after(pre);
+            pre.bind("dblclick", function () {
+              pre.remove();
+              p.show();
+            });
           })
         }
       }
