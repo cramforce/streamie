@@ -190,7 +190,7 @@ require.def("stream/initplugins",
               if(status == "success") {
                 all = all.concat(tweets)
               };
-              if(returns == 4) { // all three APIs returned, we can start drawing
+              if(returns == 4) { // all four APIs returned, we can start drawing
                 var seen = {};
                 all = all.filter(function (tweet) { // filter out dupes
                   var ret = !seen[tweet.id];
