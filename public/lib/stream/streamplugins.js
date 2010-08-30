@@ -1,19 +1,19 @@
 /*
  * List of built in plugins for tweet processing
- * 
+ *
  */
 
 require.def("stream/streamplugins",
   ["stream/tweet", "stream/twitterRestAPI", "stream/helpers", "text!../templates/tweet.ejs.html"],
   function(tweetModule, rest, helpers, templateText) {
     var template = _.template(templateText);
-    
+
     var Tweets = {};
     var Conversations = {};
     var ConversationCounter = 0;
-    
+
     return {
-      
+
       // turns retweets into something similar to tweets
       handleRetweet: {
         name: "handleRetweet",
@@ -26,7 +26,7 @@ require.def("stream/streamplugins",
           this();
         }
       },
-      
+
       // we only show tweets. No direct messages. For now
       tweetsOnly: {
         name: "tweetsOnly",
@@ -36,7 +36,7 @@ require.def("stream/streamplugins",
           }
         }
       },
-      
+
       // find all mentions in a tweet. set tweet.mentioned to true if the current user was mentioned
       mentions: {
         name: "mentions",
@@ -53,7 +53,7 @@ require.def("stream/streamplugins",
           this();
         }
       },
-      
+
       // set the tweet template
       template: {
         name: "template",
@@ -62,7 +62,7 @@ require.def("stream/streamplugins",
           this();
         }
       },
-      
+
       // render the template (the underscore.js way)
       renderTemplate: {
         name: "renderTemplate",
@@ -74,7 +74,7 @@ require.def("stream/streamplugins",
           this();
         }
       },
-      
+
       // if a tweet with the name id is in the stream already, do not continue
       avoidDuplicates: {
         name: "avoidDuplicates",
@@ -88,8 +88,8 @@ require.def("stream/streamplugins",
           }
         }
       },
-      
-      // 
+
+      //
       conversations: {
         name: "conversations",
         func: function (tweet, stream, plugin) {
@@ -108,7 +108,7 @@ require.def("stream/streamplugins",
           this();
         }
       },
-      
+
       // put the tweet into the stream
       prepend: {
         name: "prepend",
@@ -119,7 +119,7 @@ require.def("stream/streamplugins",
           this();
         }
       },
-      
+
       // htmlencode the text to avoid XSS
       htmlEncode: {
         name: "htmlEncode",
@@ -132,7 +132,7 @@ require.def("stream/streamplugins",
           this();
         }
       },
-      
+
       // calculate the age of the tweet and update it
       // tweet.created_at now includes an actual Date
       age: {
@@ -141,20 +141,30 @@ require.def("stream/streamplugins",
           tweet.created_at = new Date(tweet.data.created_at);
           function update () {
             tweet.age = (new Date()).getTime() - tweet.created_at.getTime();
-            tweet.node.find(".created_at").text(Math.round(tweet.age / 1000) + " seconds ago")
+            var age_str = '';
+            var sec = Math.round(tweet.age / 1000);
+            var minutes = Math.floor(sec/60); sec %= 60;
+            var hours = Math.floor(minutes/60); minutes %= 60;
+            var days = Math.floor(hours/24); hours %= 24;
+            if(days > 1) age_str += days+' days ';
+						if(hours > 1) age_str += hours+' hours ';
+						if(minutes > 1) age_str += minutes+' minutes ';
+						age_str += sec + ' seconds '+'ago';
+            tweet.node.find(".created_at").text(age_str)
+
           }
           update();
           setInterval(update, 1000)
           this();
         }
       },
-      
+
       // format text to HTML hotlinking, links, things that looks like links, scree names and hash tags
       formatTweetText: {
         name: "formatTweetText",
         func: function (tweet, stream) {
           var text = tweet.textHTML;
-          
+
           // links
           text = text.replace(/https?:\/\/\S+/ig, function (href) {
             return '<a href="'+href+'">'+href+'</a>';
@@ -171,13 +181,13 @@ require.def("stream/streamplugins",
           text = text.replace(/(^|\s)\#(\S+)/g, function (all, pre, tag) {
             return pre+'<a href="http://search.twitter.com/search?q='+encodeURIComponent(tag)+'" class="tag">#'+tag+'</a>';
           });
-          
+
           tweet.textHTML = text;
-          
+
           this();
         }
       },
-      
+
       // Trigger a custom event to inform everyone about a new tweet
       // Event is not fired for tweet from the prefill
       newTweetEvent: {
@@ -191,7 +201,7 @@ require.def("stream/streamplugins",
           this();
         }
       },
-      
+
       // when we insert a new tweet
       // adjust the scrollTop to show the same thing as before
       // we only do this, if the user was not scrolled to the very top
@@ -208,8 +218,8 @@ require.def("stream/streamplugins",
           this();
         }
       }
-      
+
     }
-      
+
   }
 );
