@@ -9,6 +9,8 @@ require.def("stream/streamplugins",
     var template = _.template(templateText);
     
     var Tweets = {};
+    var Conversations = {};
+    var ConversationCounter = 0;
     
     return {
       
@@ -81,36 +83,28 @@ require.def("stream/streamplugins",
           if(Tweets[id]) {
             // duplicate detected -> do not continue;
           } else {
-            Tweets[id] = tweet
+            Tweets[id] = tweet;
             this();
           }
         }
       },
       
-      // adds a function called "conversation" to each tweet that returns all the predeccessors in a conversation
-      addConversationFinder: {
-        name: "addConversationFinder",
-        finder: function () {
-          var tweet = this;
-          var tweets = [];
-          var t = tweet;
-          while(true) {
-            var replyId = t.data.in_reply_to_status_id;
-            if(replyId) {
-              t = Tweets[replyId];
-              if(t) {
-                tweets.push(t);
-              } else {
-                break;
-              }
-            } else {
-              break;
+      // 
+      conversations: {
+        name: "conversations",
+        func: function (tweet, stream, plugin) {
+          var id = tweet.data.id;
+          var in_reply_to = tweet.data.in_reply_to_status_id;
+          if(Conversations[in_reply_to]) {
+            tweet.conversation = Conversations[id] = Conversations[in_reply_to];
+          } else {
+            tweet.conversation = Conversations[id] = {
+              index: ConversationCounter++
+            };
+            if(in_reply_to) {
+              Conversations[in_reply_to] = tweet.conversation;
             }
           }
-          return tweets;
-        },
-        func: function (tweet, stream, plugin) {
-          tweet.conversation = plugin.finder;
           this();
         }
       },
