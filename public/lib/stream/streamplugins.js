@@ -37,6 +37,22 @@ require.def("stream/streamplugins",
         }
       },
       
+      // marks a tweet whether we've ever seen it before using localStorage
+      everSeen: {
+        name: "everSeen",
+        func: function (tweet) {
+          var key = "tweet"+tweet.data.id;
+          if(window.localStorage) {
+            if(window.localStorage[key]) {
+              tweet.seenBefore = true;
+            } else {
+              window.localStorage[key] = 1;
+            }
+          }
+          this();
+        }
+      },
+      
       // find all mentions in a tweet. set tweet.mentioned to true if the current user was mentioned
       mentions: {
         name: "mentions",
@@ -184,7 +200,7 @@ require.def("stream/streamplugins",
         name: "newTweetEvent",
         func: function (tweet) {
           // Do not fire for tweets
-          if(!tweet.data.prefill) {
+          if(!tweet.prefill) {
             // { custom-event: tweet:new }
             tweet.node.trigger("tweet:new", [tweet])
           }
@@ -197,14 +213,16 @@ require.def("stream/streamplugins",
       keepScrollState: {
         name: "keepScrollState",
         func: function (tweet, stream) {
-          var win = $(window);
-          var cur = win.scrollTop();
-          var next = tweet.node.next();
-          if(next.length > 0) {
-            var top = cur + next.offset().top - tweet.node.offset().top;
-            win.scrollTop( top );
+          if(!tweet.prefill || !tweet.seenBefore) {
+            var win = $(window);
+            var cur = win.scrollTop();
+            var next = tweet.node.next();
+            if(next.length > 0) {
+              var top = cur + next.offset().top - tweet.node.offset().top;
+              win.scrollTop( top );
+            }
+            this();
           }
-          this();
         }
       }
       

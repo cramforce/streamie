@@ -22,6 +22,7 @@ require.def("stream/app",
     var streamPlugins = [
       streamPlugin.handleRetweet,
       streamPlugin.tweetsOnly,
+      streamPlugin.everSeen,
       streamPlugin.avoidDuplicates,
       streamPlugin.conversations,
       streamPlugin.mentions,
