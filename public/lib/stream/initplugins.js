@@ -43,10 +43,10 @@ require.def("stream/initplugins",
             
             if(li.hasClass("add")) { // special case for new tweet
               e.preventDefault();
-              if(mainstatus.hasClass("active")) {
-                mainstatus.removeClass("active");
+              if(mainstatus.hasClass("show")) {
+                mainstatus.removeClass("show");
               } else {
-                mainstatus.addClass("active");
+                mainstatus.addClass("show");
                 mainstatus.find("[name=status]").focus();
               }
               return;
@@ -57,12 +57,12 @@ require.def("stream/initplugins",
           });
           
           mainstatus.bind("status:send", function () {
-            mainstatus.removeClass("active");
+            mainstatus.removeClass("show");
           });
           
-          $("#header").delegate("#mainnav li.add", "mouseenter mouseleave", function () {
-            mainstatus.toggleClass("tease");
-          })
+         //  $("#header").delegate("#mainnav li.add", "mouseenter mouseleave", function () {
+//             mainstatus.toggleClass("tease");
+//           })
         }
       },
       
