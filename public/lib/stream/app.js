@@ -46,6 +46,7 @@ require.def("stream/app",
       initPlugin.personalizeForCurrentUser,
       initPlugin.notifyAfterPause,
       initPlugin.keyboardShortCuts,
+      initPlugin.favicon,
       status.observe,
       status.replyForm,
       status.location,
@@ -89,7 +90,7 @@ require.def("stream/app",
                 initial = false;
                 // run initPlugins
                 initPlugins.forEach(function (plugin) {
-                  plugin.func.call(function () {}, stream);
+                  plugin.func.call(function () {}, stream, plugin);
                 })
               }
             }
