@@ -1,0 +1,285 @@
+/***basics***/
+* html *{display:none;}
+html{overflow:auto;}
+body{
+	margin:0;
+	padding:20px 0 0 0;
+	font-size:12px;
+	line-height:normal;
+	#client-font > .HelveticaNeue;
+	color:#888;
+	text-rendering:optimizeLegibility;
+	#client-gradient > .body;
+}
+a{
+	text-decoration:none;
+	color:inherit;
+	#client-transition-time > .short;
+}
+h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6{
+	margin:0;
+	padding:0;
+	font-weight:normal;
+	font-size:100%;
+	line-height:100%;
+}
+p{
+	margin:0;
+	padding:0;
+	line-height:18px;
+}
+
+form{
+	margin:0;
+	padding:0;
+}
+fieldset{
+	border:none;
+	margin:0;
+	padding:0;
+}
+legend {
+	padding:0;
+	margin:0;
+}
+dl,ul,ol,li{
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+img{border:none;}
+b,strong{font-weight:bold;}
+
+.h1,
+.h2{
+	clear:both;
+	color:#333;
+	margin:0 0 40px 0;
+	font-size:23px;
+}
+
+#container{
+	margin:0 auto;
+	max-width:980px;
+}
+
+/*header*/
+#header{
+	position:fixed;
+	top:0;
+	left:0;
+	z-index:1;
+	width:100%;
+	#client-shadow > .small;
+	#logo{
+		color:#fff;
+		font-size:11px;
+		font-weight:bold;
+		text-transform:uppercase;
+		padding:5px;
+		border-bottom:1px solid #555;
+		text-align:center;
+		background:#111;
+		text-shadow: 0 0 2px #fff;
+		/*&:after,
+		&:before{
+			content:" // ";
+		}*/
+	}
+	#mainnav{
+		overflow:hidden;
+		text-align:center;
+		border-bottom:1px solid #555;
+		background:rgba(0,0,0,.85);
+		li{
+			position:relative;
+			display:inline-block;
+			margin:0 8px;
+			font-size:30px;
+			line-height:20px;
+			padding:10px 0 5px;
+			width:50px;
+			text-align:center;
+			#client-transition-time > .long;
+			border-bottom:0 solid #fff;
+			&.active,
+			&:hover{
+				border-bottom-width:5px;
+			}
+			&.new:after{
+				display:block;
+				position:absolute;
+				top:2px;
+				right:5px;
+				width:5px;
+				height:5px;
+				content:"\00a0";
+				background:#900;
+				#client-border-radius > .middle;
+			}
+			a{
+				color:#fff;
+			}		
+		}
+	}
+	
+}
+
+body.mention {
+  #content{
+    #stream{
+      li{
+        display:none;
+      }
+      li.mention{
+        display:list-item;
+      }
+    }
+  }
+}
+
+body.retweet {
+  #content{
+    #stream{
+      li{
+        display:none;
+      }
+      li.retweet{
+        display:list-item;
+      }
+    }
+  }
+}
+
+#content{
+	margin:60px 5px 20px;
+	padding:10px;
+	//border:1px solid #efefef;
+	background:rgba(255,255,255,.2);
+	#client-border-radius > .big;
+	#client-shadow .inset;
+	
+	h2{
+		display:none;
+	}
+	#stream{
+		height:100%;
+    li.mention{
+      div.status{
+        background:#DEF4FF;
+      }
+    }
+    li.retweet{
+      div.status{
+        background:#FEFFE8;
+      }
+    }
+		li{
+			position:relative;
+			clear:both;
+			margin:0 0 20px 0;
+			&.new{
+				-webkit-animation-name: fadein;
+				-webkit-animation-duration: 2s;
+				-webkit-animation-iteration-count: 1;
+			}
+			> a{
+				position:absolute;
+				top:0;
+				left:0;
+				img{
+					#client-border-radius > .small;
+				}
+			}
+			div.status{
+				position:relative;
+				padding:10px;
+				min-height:30px;
+				margin:0 0 0 65px;
+				display:block;
+				background:#fff;
+				#client-border-radius > .middle;
+				#client-shadow > .small;
+				h3{
+					float:left;
+					font-weight:bold;
+					margin:0 0 10px 0;
+				}
+				.time{
+					position:absolute;
+					top:10px;
+					right:10px;
+				}
+				.text{
+					clear:both;
+					color:#111;
+					margin:0 0 10px;
+					a{
+						color:#900;
+						&:hover{
+							color:#111;
+						}
+					}
+				}
+				.action{
+				  position:absolute;
+					bottom:3px;
+					right:5px;
+					color:#000;
+					.reply{
+  					opacity:0;
+  					font-size:17px;
+  					line-height:17px;
+  					&:hover{
+  						opacity:1;
+  						color:#ff0000;
+  					}
+  				}
+  				.retweet{
+  					opacity:0;
+  					font-size:17px;
+  					line-height:17px;
+  					&:hover{
+  						opacity:1;
+  						color:#ff0000;
+  					}
+  				}
+  				.quote{
+  					opacity:0;
+  					font-size:17px;
+  					line-height:17px;
+  					&:hover{
+  						opacity:1;
+  						color:#ff0000;
+  					}
+  				}
+				}
+				
+				&:hover{
+					.reply{
+						opacity:.7;
+					}
+					.retweet{
+						opacity:.7;
+					}
+					.quote{
+						opacity:.7;
+					}
+				}
+				&:after{
+					position:absolute;
+					top:10px;
+					left:-16px;
+					display:block;
+					width:0;
+					height:0;
+					content:"\00a0";
+					border-color:transparent #fff transparent transparent;
+					border-style:solid;
+					border-width:8px 8px;
+				}
+			}
+		}
+	}
+	
+}

@@ -1,0 +1,119 @@
+require.def("stream/status",
+  ["stream/twitterRestAPI", "stream/helpers", "text!../templates/status.ejs.html"],
+  function(rest, helpers, replyFormTemplateText) {
+    var replyFormTemplate = _.template(replyFormTemplateText);
+    
+    function getReplyForm(li) { // tweet li
+      var form = li.find("form.status");
+      if(form.length == 0) { // no form yet, create it
+        li.find("div.status").append(replyFormTemplate({
+          tweet: li.data("tweet"),
+          helpers: helpers
+        }));
+        form = li.find("form.status");
+        form.find("[name=status]").focus();
+        form.bind("status:send", function () {
+          form.hide();
+          $(window).scrollTop(0); // Good behavior?
+        })
+      }
+      return form;
+    }
+    
+    return {
+      
+      // observe events on status forms
+      observe: {
+        name: "oberserve",
+        func: function (stream) {
+          $(document).delegate("form.status", "submit", function (e) {
+            var form = $(this);
+            var status = form.find("[name=status]");
+            if(status.val().length > 140) return false; // too long for Twitter
+            
+            rest.post(form.attr("action"), form.serialize(), function () {
+              form.find("textarea").val("");
+              form.trigger("status:send");
+            })
+            return false;
+          });
+          
+          function updateCharCount (e) {
+            var val = e.target.value;
+            var target = $(e.target).closest("form").find(".characters");
+            target.text( e.target.value.length + " characters" );
+          }
+          
+          $(document).delegate("form.status [name=status]", "keyup change paste", updateCharCount)
+          
+          // update count every N millis to catch any changes, though paste, auto complete, etc.
+          $(document).delegate("form.status [name=status]", "focus", function (e) {
+            updateCharCount(e)
+            $(e.target).data("charUpdateInterval", setInterval(function () { updateCharCount(e) }, 100));
+          })
+          $(document).delegate("form.status [name=status]", "blur", function (e) {
+            var interval = $(e.target).data("charUpdateInterval");
+            if(interval) {
+              clearInterval(interval);
+            }
+          })
+        }
+      },
+      
+      // handle event for the reply form inside tweets
+      replyForm: {
+        name: "replyForm",
+        func: function (stream) {
+          $(document).delegate("#stream a.reply", "click", function (e) {
+            e.preventDefault();
+            var li = $(this).closest("li");
+            var form = getReplyForm(li);
+            form.show();
+          })
+        }
+      },
+      
+      // The old style retweet, with the ability to comment on the original text
+      quote: {
+        name: "quote",
+        func: function (stream) {
+          $(document).delegate("#stream a.quote", "click", function (e) {
+            e.preventDefault();
+            var li = $(this).closest("li");
+            var tweet = li.data("tweet");
+            var form = getReplyForm(li);
+            form.find("[name=in_reply_to_status_id]").val(""); // no reply
+            
+            // make text. TODO: Style should be configurable
+            var text = tweet.data.text + " /via @"+tweet.data.user.screen_name
+            
+            form.find("[name=status]").val(text);
+            form.show();
+          })
+        }
+      },
+      
+      retweet: {
+        name: "retweet",
+        func: function (stream) {
+          $(document).delegate("#stream a.retweet", "click", function (e) {
+            e.preventDefault();
+            var a = $(this);
+            if(confirm("Do you really want to retweet?")) {
+              var li = a.closest("li");
+              var tweet = li.data("tweet");
+              var id = tweet.data.id;
+              rest.post("/1/statuses/retweet/"+id+".json", function (tweetData, status) {
+                if(status == "success") {
+                  a.hide();
+                  // todo: Maybe redraw the tweet with more fancy marker?
+                }
+              })
+            }
+          })
+        }
+      }
+    }
+      
+  }
+);

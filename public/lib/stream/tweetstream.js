@@ -7,12 +7,18 @@ require.def("stream/tweetstream",
     }
     
     Stream.prototype = {
+      
+      user: {
+        screen_name: null, // will be populated after auth
+        user_id: null
+      },
+      
       addPlugins: function (plugins) {
         this.plugins.push.apply(this.plugins, plugins);
       },
       
       canvas: function () {
-        return $("#canvas")
+        return $("#stream")
       },
       
       process: function (tweet) {
