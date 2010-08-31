@@ -178,11 +178,20 @@
 	
 	.opacity {
 		@timer:0.3s;
-		-webkit-transition: opacity @timer;
-		-moz-transition: opacity @timer;
-		-o-transition:opacity  @timer;
-		-ms-transition:opacity  @timer;
-		transition: opacity @timer;
+		@style:opacity;
+		-webkit-transition: @style @timer;
+		-moz-transition: @style @timer;
+		-o-transition: @style @timer;
+		-ms-transition: @style @timer;
+	}
+	
+	.actions {
+		@timer:0.3s;
+		@style:opacity,color;
+		-webkit-transition: @style @timer;
+		-moz-transition: @style @timer;
+		-o-transition: @style @timer;
+		-ms-transition: @style @timer;
 	}
 	
 	.slide {
