@@ -156,11 +156,32 @@ require.def("stream/streamplugins",
         func: function (tweet) {
           tweet.created_at = new Date(tweet.data.created_at);
           function update () {
-            tweet.age = (new Date()).getTime() - tweet.created_at.getTime();
-            tweet.node.find(".created_at").text(Math.round(tweet.age / 1000) + " seconds ago")
+            var millis = (new Date()).getTime() - tweet.created_at.getTime();
+            
+            tweet.age = millis;
+            var units   = {
+              second: Math.round(millis/1000),
+              minute: Math.round(millis/1000/60),
+              hour:   Math.round(millis/1000/60/60),
+              day:    Math.round(millis/1000/60/60/24),
+              week:   Math.round(millis/1000/60/60/24/7),
+              month:  Math.round(millis/1000/60/60/24/30), // aproximately
+              year:   Math.round(millis/1000/60/60/24/365), // aproximately
+            };
+            var text = "";
+            for(var unit in units) { // hopefully nobody extends Object :) Should use Object.keys instead.
+              var val = units[unit];
+              if(val > 0) {
+                text = "";
+                text += val + " " + unit;
+                if(val > 1) text+="s "; // !i18n
+              }
+            };
+            
+            tweet.node.find(".created_at").text(text);
           }
           update();
-          setInterval(update, 1000)
+          setInterval(update, 5000)
           this();
         }
       },
@@ -221,8 +242,8 @@ require.def("stream/streamplugins",
               var top = cur + next.offset().top - tweet.node.offset().top;
               win.scrollTop( top );
             }
-            this();
           }
+          this();
         }
       }
       
