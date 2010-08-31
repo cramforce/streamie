@@ -29,18 +29,14 @@ p{
 	line-height:18px;
 }
 
-form{
-	margin:0;
-	padding:0;
-}
-fieldset{
-	border:none;
-	margin:0;
-	padding:0;
-}
+form,
+fieldset,
 legend {
 	padding:0;
 	margin:0;
+}
+textarea{
+	resize:none;
 }
 dl,ul,ol,li{
 	margin:0;
@@ -60,7 +56,7 @@ b,strong{font-weight:bold;}
 
 #container{
 	margin:0 auto;
-	max-width:980px;
+	max-width:640px;
 }
 
 /*header*/
@@ -71,6 +67,7 @@ b,strong{font-weight:bold;}
 	z-index:1;
 	width:100%;
 	#client-shadow > .small;
+	-webkit-transform: translate3d(0,0,0);
 	#logo{
 		color:#fff;
 		font-size:11px;
@@ -114,7 +111,7 @@ b,strong{font-weight:bold;}
 				width:5px;
 				height:5px;
 				content:"\00a0";
-				background:#900;
+				background:@client-red;
 				#client-border-radius > .middle;
 			}
 			a{
@@ -176,6 +173,7 @@ b,strong{font-weight:bold;}
 				#client-border-radius > .middle;
 				#client-shadow > .small;
 				#client-transition-time > .short;
+				-webkit-transform: translate3d(0,0,0);
 				.h{
 					float:left;
 					margin:0 0 10px 0;
@@ -193,7 +191,7 @@ b,strong{font-weight:bold;}
 					color:#111;
 					margin:0;
 					a{
-						color:#900;
+						color:@client-red;
 						&:hover{
 							color:#111;
 						}
@@ -215,7 +213,7 @@ b,strong{font-weight:bold;}
 						line-height:17px;
 						&:hover{
 							opacity:1;
-							color:#ff0000;
+							color:@client-red;
 						}
 					}
 				}
