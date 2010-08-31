@@ -37,6 +37,22 @@ require.def("stream/streamplugins",
         }
       },
       
+      // marks a tweet whether we've ever seen it before using localStorage
+      everSeen: {
+        name: "everSeen",
+        func: function (tweet) {
+          var key = "tweet"+tweet.data.id;
+          if(window.localStorage) {
+            if(window.localStorage[key]) {
+              tweet.seenBefore = true;
+            } else {
+              window.localStorage[key] = 1;
+            }
+          }
+          this();
+        }
+      },
+      
       // find all mentions in a tweet. set tweet.mentioned to true if the current user was mentioned
       mentions: {
         name: "mentions",
@@ -140,11 +156,32 @@ require.def("stream/streamplugins",
         func: function (tweet) {
           tweet.created_at = new Date(tweet.data.created_at);
           function update () {
-            tweet.age = (new Date()).getTime() - tweet.created_at.getTime();
-            tweet.node.find(".created_at").text(Math.round(tweet.age / 1000) + " seconds ago")
+            var millis = (new Date()).getTime() - tweet.created_at.getTime();
+            
+            tweet.age = millis;
+            var units   = {
+              second: Math.round(millis/1000),
+              minute: Math.round(millis/1000/60),
+              hour:   Math.round(millis/1000/60/60),
+              day:    Math.round(millis/1000/60/60/24),
+              week:   Math.round(millis/1000/60/60/24/7),
+              month:  Math.round(millis/1000/60/60/24/30), // aproximately
+              year:   Math.round(millis/1000/60/60/24/365), // aproximately
+            };
+            var text = "";
+            for(var unit in units) { // hopefully nobody extends Object :) Should use Object.keys instead.
+              var val = units[unit];
+              if(val > 0) {
+                text = "";
+                text += val + " " + unit;
+                if(val > 1) text+="s "; // !i18n
+              }
+            };
+            
+            tweet.node.find(".created_at").text(text);
           }
           update();
-          setInterval(update, 1000)
+          setInterval(update, 5000)
           this();
         }
       },
@@ -184,7 +221,7 @@ require.def("stream/streamplugins",
         name: "newTweetEvent",
         func: function (tweet) {
           // Do not fire for tweets
-          if(!tweet.data.prefill) {
+          if(!tweet.prefill) {
             // { custom-event: tweet:new }
             tweet.node.trigger("tweet:new", [tweet])
           }
@@ -194,16 +231,17 @@ require.def("stream/streamplugins",
       
       // when we insert a new tweet
       // adjust the scrollTop to show the same thing as before
-      // we only do this, if the user was not scrolled to the very top
       keepScrollState: {
         name: "keepScrollState",
         func: function (tweet, stream) {
-          var win = $(window);
-          var cur = win.scrollTop();
-          if(cur != 0) {
-            var next = tweet.node.next()
-            var top = cur + next.offset().top - tweet.node.offset().top;
-            win.scrollTop( top );
+          if(!tweet.prefill || !tweet.seenBefore) {
+            var win = $(window);
+            var cur = win.scrollTop();
+            var next = tweet.node.next();
+            if(next.length > 0) {
+              var top = cur + next.offset().top - tweet.node.offset().top;
+              win.scrollTop( top );
+            }
           }
           this();
         }

@@ -46,7 +46,7 @@ require.def("stream/status",
           function updateCharCount (e) {
             var val = e.target.value;
             var target = $(e.target).closest("form").find(".characters");
-            target.text( e.target.value.length + " characters" );
+            target.text( e.target.value.length );
           }
           
           $(document).delegate("form.status [name=status]", "keyup change paste", updateCharCount)
