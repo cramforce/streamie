@@ -14,7 +14,7 @@ require.def("stream/initplugins",
         func: function (stream) {
           function change() {
             var val = location.hash.replace(/^\#/, "");
-            $("body").attr("class", val);
+            $("body").addClass(val);
             // { custom-event: stat:XXX }
             $(document).trigger("state:"+val);
           }

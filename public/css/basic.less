@@ -1,6 +1,6 @@
 /***basics***/
 * html *{display:none;}
-html{overflow:auto;}
+*+html *{display:none;}
 body{
 	margin:0;
 	padding:20px 0 0 0;
@@ -11,6 +11,9 @@ body{
 	text-rendering:optimizeLegibility;
 	//#client-gradient > .body;
 	background:#fefefe;
+	&.loading{
+		background:#fefefe url("/images/lg_streamie.png") no-repeat center 250px;
+	}
 }
 a{
 	text-decoration:none;
@@ -66,8 +69,8 @@ b,strong{font-weight:bold;}
 	position:fixed;
 	top:0;
 	left:0;
+	right:0;
 	z-index:1;
-	width:100%;
 	#client-shadow > .small;
 	-webkit-transform: translate3d(0,0,0);
 	#logo{
@@ -140,6 +143,7 @@ b,strong{font-weight:bold;}
 #content{
 	margin:60px 5px 20px;
 	padding:10px;
+	background:#fefefe;
 	border:1px solid #efefef;
 	#client-border-radius > .big;
 	h2{
