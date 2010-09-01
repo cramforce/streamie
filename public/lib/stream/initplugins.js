@@ -31,8 +31,8 @@ require.def("stream/initplugins",
           
           // close mainstatus when user hits escape
           $(document).bind("key:escape", function () {
-            if(mainstatus.hasClass("show")) {
-              mainstatus.removeClass("show");
+            if(mainstatus.hasClass("active")) {
+              mainstatus.removeClass("active");
             }
           });
           
@@ -43,10 +43,10 @@ require.def("stream/initplugins",
             
             if(li.hasClass("add")) { // special case for new tweet
               e.preventDefault();
-              if(mainstatus.hasClass("show")) {
-                mainstatus.removeClass("show");
+              if(mainstatus.hasClass("active")) {
+                mainstatus.removeClass("active");
               } else {
-                mainstatus.addClass("show");
+                mainstatus.addClass("active");
                 mainstatus.find("[name=status]").focus();
               }
               return;
@@ -57,12 +57,12 @@ require.def("stream/initplugins",
           });
           
           mainstatus.bind("status:send", function () {
-            mainstatus.removeClass("show");
+            mainstatus.removeClass("active");
           });
           
-         //  $("#header").delegate("#mainnav li.add", "mouseenter mouseleave", function () {
-//             mainstatus.toggleClass("tease");
-//           })
+          $("#header").delegate("#mainnav li.add", "mouseenter mouseleave", function () {
+            mainstatus.toggleClass("tease");
+          })
         }
       },
       
@@ -74,17 +74,15 @@ require.def("stream/initplugins",
           var dirty = win.scrollTop() > 0;
           var newCount = 0;
           function redraw() { // this should do away
-            var signal = newCount > 0 ? "("+newCount+") " : "";
-            document.title = document.title.replace(/^(?:\(\d+\) )*/, signal); 
+            var signal = newCount > 0 ? "[NEW] " : "";
+            document.title = document.title.replace(/^(?:\[NEW\] )*/, signal); 
           }
           win.bind("scroll", function () {
             dirty = win.scrollTop() > 0;
             if(!dirty) { // we scrolled to the top. Back to 0 unread
               newCount = 0;
-              setTimeout(function () { // not do this winthin the scroll event. Makes Chrome much happier performance wise.
-                redraw();
-                $(document).trigger("tweet:unread", [newCount])
-              }, 0);
+              redraw();
+              $(document).trigger("tweet:unread", [newCount])
             }
           });
           $(document).bind("tweet:new", function () {
@@ -142,41 +140,6 @@ require.def("stream/initplugins",
         }
       },
       
-      // display state in the favicon
-      favicon: {
-        name: "favicon",
-        colorCanvas: function (color) {
-          // remove the current favicon. Just changung the href doesnt work.
-          var favicon = $("link[rel~=icon]")
-          favicon.remove()
-          
-          // make a quick canvas.
-          var canvas = document.createElement("canvas");
-          canvas.width = 16;
-          canvas.height = 16;
-          var ctx = canvas.getContext("2d");
-          ctx.fillStyle = color;  
-          ctx.fillRect(0, 0, 16, 16);
-          
-          // convert canvas to DataURL
-          var url = canvas.toDataURL();
-
-          // put in a new favicon
-          $("head").append($('<link rel="shortcut icon" type="image/x-icon" href="'+url+'" />'));
-        },
-        
-        func: function (stream, plugin) {
-          
-          $(document).bind("tweet:unread", function (e, count) {
-            var color = "#000000";
-            if(count > 0) {
-              color = "#278BF5";
-            }
-            plugin.colorCanvas(color);
-          })
-        }
-      },
-      
       // Use the REST API to load the users's friends timeline, mentions and friends's retweets into the stream
       // this also happens when we detect that the user was offline for a while
       prefillTimeline: {
@@ -192,20 +155,19 @@ require.def("stream/initplugins",
               if(status == "success") {
                 all = all.concat(tweets)
               };
-              if(returns == 4) { // all four APIs returned, we can start drawing
+              if(returns == 3) { // all three APIs returned, we can start drawing
                 var seen = {};
                 all = all.filter(function (tweet) { // filter out dupes
                   var ret = !seen[tweet.id];
                   seen[tweet.id] = true;
+                  tweet.prefill = true; // tweet is from the prefill
                   return ret;
                 });
                 all = _(all).sortBy(function (tweet) { // sort tweets from all 3 API calls
                   return (new Date(tweet.created_at)).getTime();
                 });
                 all.forEach(function (tweet) { // process tweets into the stream
-                  var t = tweetModule.make(tweet);
-                  t.prefill = true;
-                  stream.process(t); // if the tweet is already there, is will be filtered away
+                  stream.process(tweetModule.make(tweet)); // if the tweet is already there, is will be filtered away
                 })
               }
             }
@@ -214,7 +176,6 @@ require.def("stream/initplugins",
             rest.get("/1/statuses/retweeted_to_me.json?count=20", handle);
             rest.get("/1/statuses/friends_timeline.json?count=20", handle);
             rest.get("/1/statuses/mentions.json?count=20", handle);
-            rest.get("/1/favorites.json", handle);
           }
           
           $(document).bind("awake", function (e, duration) { // when we awake, we might have lost some tweets

@@ -6,7 +6,6 @@
   <input type="hidden" name="display_coordinates" value="" />
 	<fieldset>
 		<textarea name="status" rows="5" cols="40" placeholder="Your Tweet…"><%= (data.user ? "@"+data.user.screen_name+' ' : '' ) || '' %></textarea>
-		<span class="characters">0</span>
-		<input type="submit" value="Submit" class="button" />
+		<input type="submit" value="Submit" /> <span class="characters">0 characters</span>
 	</fieldset>
 </form>
