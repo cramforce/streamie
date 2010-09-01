@@ -54,7 +54,10 @@
 	<meta name="language" content="en-US" />
 	<link rel="stylesheet/less" type="text/css" href="css/client.less" media="screen,projection,print" />
 	<!-- We use less.js: http://github.com/cloudhead/less.js/tree/ -->
-	<script src="ext/less-1.0.33.min.js"></script>
+	<script src="ext/less-1.0.35.min.js"></script>
+	<script>
+	  less.refresh(true); // localstorage caching is bad for frequent releases
+	</script>
 </head>
 
 <body id="streamy">
@@ -63,18 +66,20 @@
 			<h1 id="logo"><a href="#" target="_self">streamie (early ⍺) for <span id="currentuser-screen_name"></span></a></h1>
 			<ul id="mainnav">
 				<li class=""><a href="#mention" title="Metions" target="_self">@</a></li>
-				<li class="active"><a href="#all" title="Show All" target="_self">⚛</a></li>
-				<li><a href="#retweet" title="Retweets" target="_self">♻</a></li>
+				<li class="timeline active"><a href="#all" title="Show All" target="_self">⚛</a></li>
+				<li class="rt"><a href="#retweet" title="Retweets" target="_self">♻</a></li>
+				<li class="rt"><a href="#starred" title="Favorites" target="_self">★</a></li>
 				<li class="add"><a href="#add" title="New Tweet" target="_self">✍</a></li>
 			</ul>
-			<form action="/1/statuses/update.json" method="post" class="status" class="tweet" id="mainstatus">
-		    <input type="hidden" name="in_reply_to_status_id" value="" />
-		    <input type="hidden" name="lat" value="" />
-		    <input type="hidden" name="long" value="" />
-		    <input type="hidden" name="display_coordinates" value="" />
-				<fieldset>
-					<textarea name="status" rows="5" cols="40" placeholder="Your Tweet…"></textarea>
-					<input type="submit" value="Submit" /> <span class="characters">0 characters</span>
+			<form action="/1/statuses/update.json" method="post" class="status tweet" id="mainstatus"> 
+				<input type="hidden" name="in_reply_to_status_id" value="" />
+				<input type="hidden" name="lat" value="" />
+				<input type="hidden" name="long" value="" />
+				<input type="hidden" name="display_coordinates" value="" />
+				<fieldset> 
+					<textarea name="status" rows="5" cols="40" placeholder="Your Tweet…"></textarea> 
+					<span class="characters">0</span> 
+					<input type="submit" value="Tweet" class="button" />
 				</fieldset>
 			</form>
 		</div>
