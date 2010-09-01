@@ -15,6 +15,7 @@ require.def("stream/status",
         form.find("[name=status]").focus();
         form.bind("status:send", function () {
           form.hide();
+          li.removeClass("form");
           $(window).scrollTop(0); // Good behavior?
         })
       }
@@ -69,11 +70,11 @@ require.def("stream/status",
       replyForm: {
         name: "replyForm",
         func: function (stream) {
-          $(document).delegate("#stream a.reply", "click", function (e) {
-            e.preventDefault();
-            var li = $(this).closest("li");
+          $(document).delegate("#stream .actions .reply", "click", function (e) {
+            var li = $(this).parents("li");
             var form = getReplyForm(li);
             form.show();
+            li.addClass("form");
           })
         }
       },
@@ -82,9 +83,8 @@ require.def("stream/status",
       quote: {
         name: "quote",
         func: function (stream) {
-          $(document).delegate("#stream a.quote", "click", function (e) {
-            e.preventDefault();
-            var li = $(this).closest("li");
+          $(document).delegate("#stream .quote", "click", function (e) {
+            var li = $(this).parents("li");
             var tweet = li.data("tweet");
             var form = getReplyForm(li);
             form.find("[name=in_reply_to_status_id]").val(""); // no reply
@@ -102,18 +102,17 @@ require.def("stream/status",
       retweet: {
         name: "retweet",
         func: function (stream) {
-          $(document).delegate("#stream a.retweet", "click", function (e) {
-            e.preventDefault();
-            var a = $(this);
+          $(document).delegate("#stream .actions .retweet", "click", function (e) {
             if(confirm("Do you really want to retweet?")) {
-              var li = a.closest("li");
+              var button = $(this);
+              var li = button.parents("li");
               var tweet = li.data("tweet");
               var id = tweet.data.id;
               
               // Post to twitter
               rest.post("/1/statuses/retweet/"+id+".json", function (tweetData, status) {
                 if(status == "success") {
-                  a.hide();
+                  button.hide();
                   // todo: Maybe redraw the tweet with more fancy marker?
                 }
               })
@@ -142,10 +141,8 @@ require.def("stream/status",
       favorite: {
         name: "favorite",
         func: function (stream) {
-          $(document).delegate("#stream a.favorite", "click", function (e) {
-            e.preventDefault();
-            var a = $(this);
-            var li = a.closest("li");
+          $(document).delegate("#stream .actions .favorite", "click", function (e) {
+            var li = $(this).parents("li");
             var tweet = li.data("tweet");
             var id = tweet.data.id;
             
@@ -153,14 +150,14 @@ require.def("stream/status",
               rest.post("/1/favorites/create/"+id+".json", function (tweetData, status) {
                 if(status == "success") {
                   tweet.data.favorited = true;
-                  li.addClass("favorited");
+                  li.addClass("starred");
                 }
               });
             } else {
               rest.post("/1/favorites/destroy/"+id+".json", function (tweetData, status) {
                 if(status == "success") {
                   tweet.data.favorited = false;
-                  li.removeClass("favorited");
+                  li.removeClass("starred");
                 }
               });
             }
@@ -173,10 +170,8 @@ require.def("stream/status",
         name: "conversation",
         func: function (stream) {
           
-          $(document).delegate("#stream a.conversation", "click", function (e) {
-            e.preventDefault();
-            var a = $(this);
-            var li = a.closest("li");
+          $(document).delegate("#stream .conversation", "click", function (e) {
+            var li = $(this).parents("li");
             var tweet = li.data("tweet");
             var con = tweet.conversation;
             
