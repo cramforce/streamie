@@ -9,7 +9,8 @@ body{
 	#client-font > .HelveticaNeue;
 	color:#888;
 	text-rendering:optimizeLegibility;
-	#client-gradient > .body;
+	//#client-gradient > .body;
+	background:#fefefe;
 }
 a{
 	text-decoration:none;
@@ -32,6 +33,7 @@ p{
 form,
 fieldset,
 legend {
+	border:0;
 	padding:0;
 	margin:0;
 }
@@ -196,32 +198,60 @@ b,strong{font-weight:bold;}
 							color:#111;
 						}
 					}
+					&:after{
+						/*reserve space for .actions*/
+						content:"\00a0";
+						display:inline-block;
+						width:70px;
+					}
 				}
-				.action{
+				.actions{
 				  	position:absolute;
-					top:32px;
+					bottom:5px;
 					right:7px;
 					color:#000;
-					opacity:0;
-					#client-transition-time > .short;
-					.reply,
-					.retweet,
-					.favorite,
-					.quote{
-						opacity:.7;
-						font-size:17px;
-						line-height:17px;
+					#client-transition-time > .actions;
+					li{
+						display:inline;
+						font-size:15px;
+						line-height:15px;
+						cursor:pointer;
+						opacity:0;
 						&:hover{
 							opacity:1;
 							color:@client-red;
 						}
+						&.favorite{
+							&:after{
+								content:"☆";
+							}
+						}
+						&.retweet{
+							bottom:-1px;
+							&:after{
+								content:"♻";
+							}
+						}
+						&.quote{
+							font-size:25px;
+							bottom:-2px;
+							&:after{
+								content:"»";
+							}
+						}
+						&.reply{
+							bottom:-1px;
+							&:after{
+								content:"↩";
+							}
+						}
 					}
 				}
-				
+
 				&:hover{
 					#client-shadow > .smalldark;
-					.action{
-						opacity:1;
+					.actions li{
+						opacity:.7;
 					}
 				}
 				&:after{
@@ -239,6 +269,13 @@ b,strong{font-weight:bold;}
 				&:hover{
 					#client-shadow > .smalldark;
 				}
+			}
+			&.form{
+			  .status{
+				.actions{
+					bottom:84px;
+				}
+			  }
 			}
 			&.mention{
 			  .status{
@@ -258,10 +295,12 @@ b,strong{font-weight:bold;}
 				}
 			  }
 			}
-			&.favorited{
-			  .status .action .favorite {
+			&.starred{
+			  .status .actions li.favorite{
 					opacity:1;
-					color:#ff0;
+					&:after{
+						content:"★";
+					}
 				}
 			}
 		}
@@ -345,7 +384,6 @@ body.favorited #content #stream {
 		opacity:1;
 	}
 }
-
 
 form.status{
 	position:relative;
