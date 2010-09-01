@@ -116,6 +116,18 @@
       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
+    
+    (function() {
+      //notifications
+      if (window.webkitNotifications) {
+        if (window.webkitNotifications.checkPermission() === 0) {
+          alert('we may');
+        } else {
+          //request permissions
+          window.webkitNotifications.requestPermission();
+        }
+      }
+    })();
 
   </script>
 </body> 
