@@ -81,8 +81,10 @@ require.def("stream/initplugins",
             dirty = win.scrollTop() > 0;
             if(!dirty) { // we scrolled to the top. Back to 0 unread
               newCount = 0;
-              redraw();
-              $(document).trigger("tweet:unread", [newCount])
+              setTimeout(function () { // not do this winthin the scroll event. Makes Chrome much happier performance wise.
+                redraw();
+                $(document).trigger("tweet:unread", [newCount])
+              }, 0);
             }
           });
           $(document).bind("tweet:new", function () {
