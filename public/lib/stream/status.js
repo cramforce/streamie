@@ -70,7 +70,7 @@ require.def("stream/status",
       replyForm: {
         name: "replyForm",
         func: function (stream) {
-          $(document).delegate("#stream .reply", "click", function (e) {
+          $(document).delegate("#stream .actions .reply", "click", function (e) {
             var li = $(this).parents("li");
             var form = getReplyForm(li);
             form.show();
@@ -102,7 +102,7 @@ require.def("stream/status",
       retweet: {
         name: "retweet",
         func: function (stream) {
-          $(document).delegate("#stream .retweet", "click", function (e) {
+          $(document).delegate("#stream .actions .retweet", "click", function (e) {
             if(confirm("Do you really want to retweet?")) {
               var li = $(this).parents("li");
               var tweet = li.data("tweet");
@@ -140,7 +140,7 @@ require.def("stream/status",
       favorite: {
         name: "favorite",
         func: function (stream) {
-          $(document).delegate("#stream .favorite", "click", function (e) {
+          $(document).delegate("#stream .actions .favorite", "click", function (e) {
             var li = $(this).parents("li");
             var tweet = li.data("tweet");
             var id = tweet.data.id;
