@@ -71,6 +71,7 @@ b,strong{font-weight:bold;}
 	z-index:1;
 	width:100%;
 	#client-shadow > .small;
+	-webkit-transform: translate3d(0,0,0);
 	#logo{
 		color:#fff;
 		font-size:11px;
@@ -79,7 +80,7 @@ b,strong{font-weight:bold;}
 		padding:5px;
 		border-bottom:1px solid #555;
 		text-align:center;
-		background:#111;
+		background:#333;
 		text-shadow: 0 0 2px #fff;
 		&:after,
 		&:before{
@@ -90,7 +91,7 @@ b,strong{font-weight:bold;}
 		overflow:hidden;
 		text-align:center;
 		border-bottom:1px solid #555;
-		background:rgba(0,0,0,.85);
+		background:rgba(250,250,250,.95);
 		li{
 			position:relative;
 			display:inline-block;
@@ -101,7 +102,7 @@ b,strong{font-weight:bold;}
 			width:50px;
 			text-align:center;
 			#client-transition-time > .long;
-			border-bottom:0 solid #fff;
+			border-bottom:0 solid #333;
 			&.active,
 			&:hover{
 				border-bottom-width:5px;
@@ -119,12 +120,15 @@ b,strong{font-weight:bold;}
 			}
 			a{
 				position:relative;
-				color:#fff;
+				color:#333;
 				display:block;
 			}
 			&.timeline a,
 			&.add a{
 				top:-3px;
+			}	
+			&.rt a{
+				font-size:25px;
 			}		
 		}
 	}
@@ -138,7 +142,7 @@ b,strong{font-weight:bold;}
 	//background:rgba(255,255,255,.2);
 	//#client-border-radius > .big;
 	//#client-shadow .inset;
-	
+	-webkit-transform: translate3d(0,0,0);
 	h2{
 		display:none;
 	}
@@ -174,6 +178,7 @@ b,strong{font-weight:bold;}
 				#client-border-radius > .middle;
 				#client-shadow > .small;
 				#client-transition-time > .short;
+				-webkit-transform: translate3d(0,0,0);
 				.h{
 					float:left;
 					margin:0 0 10px 0;
@@ -240,5 +245,45 @@ b,strong{font-weight:bold;}
 .dm{
 	.status{
 		border-color:#c00 !important;
+	}
+}
+
+form#mainstatus{
+	position:fixed;
+	z-index:-1;
+	top:-300px;
+	left:0;
+	right:0;
+	padding:10px 10px 40px;
+	color:#333;
+	opacity:0;
+	background:rgba(250,250,250,.95);
+	border-bottom:1px solid #111;
+	#client-transition-time > .slide;
+	fieldset{
+		textarea{
+			-webkit-box-sizing:border-box;
+			width:100%;
+			height:60px;
+			font-size:14px;
+			color:#333;
+			border:1px solid #aaa;
+			#client-border-radius > .small;
+			#client-shadow .inset;
+		}
+		.characters{
+			position:absolute;
+			left:15px;
+			bottom:18px;
+			
+		}
+		.button{
+			left:120px;
+			right:9px;
+		}
+	}
+	&.show{
+		top:65px;
+		opacity:1;
 	}
 }
