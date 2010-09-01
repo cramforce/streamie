@@ -245,7 +245,38 @@ require.def("stream/streamplugins",
           }
           this();
         }
-      }
+      },
+      
+      notify: {
+        name: "notify",
+        current: 0,
+        func: function(tweet, stream) {
+          //todo: is stream.plugins.notify a good place to store state?
+          var that = stream.plugins.filter(function(val, i, arr) { return val.name == 'notify' })[0];
+          if (!tweet.seenBefore && 
+            (that.current < 5) &&
+            window.webkitNotifications && 
+            (window.webkitNotifications.checkPermission() == 0)) {
+            try {
+              var notification = 
+                window.webkitNotifications.createNotification(tweet.data.user.profile_image_url, 
+                  tweet.data.user.name, 
+                  tweet.data.text);
+               notification.show();
+               notification.onclose = function() {
+                --that.current;
+               } //onclose
+               ++that.current;               
+               //hide after 5 seconds
+               setTimeout(function() {
+                notification.cancel();
+               }, 5000);
+            } catch(e) {
+            }
+          } //if webkitNotifications
+          this();
+        } //func
+      } //notify
       
     }
       

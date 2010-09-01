@@ -33,7 +33,8 @@ require.def("stream/app",
       streamPlugin.prepend,
       streamPlugin.keepScrollState,
       streamPlugin.age,
-      streamPlugin.newTweetEvent
+      streamPlugin.newTweetEvent,
+      streamPlugin.notify
     ];
     
     // initPlugins are loaded when the page is loaded and the backend web socket connection has been established
@@ -47,6 +48,7 @@ require.def("stream/app",
       initPlugin.notifyAfterPause,
       initPlugin.keyboardShortCuts,
       initPlugin.favicon,
+      initPlugin.registerNotifications,
       status.observe,
       status.replyForm,
       status.location,

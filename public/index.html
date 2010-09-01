@@ -70,6 +70,7 @@
 				<li class="rt"><a href="#retweet" title="Retweets" target="_self">♻</a></li>
 				<li class="rt"><a href="#starred" title="Favorites" target="_self">★</a></li>
 				<li class="add"><a href="#add" title="New Tweet" target="_self">✍</a></li>
+				<li class=""><a href="#notifications" title="Notifications" target="_self" id="notifications" onclick="(function(){ alert('1'); if (window.webkitNotifications) { if (window.webkitNotifications.checkPermission() == 0) { alert('we got notifications') } else { window.webkitNotifications.requestPermission(); }}; return false;}())">N</a></li>
 			</ul>
 			<form action="/1/statuses/update.json" method="post" class="status tweet" id="mainstatus"> 
 				<input type="hidden" name="in_reply_to_status_id" value="" />
@@ -117,18 +118,6 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
     
-    (function() {
-      //notifications
-      if (window.webkitNotifications) {
-        if (window.webkitNotifications.checkPermission() === 0) {
-          alert('we may');
-        } else {
-          //request permissions
-          window.webkitNotifications.requestPermission();
-        }
-      }
-    })();
-
   </script>
 </body> 
 </html>
