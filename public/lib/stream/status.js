@@ -104,14 +104,15 @@ require.def("stream/status",
         func: function (stream) {
           $(document).delegate("#stream .actions .retweet", "click", function (e) {
             if(confirm("Do you really want to retweet?")) {
-              var li = $(this).parents("li");
+              var button = $(this);
+              var li = button.parents("li");
               var tweet = li.data("tweet");
               var id = tweet.data.id;
               
               // Post to twitter
               rest.post("/1/statuses/retweet/"+id+".json", function (tweetData, status) {
                 if(status == "success") {
-                  li.hide();
+                  button.hide();
                   // todo: Maybe redraw the tweet with more fancy marker?
                 }
               })
