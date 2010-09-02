@@ -248,13 +248,19 @@ require.def("stream/initplugins",
                 } //if !noninteractive
             } else if (permission == 2) {
               t = 'notifications disabled';
+              if (interactive) {
+                //todo: non-chrome users do what?
+                alert('To enable notifications, go to ' +
+                  '"Preferences > Under the Hood > Content Settings > Notifications > Exceptions"' +
+                  ' and remove blocking of "' + window.location.hostname + '"');
+              } //if interactive
             } //permission ==2
           } //if webkitNotifications
           $('#notifications').text(t);
           return false; 
         }; //notifunc
         $('#notifications').bind('click', notifunc);
-        notifunc(true); //call non-interactively after loading the page
+        notifunc(); //call non-interactively after loading the page
       } //func
     } //registerNotifications
       
