@@ -232,7 +232,8 @@ require.def("stream/initplugins",
         var notifunc = function(interactive) { 
           //if called from event handler, "interactive" is an object ;)
           var t = '(notifications not supported)',
-            permission = window.webkitNotifications.checkPermission();
+            permission = window.webkitNotifications &&
+              window.webkitNotifications.checkPermission();
           if (window.webkitNotifications) {
             if (permission === 0) {
               t = 'notifications enabled';
