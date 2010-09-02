@@ -192,14 +192,13 @@ require.def("stream/streamplugins",
         func: function (tweet, stream) {
           var text = tweet.textHTML;
           
-          // links
-          text = text.replace(/https?:\/\/\S+/ig, function (href) {
-            return '<a href="'+href+'">'+href+'</a>';
-          });
-          // www.google.com style links
-          text = text.replace(/(^|\s)(www\.\S+)/ig, function (all, pre,www) {
-            return pre+'<a href="http://'+www+'">'+www+'</a>';
-          });
+          //from http://gist.github.com/492947 and http://daringfireball.net/2010/07/improved_regex_for_matching_urls
+          var GRUBERS_URL_RE = /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/ig;
+
+          text = text.replace(GRUBERS_URL_RE, function(url){
+            return '<a href="'+((/^\w+\:\//.test(url)?'':'http://')+url)+'">'+url+'</a>';
+          })
+					
           // screen names
           text = text.replace(/(^|\W)\@([a-zA-Z0-9_]+)/g, function (all, pre, name) {
             return pre+'<a href="http://twitter.com/'+name+'" class="user-href">@'+name+'</a>';

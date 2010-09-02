@@ -18,8 +18,19 @@ require.def("stream/status",
           li.removeClass("form");
           $(window).scrollTop(0); // Good behavior?
         })
+        li.addClass("form");
       }
       return form;
+    }
+    
+    function setCaretAtEnd(form, text) { // if text is empty, use the current
+      var textarea = form.find("[name=status]");
+      if(!text) {
+        text = textarea[0].value
+      }
+      textarea.val(text);
+      textarea.focus();
+      textarea[0].selectionStart = text.length;
     }
     
     return {
@@ -74,7 +85,7 @@ require.def("stream/status",
             var li = $(this).parents("li");
             var form = getReplyForm(li);
             form.show();
-            li.addClass("form");
+            setCaretAtEnd(form);
           })
         }
       },
@@ -92,8 +103,8 @@ require.def("stream/status",
             // make text. TODO: Style should be configurable
             var text = tweet.data.text + " /via @"+tweet.data.user.screen_name
             
-            form.find("[name=status]").val(text);
             form.show();
+            setCaretAtEnd(form, text)
           })
         }
       },
