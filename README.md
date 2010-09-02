@@ -1,5 +1,7 @@
 # Streamie #
 
+To try out Streamie go to http://streamie.org
+
 For hacking on Streamie, see: http://www.nonblocking.io/2010/08/future-is-here-i-just-forked-running.html
 
 ## Setup ##
