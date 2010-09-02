@@ -63,14 +63,17 @@
 <body id="streamy">
 	<div id="container">
 		<div id="header">
-			<h1 id="logo"><a href="#" target="_self">streamie (early ⍺) for <span id="currentuser-screen_name"></span> (screwed up by kosta)</a></h1>
+			<h1 id="logo"><a href="#" target="_self">streamie (early ⍺) for <span id="currentuser-screen_name"></span> (screwed up by kosta)</a>
+			</h1>
+			<span style='position:absolute'>
+			  <a href="#notifications" id='notifications'>notifications</a>
+			</span>
 			<ul id="mainnav">
 				<li class=""><a href="#mention" title="Mentions" target="_self">@</a></li>
 				<li class="timeline active"><a href="#all" title="Show All" target="_self">⚛</a></li>
 				<li class="rt"><a href="#retweet" title="Retweets" target="_self">♻</a></li>
 				<li class="rt"><a href="#starred" title="Favorites" target="_self">★</a></li>
 				<li class="add"><a href="#add" title="New Tweet" target="_self">✍</a></li>
-				<li class=""><a href="#notifications" title="Notifications" target="_self" id="notifications">N</a></li>
 			</ul>
 			<form action="/1/statuses/update.json" method="post" class="status tweet" id="mainstatus"> 
 				<input type="hidden" name="in_reply_to_status_id" value="" />

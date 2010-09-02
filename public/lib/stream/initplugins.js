@@ -223,15 +223,14 @@ require.def("stream/initplugins",
           
           prefill(); // do once at start
         }
-      } //prefilleTimeline:
+      }, //prefilleTimeline:
       
-      //TODO: remove trailing comma to not to anger cramforce
-    ,registerNotifications: {
+    registerNotifications: {
       name: "registerNotifications",
       func: function() {
         //notifications
         var notifunc = function(interactive) { 
-          //if called from event handler, interactive will be some object ;)
+          //if called from event handler, "interactive" is an object ;)
           var t = '(notifications not supported)',
             permission = window.webkitNotifications.checkPermission();
           if (window.webkitNotifications) {
@@ -251,8 +250,7 @@ require.def("stream/initplugins",
               t = 'notifications disabled';
             } //permission ==2
           } //if webkitNotifications
-          //todo: remove me
-          alert(t);
+          $('#notifications').text(t);
           return false; 
         }; //notifunc
         $('#notifications').bind('click', notifunc);
