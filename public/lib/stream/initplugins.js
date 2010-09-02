@@ -226,31 +226,41 @@ require.def("stream/initplugins",
       } //prefilleTimeline:
       
       //TODO: remove trailing comma to not to anger cramforce
-//    ,registerNotifications: {
-//      name: "registerNotifications",
-//      func: function() {
-//        //notifications
-//        if (window.webkitNotifications) {
-//          if (window.webkitNotifications.checkPermission() === 0) {
-//            alert('we may');
-//          } else {
-//            //request permissions
-//            $('#notifications').bind('click', function() { 
-//              if (!window.webkitNotifications.checkPermission()) {
-//                alert('we already got notification permission');
-//              } else {
-//                alert('1');
-//                window.webkitNotifications.requestPermission();
-//                alert('2');
-//              }
-//              return false; 
-//            }); //$()
-//          } //else if checkPermissions()
-//        } //if webkitNotifications
-//      } //func
-//    } //registerNotifications
+    ,registerNotifications: {
+      name: "registerNotifications",
+      func: function() {
+        //notifications
+        var notifunc = function(interactive) { 
+          //if called from event handler, interactive will be some object ;)
+          var t = '(notifications not supported)',
+            permission = window.webkitNotifications.checkPermission();
+          if (window.webkitNotifications) {
+            if (permission === 0) {
+              t = 'notifications enabled';
+            } else if (permission == 1)
+            { //checkPermission
+                t = 'enable notifications';
+                if (interactive) {
+                  try {
+                    //notifications can only be requested "interactively"
+                    window.webkitNotifications.requestPermission(notifunc);
+                  } catch(e) {
+                  } //try/catch
+                } //if !noninteractive
+            } else if (permission == 2) {
+              t = 'notifications disabled';
+            } //permission ==2
+          } //if webkitNotifications
+          //todo: remove me
+          alert(t);
+          return false; 
+        }; //notifunc
+        $('#notifications').bind('click', notifunc);
+        notifunc(true); //call non-interactively after loading the page
+      } //func
+    } //registerNotifications
       
-    }
+    } //return
       
-  }
-);
+  } //function
+); //require.def
