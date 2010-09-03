@@ -182,6 +182,7 @@ require.def("stream/status",
         func: function (stream) {
           
           $(document).delegate("#stream .conversation", "click", function (e) {
+            e.preventDefault();
             var li = $(this).parents("li");
             var tweet = li.data("tweet");
             var con = tweet.conversation;
