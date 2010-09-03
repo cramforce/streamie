@@ -6,7 +6,8 @@ require.def("stream/tweetstream",
   ["stream/tweet"],
   function(tweetModule) {
       
-    function Stream() {
+    function Stream(settings) {
+      this.settings = settings; // settings for streamie
       this.plugins = []; // I have a set of plugins
     }
     
