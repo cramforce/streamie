@@ -263,10 +263,30 @@ require.def("stream/initplugins",
               }
             }
 
+            
+            var since = stream.newestTweet();
+            function handleSince(tweets) {
+              if(tweets) {
+                var oldest = tweets[tweets.length-1];
+                if(oldest) {
+                  if(parseInt(oldest.id, 10) > since) {
+                    oldest._missingTweets = true; // mark the oldest tweet if it is newer than the one we knew before
+                  }
+                }
+                if(oldest) {
+                  // fetch other types of statuses since the last regular status
+                  rest.get("/1/statuses/retweeted_to_me.json?since_id="+oldest.id, handle);
+                  rest.get("/1/statuses/mentions.json?since_id="+oldest.id, handle);
+                } else {
+                  rest.get("/1/statuses/retweeted_to_me.json?count=20", handle);
+                  rest.get("/1/statuses/mentions.json?count=50", handle);
+                }
+              }
+              handle.apply(this, arguments);
+            }
+            
             // Make API calls
-            rest.get("/1/statuses/retweeted_to_me.json?count=20", handle);
-            rest.get("/1/statuses/friends_timeline.json?count=20", handle);
-            rest.get("/1/statuses/mentions.json?count=20", handle);
+            rest.get("/1/statuses/friends_timeline.json?count=200", handleSince);
             rest.get("/1/favorites.json", handle);
           }
           

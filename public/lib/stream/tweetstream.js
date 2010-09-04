@@ -29,6 +29,14 @@ require.def("stream/tweetstream",
         this.linkPlugins.push.apply(this.linkPlugins, plugins);
       },
       
+      // sets or returns the newest tweet ever seen
+      newestTweet: function (newID) {
+        if(newID) {
+          window.localStorage.newestTweet = newID
+        }
+        return parseInt(window.localStorage.newestTweet || 0, 10);
+      },
+      
       // this is where we draw
       canvas: function () {
         return $("#stream")
@@ -64,6 +72,7 @@ require.def("stream/tweetstream",
         function next () {
           var plugin = self.plugins[i++];
           if(plugin) {
+            plugin.func.displayName = plugin.name;
             plugin.func.call(next, tweet, self, plugin)
           }
         }

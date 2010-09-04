@@ -49,13 +49,18 @@ require.def("stream/streamplugins",
       // marks a tweet whether we've ever seen it before using localStorage
       everSeen: {
         name: "everSeen",
-        func: function (tweet) {
+        func: function (tweet, stream) {
           var key = "tweet"+tweet.data.id;
           if(window.localStorage) {
             if(window.localStorage[key]) {
               tweet.seenBefore = true;
             } else {
               window.localStorage[key] = 1;
+            }
+            var data = tweet.retweet ? tweet.retweet : tweet.data;
+            var newest = stream.newestTweet();
+            if(data.id > newest) {
+              stream.newestTweet(data.id);
             }
           }
           this();

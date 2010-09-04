@@ -1,4 +1,4 @@
-<li class="tweet<%= tweet.mentioned ? ' mention' : ''%><%= tweet.conversation ? ' conversation'+tweet.conversation.index : ''%><%= tweet.retweet ? ' retweet' : ''%><%= !tweet.prefill ? ' new' : ''%><%= tweet.data.favorited ? ' starred' : ''%>">
+<li class="tweet<%= tweet.mentioned ? ' mention' : ''%><%= tweet.conversation ? ' conversation'+tweet.conversation.index : ''%><%= tweet.retweet ? ' retweet' : ''%><%= !tweet.prefill ? ' new' : ''%><%= tweet.data.favorited ? ' starred' : ''%><%= tweet.data._missingTweets ? ' gap' : '' %>">
 	<a href="http://twitter.com/<%= tweet.data.user.screen_name %>" class="user-href"><img src="<%= tweet.data.user.profile_image_url %>" alt="<%= tweet.data.user.name %>" width="48" height="48" class="profile_image_url" /></a>
 	<% if(tweet.retweet) { %><a href="http://twitter.com/<%= tweet.retweet.user.screen_name %>" class="retweet-user-href-icon"><img src="<%= tweet.retweet.user.profile_image_url %>" alt="<%= tweet.retweet.user.name %>" width="24" height="24" class="profile_image_url" /></a><% } %>
 	<div class="status">
