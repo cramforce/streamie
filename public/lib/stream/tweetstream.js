@@ -7,8 +7,9 @@ require.def("stream/tweetstream",
   function(tweetModule) {
       
     function Stream(settings) {
-      this.settings = settings; // settings for streamie
-      this.plugins = []; // I have a set of plugins
+      this.settings    = settings; // settings for streamie
+      this.plugins     = []; // I have a set of plugins for transforming tweets
+      this.linkPlugins = []; // A set of plugins for tranforming links in tweets
     }
     
     Stream.prototype = {
@@ -21,6 +22,11 @@ require.def("stream/tweetstream",
       // register more plugins for stream processing
       addPlugins: function (plugins) {
         this.plugins.push.apply(this.plugins, plugins);
+      },
+      
+      // register more plugins for link processing
+      addLinkPlugins: function (plugins) {
+        this.linkPlugins.push.apply(this.linkPlugins, plugins);
       },
       
       // this is where we draw

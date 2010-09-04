@@ -204,7 +204,7 @@ require.def("stream/streamplugins",
           var GRUBERS_URL_RE = /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/ig;
 
           text = text.replace(GRUBERS_URL_RE, function(url){
-            return '<a href="'+((/^\w+\:\//.test(url)?'':'http://')+url)+'">'+url+'</a>';
+            return '<a href="'+((/^\w+\:\//.test(url)?'':'http://')+helpers.html(url))+'">'+helpers.html(url)+'</a>';
           })
 					
           // screen names
@@ -218,6 +218,25 @@ require.def("stream/streamplugins",
           
           tweet.textHTML = text;
           
+          this();
+        }
+      },
+      
+      // runs the link plugins defined in app.js on each link
+      executeLinkPlugins: {
+        name: "enhanceLinks",
+        func: function (tweet, stream) {
+          var node = $("<div>"+tweet.textHTML+"</div>");
+          var as = node.find("a");
+          
+          as.each(function () {
+            var a = $(this);
+            stream.linkPlugins.forEach(function (plugin) {
+              plugin.func.call(function () {}, a, tweet, stream, plugin);
+            })
+          })
+          
+          tweet.textHTML = node.html();
           this();
         }
       },
