@@ -66,6 +66,7 @@ b,strong{font-weight:bold;}
 
 /*header*/
 #header{
+	display:none; /* only shown for authenticated users */
 	position:fixed;
 	top:0;
 	left:0;
@@ -149,6 +150,10 @@ b,strong{font-weight:bold;}
 		display:none;
 	}
 	#about{
+		h2{
+			display:block;
+			font-size: 18px;
+		}
 		font-size:13px;
 		.logo{
 			text-align:center;
@@ -161,8 +166,12 @@ b,strong{font-weight:bold;}
 		p{
 			margin-bottom:18px;
 			text-align:justify;
+			color:#000;
 		}
-		h3,h4{
+		p.subline{
+			font-size:11px;
+		}
+		h2,h3,h4{
 			font-weight:bold;
 			margin-bottom:10px;
 			color:#000;
@@ -171,6 +180,12 @@ b,strong{font-weight:bold;}
 			margin-bottom:20px;
 			li:before{
 				content:"- ";
+			}
+		}
+		a{
+			color:@client-red;
+			&:hover{
+				color:#111;
 			}
 		}
 	}
