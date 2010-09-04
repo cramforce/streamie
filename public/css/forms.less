@@ -1,0 +1,173 @@
+fieldset{
+	margin:0 0 10px;
+}
+.formrow{
+	margin:0 0 5px 0;
+}
+
+#settings{
+	#border-box;
+	position:fixed;
+	top:-200px;
+	z-index:-1;
+	width:480px;
+	left:50%;
+	margin:0 0 0 -240px;
+	padding:10px 10px 40px;
+	color:#333;
+	background:rgba(250,250,250,.95);
+	border:1px solid #111;
+	border-top:none;
+	#client-transition-time > .slide;
+	.h3{
+		text-align:center;
+		padding:0 0 3px;
+		border-bottom:2px solid #555;
+	}
+	fieldset{
+		legend{
+			#border-box;
+			display:block;
+			width:100%;
+			padding:3px;
+			margin:0;
+			background:#efefef;
+			+.formrow{
+				padding-top:3px;
+			}
+		}
+	}
+	&.show{
+		top:65px;
+		opacity:1;
+	}
+}
+
+#mainstatus{
+	#border-box;
+	position:fixed;
+	z-index:-1;
+	top:-200px;
+	width:480px;
+	left:50%;
+	margin:0 0 0 -240px;
+	padding:10px 10px 40px;
+	color:#333;
+	opacity:0;
+	background:rgba(250,250,250,.95);
+	border:1px solid #111;
+	border-top:none;
+	#client-transition-time > .slide;
+	fieldset{
+		textarea{
+			#border-box;
+			width:100%;
+			height:60px;
+			font-size:14px;
+			color:#333;
+			border:1px solid #aaa;
+			#client-border-radius > .small;
+			#client-shadow .inset;
+		}
+		.characters{
+			position:absolute;
+			right:15px;
+			bottom:48px;
+			text-align:right;
+			color:#aaa;
+			
+		}
+		.button{
+			left:9px;
+			right:9px;
+		}
+	}
+	&.show{
+		top:65px;
+		opacity:1;
+	}
+}
+
+form.status{
+	position:relative;
+	margin:5px 0 0 0;
+	border-top:1px solid #333;
+	padding:10px 0 0 0;
+	fieldset{
+		padding:0 0 35px;
+		textarea{
+			#border-box;
+			width:100%;
+			height:60px;
+			font-size:14px;
+			color:#333;
+			border:1px solid #aaa;
+			#client-border-radius > .small;
+			#client-shadow .inset;
+		}
+		.characters{
+			position:absolute;
+			right:15px;
+			bottom:48px;
+			text-align:right;
+			color:#aaa;
+			
+		}
+		.button{
+			left:9px;
+			right:9px;
+		}
+	}
+	&.show{
+		top:65px;
+		opacity:1;
+	}
+}
+
+.csstransforms {
+	form#mainstatus{
+		padding-bottom:10px;
+		padding-right:10px;
+		textarea{
+			height:60px;
+		}
+		.characters{
+			right:50px;
+			bottom:18px;
+			color:#aaa;
+		}
+		.button{
+			#border-box;
+			-webkit-transform: rotate(-90deg); 
+			-moz-transform: rotate(-90deg);
+			width:60px;
+			left:auto;
+			right:-9px;
+			bottom:29px;
+		}
+	}
+	
+	form.status{
+		fieldset{
+			padding-bottom:0;
+			padding-right:30px;
+			textarea{
+				height:60px;
+			}
+			.characters{
+				right:40px;
+				bottom:8px;
+				color:#aaa;
+			}
+			.button{
+				#border-box;
+				-webkit-transform: rotate(-90deg); 
+				-moz-transform: rotate(-90deg);
+				width:60px;
+				left:auto;
+				right:-18px;
+				bottom:19px;
+			}
+		}
+	}
+}
