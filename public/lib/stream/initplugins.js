@@ -262,39 +262,39 @@ require.def("stream/initplugins",
       name: "registerNotifications",
       func: function() {
         //notifications
-        var notifunc = function(interactive) { 
-          //if called from event handler, "interactive" is an object ;)
-          var t = '(notifications not supported)',
-            permission = window.webkitNotifications &&
-              window.webkitNotifications.checkPermission();
-          if (window.webkitNotifications) {
-            if (permission === 0) {
-              t = 'notifications enabled';
-            } else if (permission == 1)
-            { //checkPermission
-                t = 'enable notifications';
-                if (interactive) {
-                  try {
-                    //notifications can only be requested "interactively"
-                    window.webkitNotifications.requestPermission(notifunc);
-                  } catch(e) {
-                  } //try/catch
-                } //if !noninteractive
+        var permission = window.webkitNotifications &&
+          window.webkitNotifications.checkPermission();
+          
+        var callback = function(namespace, key, value) {
+          var permission = window.webkitNotifications &&
+            window.webkitNotifications.checkPermission();
+          if (value) {
+            if (permission === 1) {
+              //"not set" -> request
+              window.webkitNotifications.requestPermission(function() {
+                settings.set(namespace, key, window.webkitNotifications.checkPermission() == 0, true);
+              }); //requestPermission
             } else if (permission == 2) {
-              t = 'notifications disabled';
-              if (interactive) {
-                //todo: non-chrome users do what?
-                alert('To enable notifications, go to ' +
-                  '"Preferences > Under the Hood > Content Settings > Notifications > Exceptions"' +
-                  ' and remove blocking of "' + window.location.hostname + '"');
-              } //if interactive
-            } //permission ==2
-          } //if webkitNotifications
-          $('#notifications').text(t);
-          return false; 
-        }; //notifunc
-        $('#notifications').bind('click', notifunc);
-        notifunc(); //call non-interactively after loading the page
+              //"blocked"
+              //todo: non-chrome users do what?
+              alert('To enable notifications, go to ' +
+                '"Preferences > Under the Hood > Content Settings > Notifications > Exceptions"' +
+                ' and remove blocking of "' + window.location.hostname + '"');
+              settings.set(namespace, key, false, true); //disable again
+            }
+          } //if value...
+        } //callback
+        
+        if (window.webkitNotifications) {
+          settings.registerKey('notifications', 'chrome-notifications', 'chrome notifications',
+            permission === 0, [true, false], callback);
+          if (permission !== 0) {
+            //override stored value, as an enabled buttons sucks if the feature is disabled :(
+            //TODO: maybe signal the user why we disabled it?
+            settings.set('notifications', 'chrome-notifications', false);
+          }
+        } //if webkitNotifications
+
       } //func
     } //registerNotifications
       

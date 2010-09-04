@@ -262,6 +262,7 @@ require.def("stream/streamplugins",
           var that = stream.plugins.filter(function(val, i, arr) { return val.name == 'notify' })[0];
           if (!tweet.seenBefore && 
             (that.current < 5) &&
+            settings.get('notifications', 'chrome-notifications') &&
             window.webkitNotifications && 
             (window.webkitNotifications.checkPermission() == 0)) {
             try {

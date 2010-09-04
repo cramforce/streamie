@@ -67,7 +67,7 @@ require.def("stream/settings",
       },
       
       // register a key in a namespace and give it a label (for the UI)
-      registerKey: function (namespace, key, label, defaultValue, values) {
+      registerKey: function (namespace, key, label, defaultValue, values, callback) {
         if(!defaultSettings[namespace]) {
           throw new Error("Unknown namespace "+namespace)
         }
@@ -78,7 +78,8 @@ require.def("stream/settings",
         defaultSettings[namespace].settings[key] = {
           label: label,
           defaultValue: defaultValue,
-          values: values // possible values
+          values: values, // possible values
+          callback: callback //can be undefined
         }
       },
       
@@ -100,7 +101,7 @@ require.def("stream/settings",
       },
       
       // set a key in a namespace
-      set: function (namespace, key, value) {
+      set: function (namespace, key, value, suppressCallback) {
         init();
         var ns = settings[namespace];
         if(!ns) {
@@ -109,6 +110,25 @@ require.def("stream/settings",
         ns[key] = value
         console.log("[settings] set "+namespace+"."+key+" = "+value);
         persist(); // maybe do this somewhat lazily, like once a second
+        //call callback
+        var callback = defaultSettings &&
+          defaultSettings[namespace] &&
+          defaultSettings[namespace].settings &&
+          defaultSettings[namespace].settings[key] &&
+          defaultSettings[namespace].settings[key].callback;
+        if (!suppressCallback && callback) {
+          callback(namespace, key, value);
+        }
+        
+        //update gui accordingly. warning: this can lead to infinite recursion!
+        var element = $("#settingsForm input.setting[name=settings."+namespace+"."+key+"]");
+        element = element && element[0];
+        //TODO: what if there's more than true and false?
+        if (element && 
+          element.checked &&
+          element.checked != value) {
+          element.checked = value;
+        }
       },
       
       // returns sorted (by name) list of namespaces
