@@ -7,7 +7,7 @@ require.def("stream/initplugins",
   function(tweetModule, settings, rest, helpers, templateText) {
     
     settings.registerNamespace("notifications", "Notifications");
-    settings.registerKey("notifications", "favicon", "Favicon",  true);
+    settings.registerKey("notifications", "favicon", "Highlight Favicon (Website icon)",  true);
     settings.registerKey("notifications", "throttle", "Throttle (Only notify once per minute)", false);
     
     
@@ -19,7 +19,7 @@ require.def("stream/initplugins",
         func: function (stream) {
           function change() {
             var val = location.hash.replace(/^\#/, "");
-            $("body").addClass(val);
+            $("body").attr("class", val);
             // { custom-event: stat:XXX }
             $(document).trigger("state:"+val);
           }
@@ -54,11 +54,11 @@ require.def("stream/initplugins",
                 mainstatus.addClass("show");
                 mainstatus.find("[name=status]").focus();
               }
-              return;
             }
-            
-            a.closest("#mainnav").find("li").removeClass("active");
-            li.addClass("active")
+            if(li.hasClass("activatable")) { // special case for new tweet
+              a.closest("#mainnav").find("li").removeClass("active");
+              li.addClass("active")
+            }
           });
           
           mainstatus.bind("status:send", function () {
