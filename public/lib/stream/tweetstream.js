@@ -3,8 +3,8 @@
  */
 
 require.def("stream/tweetstream",
-  ["stream/tweet"],
-  function(tweetModule) {
+  ["stream/tweet", "stream/twitterRestAPI"],
+  function(tweetModule, rest) {
       
     function Stream(settings) {
       this.settings    = settings; // settings for streamie
@@ -32,6 +32,24 @@ require.def("stream/tweetstream",
       // this is where we draw
       canvas: function () {
         return $("#stream")
+      },
+      
+      // Get the full info for the current user. See http://apiwiki.twitter.com/Twitter-REST-API-Method:-users%C2%A0show
+      userInfo: function (cb) {
+        if(this.__userInfo) {
+          var user = this.__userInfo;
+          setTimeout(function () {
+            cb(user)
+          }, 0)
+        }
+        rest.get("/1/users/show.json?id="+this.user.user_id, function (user, status) {
+          if(status == "success") {
+            this.__userInfo = user;
+            cb(user);
+          } else {
+            console.log("Fetching user data failed")
+          }
+        });
       },
       
       // go through the list of plugins for a tweet.

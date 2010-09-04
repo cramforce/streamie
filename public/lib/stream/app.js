@@ -49,6 +49,7 @@ require.def("stream/app",
       initPlugin.keyboardShortCuts,
       initPlugin.favicon,
       initPlugin.throttableNotifactions,
+      initPlugin.background,
       status.observe,
       status.replyForm,
       status.location,
@@ -95,12 +96,12 @@ require.def("stream/app",
                 // run initPlugins
                 initPlugins.forEach(function (plugin) {
                   plugin.func.call(function () {}, stream, plugin);
-                })
+                });
+                $(document).trigger("streamie:init:complete");
               }
             }
             else if(data.tweet) {
               // We actually received a tweet. Let the stream process it
-              //$("body").removeClass("loading");
               stream.process(tweetModule.make(JSON.parse(data.tweet)));
             }
             else {
