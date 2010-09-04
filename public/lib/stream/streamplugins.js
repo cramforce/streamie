@@ -8,7 +8,8 @@ require.def("stream/streamplugins",
   function(tweetModule, settings, rest, helpers, templateText) {
     
     settings.registerNamespace("stream", "Stream");
-    settings.registerKey("stream", "showRetweets", "Show Retweets",  true);  
+    settings.registerKey("stream", "showRetweets", "Show Retweets",  true);
+    settings.registerKey("stream", "keepScrollState", "Keep scroll level when new tweets come in",  true); 
     
     var template = _.template(templateText);
     
@@ -260,13 +261,15 @@ require.def("stream/streamplugins",
       keepScrollState: {
         name: "keepScrollState",
         func: function (tweet, stream) {
-          if(!tweet.prefill || !tweet.seenBefore) {
-            var win = $(window);
-            var cur = win.scrollTop();
-            var next = tweet.node.next();
-            if(next.length > 0) {
-              var top = cur + next.offset().top - tweet.node.offset().top;
-              win.scrollTop( top );
+          if(settings.get("stream", "keepScrollState")) {
+            if(!tweet.prefill || !tweet.seenBefore) {
+              var win = $(window);
+              var cur = win.scrollTop();
+              var next = tweet.node.next();
+              if(next.length > 0) {
+                var top = cur + next.offset().top - tweet.node.offset().top;
+                win.scrollTop( top );
+              }
             }
           }
           this();
