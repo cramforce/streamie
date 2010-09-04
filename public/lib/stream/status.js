@@ -55,10 +55,14 @@ require.def("stream/status",
             return false;
           });
           
+          var last;
           function updateCharCount (e) {
-            var val = e.target.value;
-            var target = $(e.target).closest("form").find(".characters");
-            target.text( e.target.value.length );
+            var length = e.target.value.length;
+            
+            if(length != last) {
+              $(e.target).closest("form").find(".characters").text( length );
+              last = length;
+            }
           }
           
           $(document).delegate("form.status [name=status]", "keyup change paste", updateCharCount)
@@ -66,7 +70,7 @@ require.def("stream/status",
           // update count every N millis to catch any changes, though paste, auto complete, etc.
           $(document).delegate("form.status [name=status]", "focus", function (e) {
             updateCharCount(e)
-            $(e.target).data("charUpdateInterval", setInterval(function () { updateCharCount(e) }, 100));
+            $(e.target).data("charUpdateInterval", setInterval(function () { updateCharCount(e) }, 200));
           })
           $(document).delegate("form.status [name=status]", "blur", function (e) {
             var interval = $(e.target).data("charUpdateInterval");
