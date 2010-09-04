@@ -59,6 +59,13 @@
 						display:inline-block;
 						width:70px;
 					}
+					img{
+						height: 12px;
+						#client-transition-time > .short;
+						&:hover{
+							height:150px;
+						}
+					}
 				}
 				.actions{
 				  	position:absolute;
@@ -149,6 +156,9 @@
 					border-right-color:@color;
 				}
 			  }
+			  .retweet-user-href-icon {
+			    margin: 32px;
+			  }
 			}
 			&.starred{
 			  .status .actions li.favorite{
@@ -182,6 +192,14 @@ body.mention #content #stream {
 	li{
 		display:none;
 		&.mention{
+			display:block;
+		}
+	}
+}
+body.starred #content #stream {
+	li{
+		display:none;
+		&.starred{
 			display:block;
 		}
 	}

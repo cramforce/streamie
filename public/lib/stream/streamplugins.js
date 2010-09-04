@@ -4,8 +4,12 @@
  */
 
 require.def("stream/streamplugins",
-  ["stream/tweet", "stream/twitterRestAPI", "stream/helpers", "text!../templates/tweet.ejs.html"],
-  function(tweetModule, rest, helpers, templateText) {
+  ["stream/tweet", "stream/settings", "stream/twitterRestAPI", "stream/helpers", "text!../templates/tweet.ejs.html"],
+  function(tweetModule, settings, rest, helpers, templateText) {
+    
+    settings.registerNamespace("stream", "Stream");
+    settings.registerKey("stream", "showRetweets", "Show Retweets",  true);  
+    
     var template = _.template(templateText);
     
     var Tweets = {};
@@ -19,9 +23,13 @@ require.def("stream/streamplugins",
         name: "handleRetweet",
         func: function (tweet) {
           if(tweet.data.retweeted_status) {
-            var orig = tweet.data;
-            tweet.data = tweet.data.retweeted_status;
-            tweet.retweet = orig;
+            if(settings.get("stream", "showRetweets")) {
+              var orig = tweet.data;
+              tweet.data = tweet.data.retweeted_status;
+              tweet.retweet = orig;
+            } else {
+              return;
+            }
           }
           this();
         }
@@ -34,6 +42,22 @@ require.def("stream/streamplugins",
           if(tweet.data.text != null) {
             this();
           }
+        }
+      },
+      
+      // marks a tweet whether we've ever seen it before using localStorage
+      everSeen: {
+        name: "everSeen",
+        func: function (tweet) {
+          var key = "tweet"+tweet.data.id;
+          if(window.localStorage) {
+            if(window.localStorage[key]) {
+              tweet.seenBefore = true;
+            } else {
+              window.localStorage[key] = 1;
+            }
+          }
+          this();
         }
       },
       
@@ -140,11 +164,32 @@ require.def("stream/streamplugins",
         func: function (tweet) {
           tweet.created_at = new Date(tweet.data.created_at);
           function update () {
-            tweet.age = (new Date()).getTime() - tweet.created_at.getTime();
-            tweet.node.find(".created_at").text(Math.round(tweet.age / 1000) + " seconds ago")
+            var millis = (new Date()).getTime() - tweet.created_at.getTime();
+            
+            tweet.age = millis;
+            var units   = {
+              second: Math.round(millis/1000),
+              minute: Math.round(millis/1000/60),
+              hour:   Math.round(millis/1000/60/60),
+              day:    Math.round(millis/1000/60/60/24),
+              week:   Math.round(millis/1000/60/60/24/7),
+              month:  Math.round(millis/1000/60/60/24/30), // aproximately
+              year:   Math.round(millis/1000/60/60/24/365), // aproximately
+            };
+            var text = "";
+            for(var unit in units) { // hopefully nobody extends Object :) Should use Object.keys instead.
+              var val = units[unit];
+              if(val > 0) {
+                text = "";
+                text += val + " " + unit;
+                if(val > 1) text+="s "; // !i18n
+              }
+            };
+            
+            tweet.node.find(".created_at").text(text);
           }
           update();
-          setInterval(update, 1000)
+          setInterval(update, 5000)
           this();
         }
       },
@@ -155,14 +200,13 @@ require.def("stream/streamplugins",
         func: function (tweet, stream) {
           var text = tweet.textHTML;
           
-          // links
-          text = text.replace(/https?:\/\/\S+/ig, function (href) {
-            return '<a href="'+href+'">'+href+'</a>';
-          });
-          // www.google.com style links
-          text = text.replace(/(^|\s)(www\.\S+)/ig, function (all, pre,www) {
-            return pre+'<a href="http://'+www+'">'+www+'</a>';
-          });
+          //from http://gist.github.com/492947 and http://daringfireball.net/2010/07/improved_regex_for_matching_urls
+          var GRUBERS_URL_RE = /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/ig;
+
+          text = text.replace(GRUBERS_URL_RE, function(url){
+            return '<a href="'+((/^\w+\:\//.test(url)?'':'http://')+helpers.html(url))+'">'+helpers.html(url)+'</a>';
+          })
+					
           // screen names
           text = text.replace(/(^|\W)\@([a-zA-Z0-9_]+)/g, function (all, pre, name) {
             return pre+'<a href="http://twitter.com/'+name+'" class="user-href">@'+name+'</a>';
@@ -178,13 +222,32 @@ require.def("stream/streamplugins",
         }
       },
       
+      // runs the link plugins defined in app.js on each link
+      executeLinkPlugins: {
+        name: "enhanceLinks",
+        func: function (tweet, stream) {
+          var node = $("<div>"+tweet.textHTML+"</div>");
+          var as = node.find("a");
+          
+          as.each(function () {
+            var a = $(this);
+            stream.linkPlugins.forEach(function (plugin) {
+              plugin.func.call(function () {}, a, tweet, stream, plugin);
+            })
+          })
+          
+          tweet.textHTML = node.html();
+          this();
+        }
+      },
+      
       // Trigger a custom event to inform everyone about a new tweet
       // Event is not fired for tweet from the prefill
       newTweetEvent: {
         name: "newTweetEvent",
         func: function (tweet) {
           // Do not fire for tweets
-          if(!tweet.data.prefill) {
+          if(!tweet.prefill) {
             // { custom-event: tweet:new }
             tweet.node.trigger("tweet:new", [tweet])
           }
@@ -194,16 +257,17 @@ require.def("stream/streamplugins",
       
       // when we insert a new tweet
       // adjust the scrollTop to show the same thing as before
-      // we only do this, if the user was not scrolled to the very top
       keepScrollState: {
         name: "keepScrollState",
         func: function (tweet, stream) {
-          var win = $(window);
-          var cur = win.scrollTop();
-          if(cur != 0) {
-            var next = tweet.node.next()
-            var top = cur + next.offset().top - tweet.node.offset().top;
-            win.scrollTop( top );
+          if(!tweet.prefill || !tweet.seenBefore) {
+            var win = $(window);
+            var cur = win.scrollTop();
+            var next = tweet.node.next();
+            if(next.length > 0) {
+              var top = cur + next.offset().top - tweet.node.offset().top;
+              win.scrollTop( top );
+            }
           }
           this();
         }

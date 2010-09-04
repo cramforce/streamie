@@ -55,6 +55,9 @@
 	<link rel="stylesheet/less" type="text/css" href="css/streamie.less" media="screen,projection,print" />
 	<!-- We use less.js: http://github.com/cloudhead/less.js/tree/ -->
 	<script src="ext/less-1.0.35.min.js"></script>
+	<script>
+	  less.refresh(true); // localstorage caching is bad for frequent releases
+	</script>
 </head>
 
 <body id="www-streamie-org" class="loading">
@@ -62,9 +65,11 @@
 		<div id="header">
 			<h1 id="logo"><a href="#" target="_self">streamie (early ⍺) for <span id="currentuser-screen_name"></span></a></h1>
 			<ul id="mainnav">
-				<li class=""><a href="#mention" title="Metions" target="_self">@</a></li>
+				<li class=""><a href="#mention" title="Mentions" target="_self">@</a></li>
 				<li class="timeline active"><a href="#all" title="Show All" target="_self">⚛</a></li>
 				<li class="rt"><a href="#retweet" title="Retweets" target="_self">♻</a></li>
+				<li class="rt"><a href="#starred" title="Favorites" target="_self">★</a></li>
+				<li class="settings"><a href="#settings" title="Settings" target="_self">S</a></li>
 				<li class="add"><a href="#add" title="New Tweet" target="_self">✍</a></li>
 			</ul>
 			<form action="/1/statuses/update.json" method="post" class="status tweet" id="mainstatus"> 
@@ -78,6 +83,7 @@
 					<input type="submit" value="Tweet" class="button" />
 				</fieldset>
 			</form>
+			<div id="settings" class="panel"></div>
 		</div>
 		<div id="content">
 			<h2 class="h1">Timeline</h2>

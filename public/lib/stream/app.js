@@ -12,8 +12,8 @@ if(typeof console == "undefined") {
   }
 }
 require.def("stream/app",
-  ["stream/tweetstream", "stream/tweet", "stream/streamplugins", "stream/initplugins", "stream/client", "stream/status", "/ext/underscore.js", "/ext/modernizr-1.5.js", "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"],
-  function(tweetstream, tweetModule, streamPlugin, initPlugin, client, status) {
+  ["stream/tweetstream", "stream/tweet", "stream/settings", "stream/streamplugins", "stream/initplugins", "stream/linkplugins", "stream/settingsDialog", "stream/client", "stream/status", "/ext/underscore.js", "/ext/modernizr-1.5.js", "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"],
+  function(tweetstream, tweetModule, settings, streamPlugin, initPlugin, linkPlugin, settingsDialog, client, status) {
     
     // Stream plugins are called in the order defined here for each incoming tweet.
     // Important: Stream plugins have to call this() to continue the execution!
@@ -22,13 +22,15 @@ require.def("stream/app",
     var streamPlugins = [
       streamPlugin.handleRetweet,
       streamPlugin.tweetsOnly,
+      streamPlugin.everSeen,
       streamPlugin.avoidDuplicates,
       streamPlugin.conversations,
       streamPlugin.mentions,
       streamPlugin.template,
       streamPlugin.htmlEncode,
       streamPlugin.formatTweetText,
-      streamPlugin.renderTemplate, 
+      streamPlugin.executeLinkPlugins,
+      streamPlugin.renderTemplate,
       streamPlugin.prepend,
       streamPlugin.keepScrollState,
       streamPlugin.age,
@@ -45,6 +47,8 @@ require.def("stream/app",
       initPlugin.personalizeForCurrentUser,
       initPlugin.notifyAfterPause,
       initPlugin.keyboardShortCuts,
+      initPlugin.favicon,
+      initPlugin.throttableNotifactions,
       status.observe,
       status.replyForm,
       status.location,
@@ -52,11 +56,18 @@ require.def("stream/app",
       status.retweet,
       status.favorite,
       status.conversation,
-      status.showJSON
+      status.showJSON,
+      settingsDialog.init
     ];
     
-    var stream = new tweetstream.Stream();
-    window.stream = stream; // make this globally accessible so we can see what is in it.
+    // linkPlugins are executed for each link in a tweet
+    // they perform actions such as previewing images or expading short URLs
+    var linkPlugins = [
+      linkPlugin.imagePreview
+    ];
+    
+    var stream = new tweetstream.Stream(settings);
+    window.streamie = stream; // make this globally accessible so we can see what is in it.
     
     var initial = true;
     
@@ -64,6 +75,7 @@ require.def("stream/app",
       start: function () {
         $(function () {
           stream.addPlugins(streamPlugins);
+          stream.addLinkPlugins(linkPlugins);
           
           location.hash = ""; // start fresh, we dont maintain any important state
           
@@ -88,7 +100,7 @@ require.def("stream/app",
                 initial = false;
                 // run initPlugins
                 initPlugins.forEach(function (plugin) {
-                  plugin.func.call(function () {}, stream);
+                  plugin.func.call(function () {}, stream, plugin);
                 })
               }
             }
