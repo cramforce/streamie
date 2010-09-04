@@ -209,6 +209,12 @@ require.def("stream/status",
                 $("head").append(style);
             }
             
+            $("li."+className).each(function () {
+              var li = $(this);
+              var tweet = li.data("tweet");
+              tweet.fetchNotInStream()
+            })
+            
           })
         }
       },

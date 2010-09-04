@@ -120,7 +120,13 @@ require.def("stream/streamplugins",
         func: function (tweet, stream, plugin) {
           var id = tweet.data.id;
           var in_reply_to = tweet.data.in_reply_to_status_id;
-          if(Conversations[in_reply_to]) {
+          if(tweet.data._conversation) {
+            tweet.conversation = Conversations[id] = tweet.data._conversation
+          }
+          else if(Conversations[id]) {
+            tweet.conversation = Conversations[id];
+          }
+          else if(Conversations[in_reply_to]) {
             tweet.conversation = Conversations[id] = Conversations[in_reply_to];
           } else {
             tweet.conversation = Conversations[id] = {
@@ -130,6 +136,21 @@ require.def("stream/streamplugins",
               Conversations[in_reply_to] = tweet.conversation;
             }
           }
+          tweet.fetchNotInStream = function (cb) {
+            var in_reply_to = tweet.data.in_reply_to_status_id;
+            if(in_reply_to && !Tweets[in_reply_to]) {
+              rest.get("/1/statuses/show/"+in_reply_to+".json", function (status) {
+                if(status) {
+                  status._after = tweet;
+                  status._conversation = tweet.conversation;
+                  stream.process(tweetModule.make(status));
+                  if(cb) {
+                    cb(status);
+                  }
+                }
+              })
+            }
+          };
           this();
         }
       },
@@ -140,7 +161,13 @@ require.def("stream/streamplugins",
         func: function (tweet, stream) {
           tweet.node = $(tweet.html);
           tweet.node.data("tweet", tweet); // give node access to its tweet
-          stream.canvas().prepend(tweet.node);
+          if(tweet.data._after) {
+            var target = tweet.data._after;
+            target.node.after(tweet.node);
+            tweet.fetchNotInStream();
+          } else {
+            stream.canvas().prepend(tweet.node);
+          }
           this();
         }
       },
@@ -187,9 +214,11 @@ require.def("stream/streamplugins",
               }
             };
             
-            tweet.node.find(".created_at").text(text);
+            if(tweet.node) {
+              tweet.node.find(".created_at").text(text);
+            }
           }
-          update();
+          update()
           setInterval(update, 5000)
           this();
         }
