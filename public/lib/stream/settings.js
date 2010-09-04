@@ -101,7 +101,7 @@ require.def("stream/settings",
       },
       
       // set a key in a namespace
-      set: function (namespace, key, value, suppressCallback) {
+      set: function (namespace, key, value) {
         init();
         var ns = settings[namespace];
         if(!ns) {
@@ -116,10 +116,14 @@ require.def("stream/settings",
           defaultSettings[namespace].settings &&
           defaultSettings[namespace].settings[key] &&
           defaultSettings[namespace].settings[key].callback;
-        if (!suppressCallback && callback) {
+        if (callback) {
           callback(namespace, key, value);
         }
-        
+      },
+      
+      //sets a key in a namespace. Updates gui if value differs
+      //Does not call callback directly, as the gui will do that
+      setGui: function(namespace, key, value) {        
         //update gui accordingly. warning: this can lead to infinite recursion!
         var element = $("#settingsForm input.setting[name=settings."+namespace+"."+key+"]");
         element = element && element[0];

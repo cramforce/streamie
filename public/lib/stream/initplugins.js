@@ -272,7 +272,7 @@ require.def("stream/initplugins",
             if (permission === 1) {
               //"not set" -> request
               window.webkitNotifications.requestPermission(function() {
-                settings.set(namespace, key, window.webkitNotifications.checkPermission() == 0, true);
+                settings.setGui(namespace, key, window.webkitNotifications.checkPermission() == 0);
               }); //requestPermission
             } else if (permission == 2) {
               //"blocked"
@@ -280,9 +280,9 @@ require.def("stream/initplugins",
               alert('To enable notifications, go to ' +
                 '"Preferences > Under the Hood > Content Settings > Notifications > Exceptions"' +
                 ' and remove blocking of "' + window.location.hostname + '"');
-              settings.set(namespace, key, false, true); //disable again
+              settings.setGui(namespace, key, false); //disable again
             }
-          } //if value...
+          } //if value
         } //callback
         
         if (window.webkitNotifications) {
@@ -291,7 +291,7 @@ require.def("stream/initplugins",
           if (permission !== 0) {
             //override stored value, as an enabled buttons sucks if the feature is disabled :(
             //TODO: maybe signal the user why we disabled it?
-            settings.set('notifications', 'chrome-notifications', false);
+            settings.setGui('notifications', 'chrome-notifications', false);
           }
         } //if webkitNotifications
 
