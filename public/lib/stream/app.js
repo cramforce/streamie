@@ -94,7 +94,7 @@ require.def("stream/app",
             }
             else if(data.tweet) {
               // We actually received a tweet. Let the stream process it
-              $("body").removeClass("loading");
+              //$("body").removeClass("loading");
               stream.process(tweetModule.make(JSON.parse(data.tweet)));
             }
             else {
