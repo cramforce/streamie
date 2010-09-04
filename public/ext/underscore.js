@@ -629,7 +629,7 @@
   _.template = function(str, data) {
     var c  = _.templateSettings;
     var endMatch = new RegExp("'(?=[^"+c.end.substr(0, 1)+"]*"+escapeRegExp(c.end)+")","g");
-    var fn = new Function('obj',
+    var t = 
       'var p=[],print=function(){p.push.apply(p,arguments);};' +
       'with(obj||{}){p.push(\'' +
       str.replace(/\r/g, '\\r')
@@ -641,7 +641,9 @@
          .replace(c.interpolate, "',$1,'")
          .split(c.start).join("');")
          .split(c.end).join("p.push('")
-         + "');}return p.join('');");
+         + "');}return p.join('');";
+    console.log(t);
+    var fn = new Function('obj',t);
     return data ? fn(data) : fn;
   };
 

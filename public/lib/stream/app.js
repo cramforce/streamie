@@ -12,8 +12,8 @@ if(typeof console == "undefined") {
   }
 }
 require.def("stream/app",
-  ["stream/tweetstream", "stream/tweet", "stream/streamplugins", "stream/initplugins", "stream/client", "stream/status", "/ext/underscore.js", "/ext/modernizr-1.5.js", "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"],
-  function(tweetstream, tweetModule, streamPlugin, initPlugin, client, status) {
+  ["stream/tweetstream", "stream/tweet", "stream/settings", "stream/streamplugins", "stream/initplugins", "stream/settingsDialog", "stream/client", "stream/status", "/ext/underscore.js", "/ext/modernizr-1.5.js", "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"],
+  function(tweetstream, tweetModule, settings, streamPlugin, initPlugin, settingsDialog, client, status) {
     
     // Stream plugins are called in the order defined here for each incoming tweet.
     // Important: Stream plugins have to call this() to continue the execution!
@@ -49,6 +49,7 @@ require.def("stream/app",
       initPlugin.keyboardShortCuts,
       initPlugin.favicon,
       initPlugin.registerNotifications,
+      initPlugin.throttableNotifactions,
       status.observe,
       status.replyForm,
       status.location,
@@ -56,11 +57,12 @@ require.def("stream/app",
       status.retweet,
       status.favorite,
       status.conversation,
-      status.showJSON
+      status.showJSON,
+      settingsDialog.init
     ];
     
-    var stream = new tweetstream.Stream();
-    window.stream = stream; // make this globally accessible so we can see what is in it.
+    var stream = new tweetstream.Stream(settings);
+    window.streamie = stream; // make this globally accessible so we can see what is in it.
     
     var initial = true;
     

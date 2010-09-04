@@ -4,8 +4,12 @@
  */
 
 require.def("stream/streamplugins",
-  ["stream/tweet", "stream/twitterRestAPI", "stream/helpers", "text!../templates/tweet.ejs.html"],
-  function(tweetModule, rest, helpers, templateText) {
+  ["stream/tweet", "stream/settings", "stream/twitterRestAPI", "stream/helpers", "text!../templates/tweet.ejs.html"],
+  function(tweetModule, settings, rest, helpers, templateText) {
+    
+    settings.registerNamespace("stream", "Stream");
+    settings.registerKey("stream", "showRetweets", "Show Retweets",  true);  
+    
     var template = _.template(templateText);
     
     var Tweets = {};
@@ -19,9 +23,13 @@ require.def("stream/streamplugins",
         name: "handleRetweet",
         func: function (tweet) {
           if(tweet.data.retweeted_status) {
-            var orig = tweet.data;
-            tweet.data = tweet.data.retweeted_status;
-            tweet.retweet = orig;
+            if(settings.get("stream", "showRetweets")) {
+              var orig = tweet.data;
+              tweet.data = tweet.data.retweeted_status;
+              tweet.retweet = orig;
+            } else {
+              return;
+            }
           }
           this();
         }
