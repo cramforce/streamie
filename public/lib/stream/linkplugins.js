@@ -32,9 +32,11 @@ require.def("stream/linkplugins",
               var previewURL = trans(url);
               var image = new Image();
               image.src = previewURL;
+              var div = $('<span class="image-preview"/>');
+              div.append(image)
               /*image.width = 150;
               image.height = 150;*/
-              a.addClass("image").append(image);
+              a.addClass("image").append(div);
             }
           }
         }

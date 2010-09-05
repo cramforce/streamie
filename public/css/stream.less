@@ -1,11 +1,15 @@
 #content{
 	#stream{
 		height:100%;
-		li{
+		li.tweet{
 			position:relative;
 			clear:both;
 			margin:0 0 20px 0;
 			#client-transition-time > .short;
+			z-index: 0;
+			&:hover{
+				z-index:1;
+			}
 			&.new{
 				-webkit-animation-name: fadein;
 				-webkit-animation-duration: 2s;
@@ -65,11 +69,18 @@
 						display:inline-block;
 						width:70px;
 					}
-					img{
-						height: 12px;
-						#client-transition-time > .short;
+					
+					.image-preview{
+						position:relative;
+						z-index:1;
+						img{
+							height: 12px;
+						}
 						&:hover{
-							height:150px;
+							img{
+								position:absolute;
+								height:150px;
+							}
 						}
 					}
 				}
