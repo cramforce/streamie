@@ -41,8 +41,7 @@ require.def("stream/status",
       
       // implement autocomplete for screen_names
       autocomplete: {
-        name: "autocomplete",
-        func: function (stream) {
+        func: function autocomplete (stream) {
           $(document).bind("status:focus", function (e, textarea) {
             if(settings.get("status", "autocompleteScreenNames")) {
               if(!textarea.data("autocomplete:names")) {
@@ -59,8 +58,7 @@ require.def("stream/status",
       
       // observe events on status forms
       observe: {
-        name: "oberserve",
-        func: function (stream) {
+        func: function oberserve (stream) {
           
           // submit event
           $(document).delegate("form.status", "submit", function (e) {
@@ -107,8 +105,7 @@ require.def("stream/status",
       
       // handle event for the reply form inside tweets
       replyForm: {
-        name: "replyForm",
-        func: function (stream) {
+        func: function replyForm (stream) {
           $(document).delegate("#stream .actions .reply", "click", function (e) {
             var li = $(this).parents("li");
             var form = getReplyForm(li);
@@ -120,8 +117,7 @@ require.def("stream/status",
       
       // The old style retweet, with the ability to comment on the original text
       quote: {
-        name: "quote",
-        func: function (stream) {
+        func: function quote (stream) {
           $(document).delegate("#stream .quote", "click", function (e) {
             var li = $(this).parents("li");
             var tweet = li.data("tweet");
@@ -139,8 +135,7 @@ require.def("stream/status",
       
       // Click on retweet button
       retweet: {
-        name: "retweet",
-        func: function (stream) {
+        func: function retweet (stream) {
           $(document).delegate("#stream .actions .retweet", "click", function (e) {
             if(confirm("Do you really want to retweet?")) {
               var button = $(this);
@@ -162,8 +157,7 @@ require.def("stream/status",
       
       // adds geo coordinates to statusses
       location: {
-        name: "location",
-        func: function () {
+        func: function location () {
           $(document).delegate("textarea[name=status]", "focus", function () {
             var form = $(this).closest("form");
             
@@ -178,8 +172,7 @@ require.def("stream/status",
       
       // Click on favorite button
       favorite: {
-        name: "favorite",
-        func: function (stream) {
+        func: function favorite (stream) {
           $(document).delegate("#stream .actions .favorite", "click", function (e) {
             var li = $(this).parents("li");
             var tweet = li.data("tweet");
@@ -206,8 +199,7 @@ require.def("stream/status",
       
       // show all Tweets from one conversation
       conversation: {
-        name: "conversation",
-        func: function (stream) {
+        func: function conversation (stream) {
           
           $(document).delegate("#stream .conversation", "click", function (e) {
             e.preventDefault();
@@ -245,8 +237,7 @@ require.def("stream/status",
       
       // Double click on tweet text turns text into JSON; Hackability FTW!
       showJSON: {
-        name: "showJSON",
-        func: function (stream) {
+        func: function showJSON (stream) {
           $(document).delegate("#stream p.text", "dblclick", function (e) {
             var p = $(this);
             var li = p.closest("li");

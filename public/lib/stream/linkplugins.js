@@ -10,7 +10,6 @@ require.def("stream/linkplugins",
     return {
       
       imagePreview: {
-        name: "imagePreview",
         transformations: {
           standard: function (url) {
             return "http://"+url.host+"/show/thumb"+url.path;
@@ -20,7 +19,7 @@ require.def("stream/linkplugins",
           }
         },
         domains: ["img.ly", "twitpic.com", "yfrog"],
-        func: function (a, tweet, stream, plugin) { // a is a jQuery object of the a-tag
+        func: function imagePreview (a, tweet, stream, plugin) { // a is a jQuery object of the a-tag
           var prefixLength = "http://".length;
           var href = a.attr("href") || "";
           var domains = plugin.domains;
