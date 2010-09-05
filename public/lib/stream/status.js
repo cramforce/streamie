@@ -1,7 +1,10 @@
 require.def("stream/status",
-  ["stream/twitterRestAPI", "stream/helpers", "stream/location", "text!../templates/status.ejs.html"],
-  function(rest, helpers, location, replyFormTemplateText) {
+  ["stream/twitterRestAPI", "stream/helpers", "stream/location", "stream/settings", "stream/keyValueStore", "text!../templates/status.ejs.html", "/ext/jquery.autocomplete.js"],
+  function(rest, helpers, location, settings, keyValue, replyFormTemplateText) {
     var replyFormTemplate = _.template(replyFormTemplateText);
+    
+    settings.registerNamespace("status", "Status");
+    settings.registerKey("status", "autocompleteScreenNames", "As-you-type autocomplete for screen names",  true);
     
     // get (or make) a form the reply to a tweet
     function getReplyForm(li) { // tweet li
@@ -12,7 +15,8 @@ require.def("stream/status",
           helpers: helpers
         }));
         form = li.find("form.status");
-        form.find("[name=status]").focus();
+        var textarea = form.find("[name=status]");
+        textarea.focus();
         form.bind("status:send", function () {
           form.hide();
           li.removeClass("form");
@@ -34,6 +38,24 @@ require.def("stream/status",
     }
     
     return {
+      
+      // implement autocomplete for screen_names
+      autocomplete: {
+        name: "autocomplete",
+        func: function (stream) {
+          $(document).bind("status:focus", function (e, textarea) {
+            if(settings.get("status", "autocompleteScreenNames")) {
+              if(!textarea.data("autocomplete:names")) {
+                textarea.data("autocomplete:names", true);
+                textarea.autocomplete(keyValue.Store("screen_names").keys(), {
+                  multiple: true,
+                  multipleSeparator: " "
+                });
+              }
+            }
+          })
+        }
+      },
       
       // observe events on status forms
       observe: {
@@ -70,7 +92,9 @@ require.def("stream/status",
           // update count every N millis to catch any changes, though paste, auto complete, etc.
           $(document).delegate("form.status [name=status]", "focus", function (e) {
             updateCharCount(e)
-            $(e.target).data("charUpdateInterval", setInterval(function () { updateCharCount(e) }, 200));
+            var textarea = $(e.target);
+            textarea.data("charUpdateInterval", setInterval(function () { updateCharCount(e) }, 200));
+            textarea.trigger("status:focus", [textarea]);
           })
           $(document).delegate("form.status [name=status]", "blur", function (e) {
             var interval = $(e.target).data("charUpdateInterval");

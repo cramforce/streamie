@@ -4,8 +4,8 @@
  */
 
 require.def("stream/streamplugins",
-  ["stream/tweet", "stream/settings", "stream/twitterRestAPI", "stream/helpers", "text!../templates/tweet.ejs.html"],
-  function(tweetModule, settings, rest, helpers, templateText) {
+  ["stream/tweet", "stream/settings", "stream/twitterRestAPI", "stream/helpers", "stream/keyValueStore", "text!../templates/tweet.ejs.html"],
+  function(tweetModule, settings, rest, helpers, keyValue, templateText) {
     
     settings.registerNamespace("stream", "Stream");
     settings.registerKey("stream", "showRetweets", "Show Retweets",  true);
@@ -52,6 +52,7 @@ require.def("stream/streamplugins",
         func: function (tweet, stream) {
           var key = "tweet"+tweet.data.id;
           if(window.localStorage) {
+            keyValue.Store("screen_names").set("@"+tweet.data.user.screen_name, 1);
             if(window.localStorage[key]) {
               tweet.seenBefore = true;
             } else {

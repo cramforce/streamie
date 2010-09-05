@@ -72,12 +72,14 @@
 					
 					.image-preview{
 						position:relative;
-						z-index:1;
+						width:10px;
+						overflow:hidden;
 						img{
 							height: 12px;
 						}
 						&:hover{
 							img{
+								z-index:1;
 								position:absolute;
 								height:150px;
 							}

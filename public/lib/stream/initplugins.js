@@ -7,7 +7,7 @@ require.def("stream/initplugins",
   function(tweetModule, settings, rest, helpers, templateText) {
     
     settings.registerNamespace("general", "General");
-    settings.registerKey("general", "showTwitterBackground", "Show background from Twitter",  false);
+    settings.registerKey("general", "showTwitterBackground", "Show my background from Twitter",  false);
     
     settings.registerNamespace("notifications", "Notifications");
     settings.registerKey("notifications", "favicon", "Highlight Favicon (Website icon)",  true);
