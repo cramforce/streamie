@@ -57,6 +57,7 @@ require.def("stream/app",
       status.retweet,
       status.favorite,
       status.conversation,
+      status.autocomplete,
       status.showJSON,
       settingsDialog.init
     ];
