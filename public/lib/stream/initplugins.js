@@ -305,7 +305,7 @@ require.def("stream/initplugins",
         var permission = window.webkitNotifications &&
           window.webkitNotifications.checkPermission();
           
-        var callback = function(namespace, key, value) {
+        var callback = function(value, namespace, key) {
           var permission = window.webkitNotifications &&
             window.webkitNotifications.checkPermission();
           if (value) {

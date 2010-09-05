@@ -136,17 +136,16 @@ require.def("stream/settings",
         persist(); // maybe do this somewhat lazily, like once a second
       },
       
-      //Updates gui if value of key in namespace differs
-      //Does not call callback directly, as the gui will do that
+      //Updates gui and calls "set()" if value of key in namespace differs
       setGui: function(namespace, key, value) {        
         //update gui accordingly. warning: this can lead to infinite recursion!
-        var element = $("#settingsForm input.setting[name=settings."+namespace+"."+key+"]");
+        var element = $("#settings\\."+namespace+"\\."+key);
         element = element && element[0];
         //TODO: what if there's more than true and false?
         if (element && 
-          element.checked &&
-          element.checked != value) {
+          element.checked !== value) {
           element.checked = value;
+          this.set(namespace, key, value);
         }
       },
       
