@@ -327,7 +327,8 @@ require.def("stream/initplugins",
         
         if (window.webkitNotifications) {
           settings.registerKey('notifications', 'chrome-notifications', 'chrome notifications',
-            permission === 0, [true, false], callback);
+            permission === 0, [true, false]);
+          settings.subscribe('notifications', 'chrome-notifications', callback);
           if (permission !== 0) {
             //override stored value, as an enabled buttons sucks if the feature is disabled :(
             //TODO: maybe signal the user why we disabled it?
