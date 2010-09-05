@@ -39,8 +39,12 @@ require.def("stream/streamplugins",
       // we only show tweets. No direct messages. For now
       tweetsOnly: {
         name: "tweetsOnly",
-        func: function (tweet) {
+        func: function (tweet, stream) {
           if(tweet.data.text != null) {
+            if(stream.count == 0) {
+              $(document).trigger("tweet:first");
+            }
+            stream.count++;
             this();
           }
         }
