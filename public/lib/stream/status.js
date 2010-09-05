@@ -157,7 +157,7 @@ require.def("stream/status",
       
       // adds geo coordinates to statusses
       location: {
-        func: function location () {
+        func: function locationPlugin () {
           $(document).delegate("textarea[name=status]", "focus", function () {
             var form = $(this).closest("form");
             
