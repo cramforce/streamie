@@ -22,7 +22,7 @@ require.def("stream/linkplugins",
         domains: ["img.ly", "twitpic.com", "yfrog"],
         func: function (a, tweet, stream, plugin) { // a is a jQuery object of the a-tag
           var prefixLength = "http://".length;
-          var href = a.attr("href");
+          var href = a.attr("href") || "";
           var domains = plugin.domains;
           for(var i = 0, len = domains.length; i < len; ++i) {
             var domain = domains[i];
