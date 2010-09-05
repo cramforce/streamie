@@ -1,7 +1,10 @@
 require.def("stream/status",
-  ["stream/twitterRestAPI", "stream/helpers", "stream/location", "stream/keyValueStore", "text!../templates/status.ejs.html", "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js", "/ext/jquery.autocomplete.js"],
-  function(rest, helpers, location, keyValue, replyFormTemplateText) {
+  ["stream/twitterRestAPI", "stream/helpers", "stream/location", "stream/settings", "stream/keyValueStore", "text!../templates/status.ejs.html", "/ext/jquery.autocomplete.js"],
+  function(rest, helpers, location, settings, keyValue, replyFormTemplateText) {
     var replyFormTemplate = _.template(replyFormTemplateText);
+    
+    settings.registerNamespace("status", "Status");
+    settings.registerKey("status", "autocompleteScreenNames", "As-you-type autocomplete for screen names",  true);
     
     // get (or make) a form the reply to a tweet
     function getReplyForm(li) { // tweet li
@@ -41,12 +44,14 @@ require.def("stream/status",
         name: "autocomplete",
         func: function (stream) {
           $(document).bind("status:focus", function (e, textarea) {
-            if(!textarea.data("autocomplete:names")) {
-              textarea.data("autocomplete:names", true);
-              textarea.autocomplete(keyValue.Store("screen_names").keys(), {
-                multiple: true,
-                multipleSeparator: " "
-              });
+            if(settings.get("status", "autocompleteScreenNames")) {
+              if(!textarea.data("autocomplete:names")) {
+                textarea.data("autocomplete:names", true);
+                textarea.autocomplete(keyValue.Store("screen_names").keys(), {
+                  multiple: true,
+                  multipleSeparator: " "
+                });
+              }
             }
           })
         }
