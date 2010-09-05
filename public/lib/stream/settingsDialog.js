@@ -11,14 +11,16 @@ require.def("stream/settingsDialog",
     var visible = false;
     function hide() {
       visible = false;
-      $("#settings").removeClass("show");
+      var elem = $("#settings");
+      elem.removeClass("show").css("top", -elem.outerHeight());
     }
     function show() {
       visible = true;
-      $("#settings").addClass("show");
+      $("#settings").css("top", 65).addClass("show");
     }
     
     function bind() {
+      hide();
       $("#header").delegate(".settings > a", "click", function (e) {
         e.preventDefault();
         
