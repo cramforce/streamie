@@ -190,18 +190,23 @@ require.def("stream/initplugins",
       
       // display state in the favicon
       favicon: {
+        
+        canvases: {}, // cache for canvas objects
         colorCanvas: function (color) {
           // remove the current favicon. Just changung the href doesnt work.
           var favicon = $("link[rel~=icon]")
           favicon.remove()
-          
-          // make a quick canvas.
-          var canvas = document.createElement("canvas");
-          canvas.width = 16;
-          canvas.height = 16;
-          var ctx = canvas.getContext("2d");
-          ctx.fillStyle = color;  
-          ctx.fillRect(0, 0, 16, 16);
+          var canvas = this.canvases[color];
+          if(!canvas) {
+            // make a quick canvas.
+            canvas = document.createElement("canvas");
+            canvas.width = 16;
+            canvas.height = 16;
+            var ctx = canvas.getContext("2d");
+            ctx.fillStyle = color;  
+            ctx.fillRect(0, 0, 16, 16);
+            this.canvases[color] = canvas
+          }
           
           // convert canvas to DataURL
           var url = canvas.toDataURL();
