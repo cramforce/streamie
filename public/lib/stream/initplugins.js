@@ -286,7 +286,7 @@ require.def("stream/initplugins",
             }
             
             // Make API calls
-            rest.get("/1/statuses/friends_timeline.json?count=200", handleSince);
+            rest.get("/1/statuses/friends_timeline.json?count=100", handleSince);
             rest.get("/1/favorites.json", handle);
           }
           
