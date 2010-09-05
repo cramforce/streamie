@@ -31,9 +31,9 @@ require.def("stream/app",
       streamPlugin.formatTweetText,
       streamPlugin.executeLinkPlugins,
       streamPlugin.renderTemplate,
+      streamPlugin.age,
       streamPlugin.prepend,
       streamPlugin.keepScrollState,
-      streamPlugin.age,
       streamPlugin.newTweetEvent,
       streamPlugin.notify
     ];
@@ -51,6 +51,7 @@ require.def("stream/app",
       initPlugin.favicon,
       initPlugin.registerNotifications,
       initPlugin.throttableNotifactions,
+      initPlugin.background,
       status.observe,
       status.replyForm,
       status.location,
@@ -85,17 +86,11 @@ require.def("stream/app",
           var connect = function(data) {
             data = JSON.parse(data); // data must always be JSON
             if(data.error) {
-              //console.log("Error: "+data.error)
-              if(data.error == "no_auth") {
-                if(confirm("Streamie.org is a Twitter client. We'll send you to Twitter to ask for access to your account now. OK?")) {
-                  location.href = "/access" // redirect to do oauth
-                } else {
-                  // No where else to go. Patches welcome;
-                  location.href = "http://www.nonblocking.io/2010/08/future-is-here-i-just-forked-running.html";
-                }
-              }
+              console.log(data.error);
             }
             else if(data.action == "auth_ok") {
+              $("#about").hide();
+              $("#header").show();
               // we are now connected and authorization was fine
               stream.user = data.info; // store the info of the logged user
               if(initial) {
@@ -103,7 +98,8 @@ require.def("stream/app",
                 // run initPlugins
                 initPlugins.forEach(function (plugin) {
                   plugin.func.call(function () {}, stream, plugin);
-                })
+                });
+                $(document).trigger("streamie:init:complete");
               }
             }
             else if(data.tweet) {

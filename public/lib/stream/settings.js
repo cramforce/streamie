@@ -15,8 +15,8 @@ require.def("stream/settings",
   function() {
     
     var defaultSettings = {};
-    
     var settings;
+    var subscriptions = {};
     
     // init settings from localStorage
     function init() {
@@ -56,6 +56,17 @@ require.def("stream/settings",
       }
     }
     
+    function notify(namespace, key, value) {
+      // call subscriptions on value change
+      if(subscriptions[namespace] && subscriptions[namespace][key]) {
+        subscriptions[namespace][key].forEach(function (cb) {
+          cb(value, namespace, key);
+        })
+      }
+    }
+    
+    init();
+    
     return {
       
       // register a namespace and give it a label (for the UI)
@@ -67,7 +78,8 @@ require.def("stream/settings",
       },
       
       // register a key in a namespace and give it a label (for the UI)
-      registerKey: function (namespace, key, label, defaultValue, values, callback) {
+      registerKey: function (namespace, key, label, defaultValue, values) {
+        var self = this;
         if(!defaultSettings[namespace]) {
           throw new Error("Unknown namespace "+namespace)
         }
@@ -78,14 +90,24 @@ require.def("stream/settings",
         defaultSettings[namespace].settings[key] = {
           label: label,
           defaultValue: defaultValue,
-          values: values, // possible values
-          callback: callback //can be undefined
-        }
+          values: values // possible values
+        };
+        
+        // initial notification
+        $(document).bind("streamie:init:complete", function () {
+          notify(namespace, key, self.get(namespace, key));
+        });
+      },
+      
+      // get a callback every time the key changes
+      subscribe: function (namespace, key, cb) {
+        if(!subscriptions[namespace]) subscriptions[namespace] = {};
+        if(!subscriptions[namespace][key]) subscriptions[namespace][key] = [];
+        subscriptions[namespace][key].push(cb);
       },
       
       // synchronous get of a settings key in a namespace
       get: function (namespace, key) {
-        init();
         var ns = settings[namespace];
         if(ns) {
           if(key in ns) {
@@ -102,26 +124,19 @@ require.def("stream/settings",
       
       // set a key in a namespace
       set: function (namespace, key, value) {
-        init();
         var ns = settings[namespace];
         if(!ns) {
           ns = settings[namespace] = {};
         }
-        ns[key] = value
+        ns[key] = value;
+        
+        notify(namespace, key, value)
+        
         console.log("[settings] set "+namespace+"."+key+" = "+value);
         persist(); // maybe do this somewhat lazily, like once a second
-        //call callback
-        var callback = defaultSettings &&
-          defaultSettings[namespace] &&
-          defaultSettings[namespace].settings &&
-          defaultSettings[namespace].settings[key] &&
-          defaultSettings[namespace].settings[key].callback;
-        if (callback) {
-          callback(namespace, key, value);
-        }
       },
       
-      //sets a key in a namespace. Updates gui if value differs
+      //Updates gui if value of key in namespace differs
       //Does not call callback directly, as the gui will do that
       setGui: function(namespace, key, value) {        
         //update gui accordingly. warning: this can lead to infinite recursion!

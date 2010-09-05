@@ -1,3 +1,5 @@
 lib/startup.bash
 lib/data/
 twitter-stream-proxy.bbprojectd/*
+*.bbprojectsettings
+*.bbprojectsettings
