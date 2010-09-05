@@ -70,10 +70,11 @@ require.def("stream/streamplugins",
       // find all mentions in a tweet. set tweet.mentioned to true if the current user was mentioned
       mentions: {
         name: "mentions",
-        func: function (tweet, stream) {
+        regex: /(^|\W)\@([a-zA-Z0-9_]+)/g,
+        func: function (tweet, stream, plugin) {
           var screen_name = stream.user.screen_name;
           tweet.mentions = [];
-          tweet.data.text.replace(/(^|\W)\@([a-zA-Z0-9_]+)/g, function (match, pre, name) {
+          tweet.data.text.replace(plugin.regex, function (match, pre, name) {
             if(name == screen_name) {
               tweet.mentioned = true;
             }
@@ -180,10 +181,12 @@ require.def("stream/streamplugins",
       // htmlencode the text to avoid XSS
       htmlEncode: {
         name: "htmlEncode",
-        func: function (tweet, stream) {
+        GT_RE: /\&gt\;/g,
+        LT_RE: /\&lt\;/g,
+        func: function (tweet, stream, plugin) {
           var text = tweet.data.text;
-          text = text.replace(/\&gt\;/g, ">"); // these are preencoded in Twitter tweets
-          text = text.replace(/\&lt\;/g, "<");
+          text = text.replace(plugin.GT_RE, ">"); // these are preencoded in Twitter tweets
+          text = text.replace(plugin.LT_RE, "<");
           text = helpers.html(text);
           tweet.textHTML = text;
           this();
@@ -234,6 +237,8 @@ require.def("stream/streamplugins",
         name: "formatTweetText",
         //from http://gist.github.com/492947 and http://daringfireball.net/2010/07/improved_regex_for_matching_urls
         GRUBERS_URL_RE: /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/ig,
+        SCREEN_NAME_RE: /(^|\W)\@([a-zA-Z0-9_]+)/g,
+        HASH_TAG_RE:    /(^|\s)\#(\S+)/g,
         func: function (tweet, stream, plugin) {
           var text = tweet.textHTML;
           
@@ -242,11 +247,11 @@ require.def("stream/streamplugins",
           })
 					
           // screen names
-          text = text.replace(/(^|\W)\@([a-zA-Z0-9_]+)/g, function (all, pre, name) {
+          text = text.replace(plugin.SCREEN_NAME_RE, function (all, pre, name) {
             return pre+'<a href="http://twitter.com/'+name+'" class="user-href">@'+name+'</a>';
           });
           // hash tags
-          text = text.replace(/(^|\s)\#(\S+)/g, function (all, pre, tag) {
+          text = text.replace(plugin.HASH_TAG_RE, function (all, pre, tag) {
             return pre+'<a href="http://search.twitter.com/search?q='+encodeURIComponent(tag)+'" class="tag">#'+tag+'</a>';
           });
           
@@ -293,10 +298,11 @@ require.def("stream/streamplugins",
       // adjust the scrollTop to show the same thing as before
       keepScrollState: {
         name: "keepScrollState",
-        func: function (tweet, stream) {
+        WIN: $(window),
+        func: function (tweet, stream, plugin) {
           if(settings.get("stream", "keepScrollState")) {
             if(!tweet.prefill || !tweet.seenBefore) {
-              var win = $(window);
+              var win = plugin.WIN;
               var cur = win.scrollTop();
               var next = tweet.node.next();
               if(next.length > 0) {
