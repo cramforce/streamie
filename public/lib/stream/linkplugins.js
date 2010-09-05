@@ -16,9 +16,17 @@ require.def("stream/linkplugins",
           },
           yfrog: function (url) {
             return "http://"+url.host+url.path+".th.jpg";
+          },
+          "i.imgur.com": function (url) {
+            var path = (url.path || "").replace(/(?:.jpg)?$/, "s.jpg");
+            return "http://"+url.host+path;
+          },
+          "imgur.com": function (url) {
+            var path = (url.path || "").replace(/(?:.jpg)?$/, "s.jpg");
+            return "http://"+url.host+path;
           }
         },
-        domains: ["img.ly", "twitpic.com", "yfrog"],
+        domains: ["img.ly", "twitpic.com", "yfrog", "imgur.com", "i.imgur.com"],
         func: function imagePreview (a, tweet, stream, plugin) { // a is a jQuery object of the a-tag
           var prefixLength = "http://".length;
           var href = a.attr("href") || "";
