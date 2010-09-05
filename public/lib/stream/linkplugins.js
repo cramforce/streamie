@@ -22,8 +22,7 @@ require.def("stream/linkplugins",
             return "http://"+url.host+path;
           },
           "imgur.com": function (url) {
-            var path = (url.path || "").replace(/(?:.jpg)?$/, "s.jpg");
-            return "http://"+url.host+path;
+            return this["i.imgur.com"](url);
           }
         },
         domains: ["img.ly", "twitpic.com", "yfrog", "imgur.com", "i.imgur.com"],
@@ -36,7 +35,7 @@ require.def("stream/linkplugins",
             if(href.indexOf(domain) === prefixLength) {
               var url = parseUri(href);
               var trans = plugin.transformations[domain] || plugin.transformations.standard;
-              var previewURL = trans(url);
+              var previewURL = trans.call(plugin.transformations, url);
               var image = new Image();
               image.src = previewURL;
               var div = $('<span class="image-preview"/>');
