@@ -306,10 +306,9 @@ require.def("stream/streamplugins",
       },
       
       notify: {
-        name: "notify",
+        //todo: is stream.plugins.notify a good place to store state?
         current: 0,
-        func: function(tweet, stream) {
-          //todo: is stream.plugins.notify a good place to store state?
+        func: function notify(tweet, stream) {
           var that = stream.plugins.filter(function(val, i, arr) { return val.name == 'notify' })[0];
           if (!tweet.seenBefore && 
             (that.current < 5) &&

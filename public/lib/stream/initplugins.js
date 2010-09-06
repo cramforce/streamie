@@ -295,7 +295,7 @@ require.def("stream/initplugins",
       
     registerNotifications: {
       name: "registerNotifications",
-      func: function() {
+      func: function registerNotifications() {
         //notifications
         var permission = window.webkitNotifications &&
           window.webkitNotifications.checkPermission();
