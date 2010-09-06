@@ -306,14 +306,12 @@ require.def("stream/streamplugins",
       },
       
       notify: {
-        //todo: is stream.plugins.notify a good place to store state?
         current: 0,
-        func: function notify(tweet, stream) {
-          var that = stream.plugins.filter(function(val, i, arr) { return val.name == 'notify' })[0];
+        func: function notify(tweet, stream, plugin) {
           if (!tweet.seenBefore && 
-            (that.current < 5) &&
+            plugin.current < 5 &&
             window.webkitNotifications && 
-            (window.webkitNotifications.checkPermission() == 0) &&
+            window.webkitNotifications.checkPermission() == 0 &&
             settings.get('notifications', 'chrome-notifications')) {
             try {
               var notification = 
@@ -322,9 +320,9 @@ require.def("stream/streamplugins",
                   tweet.data.text);
                notification.show();
                notification.onclose = function() {
-                --that.current;
+                --plugin.current;
                } //onclose
-               ++that.current;               
+               ++plugin.current;               
                //hide after 5 seconds
                setTimeout(function() {
                 notification.cancel();
