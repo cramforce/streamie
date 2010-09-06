@@ -43,6 +43,7 @@ require.def("stream/tweetstream",
       },
       
       // Get the full info for the current user. See http://apiwiki.twitter.com/Twitter-REST-API-Method:-users%C2%A0show
+      // the callback "cb" will receive the data. The API call is cache after the first call
       userInfo: function (cb) {
         if(this.__userInfo) {
           var user = this.__userInfo;
@@ -77,7 +78,9 @@ require.def("stream/tweetstream",
           }
         }
         next();
-      }
+      },
+      
+      count: 0 // count is incremented in the streamplugin/tweetsOnly
     };
     
     return {

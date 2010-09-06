@@ -92,6 +92,9 @@ require.def("stream/app",
             else if(data.action == "auth_ok") {
               $("#about").hide();
               $("#header").show();
+              $(document).bind("tweet:first", function () {
+                $("#content .logo").hide();
+              });
               // we are now connected and authorization was fine
               stream.user = data.info; // store the info of the logged user
               if(initial) {

@@ -17,8 +17,7 @@ require.def("stream/initplugins",
       
       // when location.hash changes we set the hash to be the class of our HTML body
       hashState: {
-        name: "hashState",
-        func: function (stream) {
+        func: function hashState (stream) {
           function change() {
             var val = location.hash.replace(/^\#/, "");
             $("body").attr("class", val);
@@ -32,8 +31,7 @@ require.def("stream/initplugins",
       
       // change the background to the twitter background
       background: {
-        name: "background",
-        func: function (stream) {
+        func: function background (stream) {
           settings.subscribe("general", "showTwitterBackground", function (bool) {
             if(bool) {
               stream.userInfo(function (user) {
@@ -50,8 +48,7 @@ require.def("stream/initplugins",
       
       // make the clicked nav item "active"
       navigation: {
-        name: "navigation",
-        func: function (stream) {
+        func: function navigation (stream) {
           var mainstatus = $("#mainstatus");
           
           // close mainstatus when user hits escape
@@ -93,8 +90,7 @@ require.def("stream/initplugins",
       
       // signals new tweets
       signalNewTweets: {
-        name: "signalNewTweets",
-        func: function () {
+        func: function signalNewTweets () {
           var win = $(window);
           var dirty = win.scrollTop() > 0;
           var newCount = 0;
@@ -128,8 +124,7 @@ require.def("stream/initplugins",
       // tranform "tweet:unread" events into "notify:tweet:unread" events
       // depending on setting, only fire the latter once a minute
       throttableNotifactions: {
-        name: "throttableNotifications",
-        func: function () {
+        func: function throttableNotifactions () {
           var notifyCount = null;
           setInterval(function () {
             // if throttled, only redraw every N seconds;
@@ -153,8 +148,7 @@ require.def("stream/initplugins",
       
       // listen to keyboard events and translate them to semantic custom events
       keyboardShortCuts: {
-        name: "keyboardShortCuts",
-        func: function () {
+        func: function keyboardShortCuts () {
           
           function trigger(e, name) {
             $(e.target).trigger("key:"+name);
@@ -169,16 +163,14 @@ require.def("stream/initplugins",
       },
       
       personalizeForCurrentUser: {
-        name: "personalizeForCurrentUser",
-        func: function (stream) {
+        func: function personalizeForCurrentUser (stream) {
           $("#currentuser-screen_name").text("@"+stream.user.screen_name)
         }
       },
       
       // sends an event after user
       notifyAfterPause: {
-        name: "notifyAfterPause",
-        func: function () {
+        func: function notifyAfterPause () {
           
           function now() {
             return (new Date).getTime();
@@ -198,19 +190,23 @@ require.def("stream/initplugins",
       
       // display state in the favicon
       favicon: {
-        name: "favicon",
+        
+        canvases: {}, // cache for canvas objects
         colorCanvas: function (color) {
           // remove the current favicon. Just changung the href doesnt work.
           var favicon = $("link[rel~=icon]")
           favicon.remove()
-          
-          // make a quick canvas.
-          var canvas = document.createElement("canvas");
-          canvas.width = 16;
-          canvas.height = 16;
-          var ctx = canvas.getContext("2d");
-          ctx.fillStyle = color;  
-          ctx.fillRect(0, 0, 16, 16);
+          var canvas = this.canvases[color];
+          if(!canvas) {
+            // make a quick canvas.
+            canvas = document.createElement("canvas");
+            canvas.width = 16;
+            canvas.height = 16;
+            var ctx = canvas.getContext("2d");
+            ctx.fillStyle = color;  
+            ctx.fillRect(0, 0, 16, 16);
+            this.canvases[color] = canvas
+          }
           
           // convert canvas to DataURL
           var url = canvas.toDataURL();
@@ -219,7 +215,7 @@ require.def("stream/initplugins",
           $("head").append($('<link rel="shortcut icon" type="image/x-icon" href="'+url+'" />'));
         },
         
-        func: function (stream, plugin) {
+        func: function favicon (stream, plugin) {
           $(document).bind("notify:tweet:unread", function (e, count) {
             var color = "#000000";
             if(count > 0) {
@@ -233,8 +229,7 @@ require.def("stream/initplugins",
       // Use the REST API to load the users's friends timeline, mentions and friends's retweets into the stream
       // this also happens when we detect that the user was offline for a while
       prefillTimeline: {
-        name: "prefillTimeline",
-        func: function (stream) { 
+        func: function prefillTimeline (stream) { 
           
           function prefill () {
             var all = [];
