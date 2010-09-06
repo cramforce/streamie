@@ -6,7 +6,7 @@
 		<% ns.keys().forEach(function (key) { %>
 		<% var value = settings.get(ns.name, key), name  = "settings."+ns.name+"."+key; %>
 		<div class="formrow">
-			<label for="<%=name%>"><input type="checkbox" name="<%=name%>" id="<%=name%>" <%= value ? 'checked' : ''  %> class="setting" /> <%= ns.settings[key].label %></label>
+			<label><input type="checkbox" name="<%=name%>" id="<%=name%>" <%= value ? 'checked' : ''  %> class="setting" /> <%= ns.settings[key].label %></label>
 		</div>
 		<% });%>
 	</fieldset>
