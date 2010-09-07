@@ -103,6 +103,54 @@ require.def("stream/status",
         }
       },
       
+      mediaUpload: {
+        func: function imageUpload (stream) {
+          $(document).delegate("form.status .extra", "change", function () {
+            var select = $(this);
+            var val = select.val();
+            this.selectedIndex = 0;
+            if(val == "image") {
+              select.closest("form").find("[name=file]").click();
+            }
+          });
+          $(document).delegate("form.status [name=file]", "change", function () {
+            var file = this;
+            var form = $(this).closest("form");
+            
+            if(typeof FormData == "undefined") {
+              alert("Media upload is not supported by your browser!");
+              return;
+            }
+            
+            var formData = new FormData();  
+            formData.append("image", file.files[0]);
+            
+            // use native XHR because jQuery does evil stuff that I couldn't work around.
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/imgur/2/upload.json");  
+            xhr.send(formData);
+            
+            xhr.onreadystatechange = function () {
+              if(this.readyState == 4) {
+                if(this.status == 200) {
+                  console.log(this.responseText);
+                  var image = JSON.parse(this.responseText);
+                  var textarea = form.find("[name=status]");
+                  var cur = textarea.val();
+                  
+                  var url = image.upload.links.imgur_page;
+                  
+                  textarea.val(cur + " " + url);
+                  textarea.change();
+                } else {
+                  console.log("[FileUpload Error] Status '"+xhr.statusText+"' URL: "+url);
+                }
+              }
+            };
+          })
+        }
+      },
+      
       // handle event for the reply form inside tweets
       replyForm: {
         func: function replyForm (stream) {
