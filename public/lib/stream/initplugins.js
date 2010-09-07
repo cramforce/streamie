@@ -116,7 +116,8 @@ require.def("stream/initplugins",
             if(!dirty) { // we scrolled to the top. Back to 0 unread
               newCount = 0;
               setTimeout(function () { // not do this winthin the scroll event. Makes Chrome much happier performance wise.
-                $(document).trigger("notify:tweet:unread", [newCount])
+                $(document).trigger("tweet:unread", [newCount]); // notify
+                $(document).trigger("notify:tweet:unread", [newCount]); // we want to have this event bypass throttle because it always involves user interaction
               }, 0);
             }
           });
