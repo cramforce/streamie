@@ -15,6 +15,23 @@ require.def("stream/initplugins",
     
     return {
       
+      preview: {
+        func: function preview() {
+          $("#stream").delegate("p.text a", "click", function (e) {
+            e.preventDefault();
+            var preview = $("#preview");
+            var width = $(window).width() - 480;
+            preview.width(width);
+            var height = $(window).height() - 100;
+            preview.height(height);
+            preview.show();
+            
+            var href = this.href;
+            preview.find("iframe").attr("src", href);
+          })
+        }
+      },
+      
       // when location.hash changes we set the hash to be the class of our HTML body
       hashState: {
         func: function hashState (stream) {

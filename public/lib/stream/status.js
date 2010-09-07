@@ -216,7 +216,7 @@ require.def("stream/status",
             if(!con.styleAppended) {
               con.styleAppended = true;
               // add some dynamic style to the page to hide everything besides this conversation
-              var style = '<style type="text/css" id>'+
+              var style = '<style type="text/css">'+
                 'body.'+className+' #content #stream li {display:none;}\n'+
                 'body.'+className+' #content #stream li.'+className+' {display:block;}\n'+
                 '</style>';
