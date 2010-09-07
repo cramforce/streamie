@@ -94,13 +94,10 @@ form.status{
 	margin:5px 0 0 0;
 	border-top:1px solid #333;
 	padding:10px 0 0 0;
-	[name=file]{
-		position:absolute;
-		left: -5000px;
-	}
 	fieldset{
 		padding:0 0 35px;
 		margin-bottom:0;
+		position:relative;
 		textarea{
 			#border-box;
 			width:100%;
@@ -123,11 +120,12 @@ form.status{
 			left:9px;
 			right:9px;
 		}
-		.extra{
-			font-size:7px;
-			height: 8px;
-			width: 40px;
-		}
+	}
+	.extra{
+		display:none;
+	}
+	&:hover .extra{
+		display:block;
 	}
 	&.show{
 		top:65px;
@@ -143,8 +141,8 @@ form.status{
 			height:60px;
 		}
 		.characters{
-			right:50px;
-			bottom:18px;
+			right:39px;
+			bottom:9px;
 			color:#aaa;
 		}
 		.button{
@@ -153,8 +151,8 @@ form.status{
 			-moz-transform: rotate(-90deg);
 			width:60px;
 			left:auto;
-			right:-9px;
-			bottom:29px;
+			right:-18px;
+			bottom:20px;
 		}
 	}
 	

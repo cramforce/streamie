@@ -79,14 +79,12 @@
 				<input type="hidden" name="display_coordinates" value="" />
 				<fieldset> 
 					<textarea name="status" rows="5" cols="40" placeholder="Your Tweet…"></textarea>
-					<select class="extra">
-					  <option value="">+</option>
-					  <option value="image">Add Image</option>
-					</select>
-					<input type="file" name="file" />
 					<span class="characters">0</span> 
 					<input type="submit" value="Tweet" class="button" />
 				</fieldset>
+				<div class="extra">
+					<label for="file">Image-Upload <input type="file" name="file" /></label>
+				</div>
 			</form>
 			<div id="settings" class="panel"></div>
 		</div>
