@@ -17,15 +17,26 @@ require.def("stream/initplugins",
       
       // when location.hash changes we set the hash to be the class of our HTML body
       hashState: {
-        func: function hashState (stream) {
+        ScrollState: {},
+        func: function hashState (stream, plugin) {
+          var win = $(window);
           function change() {
             var val = location.hash.replace(/^\#/, "");
             $("body").attr("class", val);
             // { custom-event: stat:XXX }
             $(document).trigger("state:"+val);
+            
+            var scrollState = plugin.ScrollState[val || "all"];
+            if(scrollState != null) {
+              win.scrollTop(scrollState);
+            }
           }
-          $(window).bind("hashchange", change); // who cares about old browsers?
+          win.bind("hashchange", change); // who cares about old browsers?
           change();
+          
+          win.bind("scroll", function () {
+            plugin.ScrollState[location.hash.replace(/^\#/, "") || "all"] = win.scrollTop();
+          })
         }
       },
       
