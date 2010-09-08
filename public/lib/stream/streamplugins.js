@@ -290,13 +290,18 @@ require.def("stream/streamplugins",
       keepScrollState: {
         WIN: $(window),
         func: function keepScrollState (tweet, stream, plugin) {
-          if(settings.get("stream", "keepScrollState")) {
-            if(!tweet.prefill || !tweet.seenBefore) {
-              var win = plugin.WIN;
-              var cur = win.scrollTop();
-              var next = tweet.node.next();
-              if(next.length > 0) {
-                var top = cur + next.offset().top - tweet.node.offset().top;
+          var next = tweet.node.next();
+          if(next.length > 0) {
+            var height = next.offset().top - tweet.node.offset().top;
+            tweet.height = height;
+            if(settings.get("stream", "keepScrollState")) {
+              if(!tweet.prefill || !tweet.seenBefore) {
+                var win = plugin.WIN;
+                var cur = win.scrollTop();
+              
+                
+                var top = cur + height;
+                
                 win.scrollTop( top );
               }
             }
