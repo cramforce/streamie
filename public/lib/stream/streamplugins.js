@@ -328,6 +328,7 @@ require.def("stream/streamplugins",
         current: 0,
         func: function notify(tweet, stream, plugin) {
           if (!tweet.seenBefore && 
+            !tweet.prefill &&
             plugin.current < 5 &&
             window.webkitNotifications && 
             window.webkitNotifications.checkPermission() == 0 &&
