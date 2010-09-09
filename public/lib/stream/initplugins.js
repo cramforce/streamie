@@ -37,8 +37,13 @@ require.def("stream/initplugins",
           win.bind("scroll", function () {
             plugin.ScrollState[location.hash.replace(/^\#/, "") || "all"] = win.scrollTop();
           })
+        }
+      },
+      
+      readState: {
+        func: function readState (stream) {
+          var win = $(window);
           
-          // EXPERIMENTAL
           // memorize the view area that was visible during scrolling
           var max = 0;
           var min = 1000000;
@@ -60,8 +65,9 @@ require.def("stream/initplugins",
           // Every second or so mark the tweets that are in the visible interval as "read"
           setInterval(function () {
             
-            var li  = $("#stream > li");
-            var top = 91; // TODO make this dynamic
+            var li     = $("#stream > li");
+            var top    = 91; // TODO make this dynamic
+            var unread = 0;
             li.each(function () {
               var l = $(this);
               var height = l.data("tweet").height || 79; // every tweet except the last (where is it not so important) knows its height from earlier in the process
@@ -69,11 +75,16 @@ require.def("stream/initplugins",
               if(!l.hasClass("read")) {
                 if(top > min && top + height < max) {
                   l.addClass("read");
+                } else {
+                  ++unread;
                 }
               }
               
               top += height; // calculate top, as we go which is a lot faster that calculating position() or offset() every time
             });
+            
+            // update notifications
+            $(document).trigger("notify:tweet:unread", [unread]);
             
             max = 0;
             min = 10000000000;
