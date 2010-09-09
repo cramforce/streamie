@@ -19,7 +19,20 @@ require.def("stream/streamplugins",
     
     return {
       
-      // turns retweets into something similar to tweets
+      // Turns direct messages into something similar to a tweet
+      // Because Streamie uses a stream methaphor for everything it does not make sense to
+      // make a special case for direct messages
+      handleDirectMessage: {
+        func: function handleDirectMessage (tweet) {
+          if(tweet.data.sender) {
+            tweet.direct_message = true;
+            tweet.data.user = tweet.data.sender; // the user is the sender
+          }
+          this();
+        }
+      },
+      
+      // Turns retweets into something similar to tweets
       handleRetweet: {
         func: function handleRetweet (tweet) {
           if(tweet.data.retweeted_status) {
@@ -28,6 +41,7 @@ require.def("stream/streamplugins",
               tweet.data = tweet.data.retweeted_status;
               tweet.retweet = orig;
             } else {
+              console.log(JSON.stringify(tweet, null, " "));
               return;
             }
           }
@@ -290,13 +304,18 @@ require.def("stream/streamplugins",
       keepScrollState: {
         WIN: $(window),
         func: function keepScrollState (tweet, stream, plugin) {
-          if(settings.get("stream", "keepScrollState")) {
-            if(!tweet.prefill || !tweet.seenBefore) {
-              var win = plugin.WIN;
-              var cur = win.scrollTop();
-              var next = tweet.node.next();
-              if(next.length > 0) {
-                var top = cur + next.offset().top - tweet.node.offset().top;
+          var next = tweet.node.next();
+          if(next.length > 0) {
+            var height = next.offset().top - tweet.node.offset().top;
+            tweet.height = height;
+            if(settings.get("stream", "keepScrollState")) {
+              if(!tweet.prefill || !tweet.seenBefore) {
+                var win = plugin.WIN;
+                var cur = win.scrollTop();
+              
+                
+                var top = cur + height;
+                
                 win.scrollTop( top );
               }
             }

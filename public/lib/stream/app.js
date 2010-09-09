@@ -20,6 +20,7 @@ require.def("stream/app",
     // They receive two paramters. The tweet which is an instance of stream/tweet.Tweet
     // and the stream which is an instance of stream/tweetstream.Stream.
     var streamPlugins = [
+      streamPlugin.handleDirectMessage,
       streamPlugin.handleRetweet,
       streamPlugin.tweetsOnly,
       streamPlugin.everSeen,
@@ -108,7 +109,11 @@ require.def("stream/app",
             }
             else if(data.tweet) {
               // We actually received a tweet. Let the stream process it
-              stream.process(tweetModule.make(JSON.parse(data.tweet)));
+              var data = JSON.parse(data.tweet);
+              if(data.direct_message) {
+                data = data.direct_message;
+              }
+              stream.process(tweetModule.make(data));
             }
             else {
               // dunno what to do here

@@ -23,10 +23,22 @@ require.def("stream/client",
       
       var connected = true;
       socket.on('message', function (msg) {
-        if(JSON.parse(msg) == "pong") {
+        var data = JSON.parse(msg);
+        if(data == "pong") {
           connected = true;
         }
-      })
+        else if(data.streamError) {
+          console.log("[Backend] Stream error "+data.streamError)
+          // We have an error on the backend connection to twitter.
+          // Wait a short time and then reconnect.
+          setTimeout(function () {
+            clearInterval(interval);
+            socket.disconnect(); // just making sure
+            console.log("Reconnecting");
+            connect(cb);
+          }, 2000)
+        }
+      });
       
       var interval = setInterval(function () { // send a ping every N seconds
         connected = false;

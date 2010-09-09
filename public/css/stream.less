@@ -179,6 +179,15 @@
 			    margin: 32px;
 			  }
 			}
+			&.direct{
+			  .status{
+			  	@color:#0000ff;
+				border-color:@color !important;
+				&:after{
+					border-right-color:@color;
+				}
+			  }
+			}
 			&.starred{
 			  .status .actions li.favorite{
 					opacity:1;
@@ -219,6 +228,14 @@ body.starred #content #stream {
 	li{
 		display:none;
 		&.starred{
+			display:block;
+		}
+	}
+}
+body.direct #content #stream {
+	li{
+		display:none;
+		&.direct{
 			display:block;
 		}
 	}
