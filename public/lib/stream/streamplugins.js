@@ -193,10 +193,12 @@ require.def("stream/streamplugins",
       htmlEncode: {
         GT_RE: /\&gt\;/g,
         LT_RE: /\&lt\;/g,
+        QUOT_RE: /\&quot\;/g,
         func: function htmlEncode (tweet, stream, plugin) {
           var text = tweet.data.text;
           text = text.replace(plugin.GT_RE, ">"); // these are preencoded in Twitter tweets
           text = text.replace(plugin.LT_RE, "<");
+          text = text.replace(plugin.QUOT_RE, '"'); // Some clients encode " to &quot; (only a few) If you're tweet contains the literal text &quot; you are out of luck
           text = helpers.html(text);
           tweet.textHTML = text;
           this();
