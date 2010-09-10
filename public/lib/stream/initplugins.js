@@ -306,9 +306,9 @@ require.def("stream/initplugins",
         }
       }, //prefilleTimeline:
       
-    registerNotifications: {
-      name: "registerNotifications",
-      func: function registerNotifications() {
+    registerWebkitNotifications: {
+      name: "registerWebkitNotifications",
+      func: function registerWebkitNotifications() {
         //notifications
         var permission = window.webkitNotifications &&
           window.webkitNotifications.checkPermission();
@@ -334,13 +334,13 @@ require.def("stream/initplugins",
         } //callback
         
         if (window.webkitNotifications) {
-          settings.registerKey('notifications', 'chrome-notifications', 'chrome notifications',
+          settings.registerKey('notifications', 'webkit-notifications', 'Chrome notifications',
             permission === 0, [true, false]);
-          settings.subscribe('notifications', 'chrome-notifications', callback);
+          settings.subscribe('notifications', 'webkit-notifications', callback);
           if (permission !== 0) {
             //override stored value, as an enabled buttons sucks if the feature is disabled :(
             //TODO: maybe signal the user why we disabled it?
-            settings.set('notifications', 'chrome-notifications', false);
+            settings.set('notifications', 'webkit-notifications', false);
           }
         } //if webkitNotifications
 

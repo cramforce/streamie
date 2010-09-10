@@ -324,9 +324,9 @@ require.def("stream/streamplugins",
         }
       },
       
-      notify: {
+      webkitNotify: {
         current: 0,
-        func: function notify(tweet, stream, plugin) {
+        func: function webkitNotify(tweet, stream, plugin) {
           if (!tweet.seenBefore && 
             !tweet.prefill &&
             plugin.current < 5 &&
