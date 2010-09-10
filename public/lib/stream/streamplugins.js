@@ -332,7 +332,7 @@ require.def("stream/streamplugins",
             plugin.current < 5 &&
             window.webkitNotifications && 
             window.webkitNotifications.checkPermission() == 0 &&
-            settings.get('notifications', 'chrome-notifications')) {
+            settings.get('notifications', 'enableWebkitNotifications')) {
             try {
               var notification = 
                 window.webkitNotifications.createNotification(tweet.data.user.profile_image_url, 
