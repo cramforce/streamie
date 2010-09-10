@@ -324,15 +324,18 @@ require.def("stream/streamplugins",
         }
       },
       
-      notify: {
+      webkitNotify: {
+        //how many notifications are currently shown?
         current: 0,
-        func: function notify(tweet, stream, plugin) {
+        func: function webkitNotify(tweet, stream, plugin) {
+          //only show tweets not seen before, while not prefilling, 
+          //if we have the rights and its enabled in the settings
           if (!tweet.seenBefore && 
             !tweet.prefill &&
             plugin.current < 5 &&
             window.webkitNotifications && 
             window.webkitNotifications.checkPermission() == 0 &&
-            settings.get('notifications', 'chrome-notifications')) {
+            settings.get('notifications', 'enableWebkitNotifications')) {
             try {
               var notification = 
                 window.webkitNotifications.createNotification(tweet.data.user.profile_image_url, 
@@ -349,10 +352,10 @@ require.def("stream/streamplugins",
                }, 5000);
             } catch(e) {
             }
-          } //if webkitNotifications
+          }
           this();
-        } //func
-      } //notify
+        } 
+      }
       
     }
       
