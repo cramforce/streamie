@@ -110,8 +110,9 @@ require.def("stream/streamplugins",
       
       // render the template (the underscore.js way)
       renderTemplate: {
-        func: function renderTemplate (tweet) {
+        func: function renderTemplate (tweet, stream) {
           tweet.html = tweet.template({
+            stream: stream,
             tweet: tweet,
             helpers: helpers
           });
