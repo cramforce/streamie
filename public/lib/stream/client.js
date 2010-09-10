@@ -8,6 +8,7 @@ require.def("stream/client",
     
     function connect (cb) {
       io.setPath('/ext/socket.io/');
+      window.WEB_SOCKET_SWF_LOCATION = "/foobar"; // we do not use flash, but socket.io still complaints
       var socket = new io.Socket(location.hostname, { 
         port: location.port || 80,
         transports: ['websocket', 'htmlfile', 'xhr-multipart', 'xhr-polling']
@@ -20,6 +21,8 @@ require.def("stream/client",
       }));
       socket.on('message', cb); // send all messages to our callback
       // TODO: auto reconnect when the connection is lost
+      
+      var failCount = 0;
       
       var connected = true;
       socket.on('message', function (msg) {
@@ -36,7 +39,7 @@ require.def("stream/client",
             socket.disconnect(); // just making sure
             console.log("Reconnecting");
             connect(cb);
-          }, 2000)
+          }, 1000 * (++failCount))
         }
       });
       
