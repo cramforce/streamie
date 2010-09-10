@@ -58,6 +58,7 @@ require.def("stream/settings",
     
     function notify(namespace, key, value) {
       // call subscriptions on value change
+      $(document).trigger("settings:set", [namespace, key, value]);
       if(subscriptions[namespace] && subscriptions[namespace][key]) {
         subscriptions[namespace][key].forEach(function (cb) {
           cb(value, namespace, key);
@@ -134,20 +135,6 @@ require.def("stream/settings",
         
         console.log("[settings] set "+namespace+"."+key+" = "+value);
         persist(); // maybe do this somewhat lazily, like once a second
-      },
-      
-      //Updates gui and calls "set()" if value of key in namespace differs
-      setGui: function(namespace, key, value) {        
-        //only change the GUI if the value differs to avoid infinite recursion 
-        //if a callback if registered
-        var element = $("#settings\\."+namespace+"\\."+key);
-        element = element && element[0];
-        //TODO: what if there's more than true and false?
-        if (element && 
-          element.checked !== value) {
-          element.checked = value;
-          this.set(namespace, key, value);
-        }
       },
       
       // returns sorted (by name) list of namespaces

@@ -330,7 +330,7 @@ require.def("stream/initplugins",
               window.webkitNotifications.requestPermission(function() {
                 //after the user allowed or disallowed webkitNotification rights, change the
                 //gui accordingly
-                settings.setGui(namespace, key, window.webkitNotifications.checkPermission() == 0);
+                settings.set(namespace, key, window.webkitNotifications.checkPermission() == 0);
               }); 
             } else if (permission == 2) {
               //"blocked" -> tell the user how to unblock (it seems she wants to do that)
@@ -339,7 +339,7 @@ require.def("stream/initplugins",
               alert('To enable notifications, go to ' +
                 '"Preferences > Under the Hood > Content Settings > Notifications > Exceptions"' +
                 ' and remove blocking of "' + window.location.hostname + '"');
-              settings.setGui(namespace, key, false); //disable again
+              settings.set(namespace, key, false); //disable again
             } 
           }
         } 
