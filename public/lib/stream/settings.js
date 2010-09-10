@@ -136,6 +136,20 @@ require.def("stream/settings",
         persist(); // maybe do this somewhat lazily, like once a second
       },
       
+      //Updates gui and calls "set()" if value of key in namespace differs
+      setGui: function(namespace, key, value) {        
+        //only change the GUI if the value differs to avoid infinite recursion 
+        //if a callback if registered
+        var element = $("#settings\\."+namespace+"\\."+key);
+        element = element && element[0];
+        //TODO: what if there's more than true and false?
+        if (element && 
+          element.checked !== value) {
+          element.checked = value;
+          this.set(namespace, key, value);
+        }
+      },
+      
       // returns sorted (by name) list of namespaces
       namespaces: function () {
         var namespaces = Object.keys(defaultSettings).sort().map(function (name) {
