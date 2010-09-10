@@ -60,15 +60,19 @@ require.def("stream/streamplugins",
 		       // for @username and #tag
 		       var src_match	= src_text.match(/[@#]\w+/g);
 		       var dst_match	= dst_text.match(/[@#]\s+\w+/g);
-		       for(var i = 0; dst_match && i < dst_match.length; i++){
-			       result	= result.replace(dst_match[i], src_match[i]);
+		       if( src_match && dst_match && src_match.length == dst_match.length ){
+				for(var i = 0; dst_match && i < dst_match.length; i++){
+					result	= result.replace(dst_match[i], src_match[i]);
+				}
 		       }
 		       
 		       // for ponctuation
-		       var src_match	= src_text.match(/[.]\w+/g);
-		       var dst_match	= dst_text.match(/[.]\s\w+/g);
-		       for(var i = 0; dst_match && i < dst_match.length; i++){
+		       var src_match	= src_text.match(/ [.]\w+/g);
+		       var dst_match	= dst_text.match(/[.] \w+/g);
+		       if( src_match && dst_match && src_match.length == dst_match.length ){
+		         for(var i = 0; dst_match && i < dst_match.length; i++){
 			       result	= result.replace(dst_match[i], " "+src_match[i]);
+		         }
 		       }
 		       // return the just-built result
 		       return result;
