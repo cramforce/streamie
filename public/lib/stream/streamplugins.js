@@ -325,8 +325,11 @@ require.def("stream/streamplugins",
       },
       
       webkitNotify: {
+        //how many notifications are currently shown?
         current: 0,
         func: function webkitNotify(tweet, stream, plugin) {
+          //only show tweets not seen before, while not prefilling, 
+          //if we have the rights and its enabled in the settings
           if (!tweet.seenBefore && 
             !tweet.prefill &&
             plugin.current < 5 &&
@@ -349,10 +352,10 @@ require.def("stream/streamplugins",
                }, 5000);
             } catch(e) {
             }
-          } //if webkitNotifications
+          }
           this();
-        } //func
-      } //notify
+        } 
+      }
       
     }
       

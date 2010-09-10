@@ -138,7 +138,8 @@ require.def("stream/settings",
       
       //Updates gui and calls "set()" if value of key in namespace differs
       setGui: function(namespace, key, value) {        
-        //update gui accordingly. warning: this can lead to infinite recursion!
+        //only change the GUI if the value differs to avoid infinite recursion 
+        //if a callback if registered
         var element = $("#settings\\."+namespace+"\\."+key);
         element = element && element[0];
         //TODO: what if there's more than true and false?
