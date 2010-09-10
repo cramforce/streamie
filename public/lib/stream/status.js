@@ -38,7 +38,28 @@ require.def("stream/status",
     }
     
     return {
-      
+      // handle event for the reply form inside tweets
+      translateToggle: {
+        func: function translateToggle (stream) {
+          $(document).delegate("#stream .actions .translate_toggle", "click", function (e) {
+            var li = $(this).parents("li");
+            var tweet = li.data("tweet");
+            if(!tweet.translate)  return;
+		console.log("translate toggle");
+		console.log(avail_langs);
+	      		var avail_langs	= _.keys(tweet.translate.texts);
+        		var cur_idx	= _.indexOf(avail_langs, tweet.translate.cur_lang);
+        		cur_idx		= (cur_idx+1) % avail_langs.length;
+        		tweet.translate.cur_lang	= avail_langs[cur_idx];
+
+            if( tweet.node ){
+              tweet.node.find("p.text").html(tweet.translate.texts[tweet.translate.cur_lang]);
+              tweet.node.find("p.text").html(tweet.translate.texts[tweet.translate.cur_lang]);
+    	        //stream.process(tweet);
+            }
+          });
+        }
+      },
       // implement autocomplete for screen_names
       autocomplete: {
         func: function autocomplete (stream) {

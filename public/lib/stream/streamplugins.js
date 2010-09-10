@@ -29,17 +29,26 @@ require.def("stream/streamplugins",
 	    if( src_lang == dst_lang )	return;
             console.log("[", src_lang, "] ", tweet.data.text)
             console.log("[", dst_lang, "] ", result.translation);
+	    /**
+	     * - UI issue
+	     *   - how to show users than this tweet as been translated
+	     *   - how to show users that a translation is available
+	     *   - how to allow translation back and forth
+	     * - tweet processing.
+	     *   - translating cause link to be unclickable
+	    */
 	    tweet.translate	= {
 		src_lang	: src_lang,
-		dst_lang	: dst_lang,
-		src_text	: tweet.data.text,
-		dst_text	: result.translation
+		cur_lang	: dst_lang,
+		texts		: {}
 	    }
-            if(tweet.node) {
-	      tweet.node.find("div.language").text(tweet.translate.src_lang);
-              tweet.node.find("p.text").css({color:"red"});
-	      var suffix	= " ["+tweet.translate.src_lang+"]";
-              tweet.node.find("p.text").html(tweet.translate.dst_text+suffix);
+	    tweet.translate.texts[src_lang]	= tweet.data.text;
+	    tweet.translate.texts[dst_lang]	= result.translation;
+	    // modify the dom directly
+            if( tweet.node ){
+	      tweet.node.find("p.text").css({color:"red"});
+              tweet.node.find("p.text").html(tweet.translate.texts[tweet.translate.cur_lang]);
+	      //stream.process(tweet);
             }
 	  });
 	  this();

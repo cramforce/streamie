@@ -60,6 +60,7 @@ require.def("stream/app",
       status.conversation,
       status.autocomplete,
       status.showJSON,
+      status.translateToggle,
       settingsDialog.init
     ];
     
