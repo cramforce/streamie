@@ -36,14 +36,53 @@ require.def("stream/streamplugins",
 	     *   - how to allow translation back and forth
 	     * - tweet processing.
 	     *   - translating cause link to be unclickable
+	     * - google translate.
+	     *   - it changes symbols
+	     *   - "nice domain .fr" => "nice domain. fr"
+	     *   - "#supertag" => "# supertag"
+	     *   - "@supername" => "@ supername"
+	     *   - apparently, cant escape words from translation
+	     *   - with a post processing it is possible to reduce damage.
+	     *     - if no space after symbol in src, remove it from dst
 	    */
+	    /**
+		* Some postprocessing to workaround google translate
+		* - google translate issue
+		*   - it changes symbols
+		*   - "nice domain .fr" => "nice domain. fr"
+		*   - "#supertag" => "# supertag"
+		*   - "@supername" => "@ supername"
+		*   - apparently, cant escape words from translation
+	       */
+	       function twitter_gtranslate_pproc(src_text, dst_text){
+		       var result	= dst_text;
+	       
+		       // for @username and #tag
+		       var src_match	= src_text.match(/[@#]\w+/g);
+		       var dst_match	= dst_text.match(/[@#]\s+\w+/g);
+		       for(var i = 0; dst_match && i < dst_match.length; i++){
+			       result	= result.replace(dst_match[i], src_match[i]);
+		       }
+		       
+		       // for ponctuation
+		       var src_match	= src_text.match(/[.]\w+/g);
+		       var dst_match	= dst_text.match(/[.]\s\w+/g);
+		       for(var i = 0; dst_match && i < dst_match.length; i++){
+			       result	= result.replace(dst_match[i], " "+src_match[i]);
+		       }
+		       // return the just-built result
+		       return result;
+	       }
 	    tweet.translate	= {
 		src_lang	: src_lang,
 		cur_lang	: dst_lang,
 		texts		: {}
 	    }
-	    tweet.translate.texts[src_lang]	= tweet.data.text;
-	    tweet.translate.texts[dst_lang]	= result.translation;
+	    var src_text	= tweet.data.text;
+	    var dst_text	= result.translation;
+	    dst_text	= twitter_gtranslate_pproc(src_text, dst_text)
+	    tweet.translate.texts[src_lang]	= src_text;
+	    tweet.translate.texts[dst_lang]	= dst_text;
 	    // modify the dom directly
             if( tweet.node ){
 	      tweet.node.find("p.text").css({color:"red"});
