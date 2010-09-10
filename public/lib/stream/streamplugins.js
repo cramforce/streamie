@@ -18,7 +18,34 @@ require.def("stream/streamplugins",
     var ConversationCounter = 0;
     
     return {
-      
+      // translate 
+      translate: {
+        func: function tweetsOnly (tweet, stream) {
+	  var dst_lang	= "en";
+	  google.language.translate(tweet.data.text, "", dst_lang, function(result){
+            //console.log("tweet to translate [", result, "] ", tweet);
+            if(result.error) return;
+	    var src_lang	= result.detectedSourceLanguage;
+	    if( src_lang == dst_lang )	return;
+            console.log("[", src_lang, "] ", tweet.data.text)
+            console.log("[", dst_lang, "] ", result.translation);
+	    tweet.translate	= {
+		src_lang	: src_lang,
+		dst_lang	: dst_lang,
+		src_text	: tweet.data.text,
+		dst_text	: result.translation
+	    }
+            if(tweet.node) {
+	      tweet.node.find("div.language").text(tweet.translate.src_lang);
+              tweet.node.find("p.text").css({color:"red"});
+	      var suffix	= " ["+tweet.translate.src_lang+"]";
+              tweet.node.find("p.text").html(tweet.translate.dst_text+suffix);
+            }
+	  });
+	  this();
+        }
+      },
+            
       // turns retweets into something similar to tweets
       handleRetweet: {
         func: function handleRetweet (tweet) {
