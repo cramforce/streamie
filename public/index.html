@@ -69,6 +69,7 @@
 				<li class="activatable timeline active"><a href="#all" title="Show All" target="_self">⚛</a></li>
 				<li class="activatable rt"><a href="#retweet" title="Retweets" target="_self">♻</a></li>
 				<li class="activatable rt"><a href="#starred" title="Favorites" target="_self">★</a></li>
+				<li class="activatable rt"><a href="#direct" title="Direct Messages" target="_self">✉</a></li>
 				<li class="settings"><a href="#settings" title="Settings" target="_self">⚙</a></li>
 				<li class="add"><a href="#add" title="New Tweet" target="_self">✍</a></li>
 			</ul>
@@ -122,6 +123,7 @@
 		</div>
 	</div>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script src="ext/socket.io/socket.io.js"></script>
 	<!-- We use require.js for loading dependencies http://requirejs.org/ -->
   <script src="ext/require.js"></script>
   <script>
@@ -131,7 +133,7 @@
         "stream": "/lib/stream"
       },
     },
-    ["stream/app", "ext/socket.io/socket.io.js"],
+    ["stream/app"],
       function(app) {
         app.start();
       }

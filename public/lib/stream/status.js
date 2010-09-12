@@ -60,11 +60,19 @@ require.def("stream/status",
       observe: {
         func: function oberserve (stream) {
           
+          function shortenDirectMessagePrefix(val) {
+            return val.replace(/d\s+\@\w+\s/, ""); // remove direct message prefix
+          }
+          
           // submit event
           $(document).delegate("form.status", "submit", function (e) {
             var form = $(this);
             var status = form.find("[name=status]");
-            if(status.val().length > 140) return false; // too long for Twitter
+            var maxlength = 140;
+            var val = status.val();
+            val = shortenDirectMessagePrefix(val);
+            
+            if(val.length > maxlength) return false; // too long for Twitter
             
             // post to twitter
             rest.post(form.attr("action"), form.serialize(), function () {
@@ -77,7 +85,9 @@ require.def("stream/status",
           
           var last;
           function updateCharCount (e) {
-            var length = e.target.value.length;
+            var val = e.target.value;
+            val = shortenDirectMessagePrefix(val);
+            var length = val.length;
             
             if(length != last) {
               $(e.target).closest("form").find(".characters").text( length );
