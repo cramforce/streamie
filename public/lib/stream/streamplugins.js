@@ -57,6 +57,9 @@ require.def("stream/streamplugins",
               $(document).trigger("tweet:first");
             }
             stream.count++;
+            if(tweet.data.user.id == stream.user.user_id) {
+              tweet.yourself = true;
+            }
             this();
           }
         }
