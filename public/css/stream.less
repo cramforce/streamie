@@ -23,7 +23,7 @@
 			}
 			> a{
 				position:absolute;
-				top:0;
+				top:4px;
 				left:0;
 				img{
 					#client-border-radius > .small;
@@ -160,8 +160,12 @@
 			}
 			&.mention{
 			  .status{
-			  	@color:#f69c9c;
-				border-color:@color !important;
+			  	@color:#7f9d83;
+				//border-color:@color !important;
+				background-color:@color;
+				.h,.time{
+					color:#fff;
+				}
 				&:after{
 					border-right-color:@color;
 				}
@@ -169,8 +173,12 @@
 			}
 			&.retweet{
 			  .status{
-			  	@color:#999;
-				border-color:@color !important;
+			  	@color:#d58383;
+				//border-color:@color !important;
+				background-color:@color;
+				.h,.time{
+					color:#fff;
+				}
 				&:after{
 					border-right-color:@color;
 				}
@@ -181,8 +189,12 @@
 			}
 			&.direct{
 			  .status{
-			  	@color:#0000ff;
-				border-color:@color !important;
+			  	@color:#84b0c1;
+				//border-color:@color !important;
+				background-color:@color;
+				.h,.time{
+					color:#fff;
+				}
 				&:after{
 					border-right-color:@color;
 				}
