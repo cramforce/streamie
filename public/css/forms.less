@@ -97,6 +97,7 @@ form.status{
 	fieldset{
 		padding:0 0 35px;
 		margin-bottom:0;
+		position:relative;
 		textarea{
 			#border-box;
 			width:100%;
@@ -120,6 +121,12 @@ form.status{
 			right:9px;
 		}
 	}
+	.extra{
+		display:none;
+	}
+	&:hover .extra{
+		display:block;
+	}
 	&.show{
 		top:65px;
 		opacity:1;
@@ -134,8 +141,8 @@ form.status{
 			height:60px;
 		}
 		.characters{
-			right:50px;
-			bottom:18px;
+			right:39px;
+			bottom:9px;
 			color:#aaa;
 		}
 		.button{
@@ -144,8 +151,8 @@ form.status{
 			-moz-transform: rotate(-90deg);
 			width:60px;
 			left:auto;
-			right:-9px;
-			bottom:29px;
+			right:-18px;
+			bottom:20px;
 		}
 	}
 	
