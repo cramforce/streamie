@@ -7,7 +7,7 @@ require.def("stream/client",
   function(tweetstream, tweetModule) {
     
     var transports             = ['websocket', 'htmlfile', 'xhr-multipart', 'xhr-polling'];
-    var convervativeTransports = ['htmlfile', 'xhr-multipart', 'xhr-polling'];
+    var convervativeTransports = ['xhr-polling']; // xhr-polling should work even through the most evil proxies
     
     var connectFail  = 0;  // actual failed connects since last successfull connect
     var connectCount = 0;
