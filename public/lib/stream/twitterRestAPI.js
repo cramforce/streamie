@@ -23,7 +23,7 @@ require.def("stream/twitterRestAPI",
     function handler(method, url, requestData, callback) {
       
       if(devCacheEnabled) {
-        var cache = localStorage.getItem("devcache:"+url);
+        var cache = sessionStorage.getItem("devcache:"+url);
         if(cache) {
           cache = JSON.parse(cache);
           setTimeout(function () {
@@ -35,7 +35,7 @@ require.def("stream/twitterRestAPI",
       var success = function(data, status, xhr) {
         if(devCacheEnabled) {
           if(status == "success") {
-            localStorage.setItem("devcache:"+url, JSON.stringify({
+            sessionStorage.setItem("devcache:"+url, JSON.stringify({
               data: data,
               status: status
             }));
