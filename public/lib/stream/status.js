@@ -19,10 +19,12 @@ require.def("stream/status",
         textarea.data("init-val", textarea.val());
         textarea.focus();
         form.bind("status:send", function () {
+          form.trigger("close");
+        });
+        form.bind("close", function () {
           form.hide();
           li.removeClass("form");
-          $(window).scrollTop(0); // Good behavior?
-        })
+        });
       }
       li.addClass("form");
       return form;
@@ -64,6 +66,19 @@ require.def("stream/status",
           function shortenDirectMessagePrefix(val) {
             return val.replace(/d\s+\@?\w+\s/, ""); // remove direct message prefix
           }
+          
+          // When the user hits escape, close the form
+          $(document).bind("key:escape", function (e) {
+            var target = $(e.target);
+            if(target.is(":input") && target.closest("form.status").length > 0) {
+              target.trigger("close");
+            }
+          });
+          
+          $(document).delegate("form.status .close", "click", function (e) {
+            e.preventDefault();
+            $(this).trigger("close");
+          });
           
           // submit event
           $(document).delegate("form.status", "submit", function (e) {
@@ -118,14 +133,6 @@ require.def("stream/status",
       
       mediaUpload: {
         func: function imageUpload (stream) {
-          $(document).delegate("form.status .extra", "change", function () {
-            var select = $(this);
-            var val = select.val();
-            this.selectedIndex = 0;
-            if(val == "image") {
-              select.closest("form").find("[name=file]").click();
-            }
-          });
           $(document).delegate("form.status [name=file]", "change", function () {
             var file = this;
             var form = $(this).closest("form");
