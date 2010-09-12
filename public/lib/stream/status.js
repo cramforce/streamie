@@ -1,6 +1,6 @@
 require.def("stream/status",
-  ["stream/twitterRestAPI", "stream/helpers", "stream/location", "stream/settings", "stream/keyValueStore", "text!../templates/status.ejs.html", "/ext/jquery.autocomplete.js"],
-  function(rest, helpers, location, settings, keyValue, replyFormTemplateText) {
+  ["stream/twitterRestAPI", "stream/helpers", "stream/popin", "stream/location", "stream/settings", "stream/keyValueStore", "text!../templates/status.ejs.html", "/ext/jquery.autocomplete.js"],
+  function(rest, helpers, popin, location, settings, keyValue, replyFormTemplateText) {
     var replyFormTemplate = _.template(replyFormTemplateText);
     
     settings.registerNamespace("status", "Status");
@@ -133,7 +133,16 @@ require.def("stream/status",
       
       mediaUpload: {
         func: function imageUpload (stream) {
-          $(document).delegate("form.status [name=file]", "change", function () {
+          
+          var statusForm;
+          
+          $(document).delegate("form.status .attachImage", "click", function (e) {
+            e.preventDefault();
+            statusForm = $(this).closest("form.status");
+            popin.show("imageUpload");
+          });
+          
+          $(document).delegate("#imageUpload [name=file]", "change", function () {
             var file = this;
             var form = $(this).closest("form");
             
@@ -149,19 +158,24 @@ require.def("stream/status",
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "/imgur/2/upload.json");  
             xhr.send(formData);
+            $("#imageUpload .progress").text("Uploading...");
             
             xhr.onreadystatechange = function () {
               if(this.readyState == 4) {
+                $("#imageUpload .progress").text("");
                 if(this.status == 200) {
                   console.log(this.responseText);
                   var image = JSON.parse(this.responseText);
-                  var textarea = form.find("[name=status]");
+                  var textarea = statusForm.find("[name=status]");
                   var cur = textarea.val();
                   
                   var url = image.upload.links.imgur_page;
                   
                   textarea.val(cur + " " + url);
                   textarea.change();
+                  
+                  $("#imageUpload").trigger("close");
+                  textarea.focus();
                 } else {
                   console.log("[FileUpload Error] Status '"+xhr.statusText+"' URL: "+url);
                 }
