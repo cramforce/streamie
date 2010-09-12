@@ -157,6 +157,7 @@ require.def("stream/status",
               rest.post("/1/statuses/retweet/"+id+".json", function (tweetData, status) {
                 if(status == "success") {
                   button.hide();
+                  $(document).trigger("status:retweet")
                   // todo: Maybe redraw the tweet with more fancy marker?
                 }
               })
@@ -191,6 +192,7 @@ require.def("stream/status",
             if(!tweet.data.favorited) {
               rest.post("/1/favorites/create/"+id+".json", function (tweetData, status) {
                 if(status == "success") {
+                  $(document).trigger("status:favorite")
                   tweet.data.favorited = true;
                   li.addClass("starred");
                 }
@@ -198,6 +200,7 @@ require.def("stream/status",
             } else {
               rest.post("/1/favorites/destroy/"+id+".json", function (tweetData, status) {
                 if(status == "success") {
+                  $(document).trigger("status:favoriteDestroy")
                   tweet.data.favorited = false;
                   li.removeClass("starred");
                 }
@@ -240,7 +243,6 @@ require.def("stream/status",
               var tweet = li.data("tweet");
               tweet.fetchNotInStream()
             })
-            
           })
         }
       },

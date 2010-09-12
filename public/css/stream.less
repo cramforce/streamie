@@ -209,7 +209,7 @@
 					}
 				}
 			}
-			&.reply{
+			&.yourself{
 				> a{
 					left:auto;
 					right:0;
@@ -227,31 +227,31 @@
 				}
 				&.mention{
 				  .status{
-					&:after{
-						border-color:transparent transparent transparent @client-color-mention;
-					}
+						&:after{
+							border-color:transparent transparent transparent @client-color-mention;
+						}
 				  }
 				}
 				&.retweet{
 				  .status{
-					&:after{
-						border-color:transparent transparent transparent @client-color-rt;
-					}
+						&:after{
+							border-color:transparent transparent transparent @client-color-rt;
+						}
 				  }
 				  .retweet-user-href-icon {
-					margin:32px 32px 0 0;
+				    margin:32px 32px 0 0;
 				  }
-	
+
 				}
 				&.direct{
 				  .status{
-					&:after{
-						border-color:transparent transparent transparent @client-color-dm;
+						&:after{
+							border-color:transparent transparent transparent @client-color-dm;
+						}
 					}
-				  }
 				}
 			}
-		}
+		}	
 	}
 }
 body.retweet #content #stream {

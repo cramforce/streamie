@@ -174,6 +174,46 @@ b,strong{font-weight:bold;}
 	
 }
 
+html.no-utf8{
+	#header{
+		#mainnav{
+			li{
+				line-height:auto;
+				padding:0;
+				a{
+					background:transparent url("/images/ic_mainnav.png") no-repeat 0 0;
+					text-indent:-3000px;
+					display:block;
+					height:39px;
+					top:0 !important;
+					font-size:10px !important;
+				}
+				&.rpl a{
+					background-position:center 9px;
+				}
+				&.timeline a{
+					background-position:center -92px;
+				}
+				&.rt a{
+					background-position:center -190px;
+				}
+				&.fv a{
+					background-position:center -292px;
+				}
+				&.dm a{
+					background-position:center -392px;
+				}
+				&.settings a{
+					background-position:center -492px;
+				}
+				&.add a{
+					background-position:center -592px;
+				}
+			}
+		}
+	}
+}
+
 #content{
 	margin:60px 5px 20px;
 	padding:10px;
