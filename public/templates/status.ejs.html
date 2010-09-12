@@ -5,7 +5,7 @@
   <input type="hidden" name="long" value="" />
   <input type="hidden" name="display_coordinates" value="" />
 	<fieldset>
-		<textarea name="status" rows="5" cols="40" placeholder="Your Tweet…"><%= (data.user ? "@"+data.user.screen_name+' ' : '' ) || '' %></textarea>
+		<textarea name="status" rows="5" cols="40" placeholder="Your Tweet…"><%=tweet.direct_message ? 'd ' : ''  %><%= (data.user ? "@"+data.user.screen_name+' ' : '' ) || '' %></textarea>
 		<span class="characters">0</span>
 		<input type="submit" value="Submit" class="button" />
 	</fieldset>

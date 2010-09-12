@@ -16,14 +16,15 @@ require.def("stream/status",
         }));
         form = li.find("form.status");
         var textarea = form.find("[name=status]");
+        textarea.data("init-val", textarea.val());
         textarea.focus();
         form.bind("status:send", function () {
           form.hide();
           li.removeClass("form");
           $(window).scrollTop(0); // Good behavior?
         })
-        li.addClass("form");
       }
+      li.addClass("form");
       return form;
     }
     
@@ -60,15 +61,25 @@ require.def("stream/status",
       observe: {
         func: function oberserve (stream) {
           
+          function shortenDirectMessagePrefix(val) {
+            return val.replace(/d\s+\@?\w+\s/, ""); // remove direct message prefix
+          }
+          
           // submit event
           $(document).delegate("form.status", "submit", function (e) {
             var form = $(this);
             var status = form.find("[name=status]");
-            if(status.val().length > 140) return false; // too long for Twitter
+            var maxlength = 140;
+            var val = status.val();
+            val = shortenDirectMessagePrefix(val);
+            
+            if(val.length > maxlength) return false; // too long for Twitter
             
             // post to twitter
             rest.post(form.attr("action"), form.serialize(), function () {
-              form.find("textarea").val("");
+              var textarea = form.find("textarea");
+              var val = textarea.data("init-val") || "";
+              textarea.val(val);
               // { custom-event: status:send }
               form.trigger("status:send");
             })
@@ -77,7 +88,9 @@ require.def("stream/status",
           
           var last;
           function updateCharCount (e) {
-            var length = e.target.value.length;
+            var val = e.target.value;
+            val = shortenDirectMessagePrefix(val);
+            var length = val.length;
             
             if(length != last) {
               $(e.target).closest("form").find(".characters").text( length );
@@ -195,6 +208,7 @@ require.def("stream/status",
               rest.post("/1/statuses/retweet/"+id+".json", function (tweetData, status) {
                 if(status == "success") {
                   button.hide();
+                  $(document).trigger("status:retweet")
                   // todo: Maybe redraw the tweet with more fancy marker?
                 }
               })
@@ -229,6 +243,7 @@ require.def("stream/status",
             if(!tweet.data.favorited) {
               rest.post("/1/favorites/create/"+id+".json", function (tweetData, status) {
                 if(status == "success") {
+                  $(document).trigger("status:favorite")
                   tweet.data.favorited = true;
                   li.addClass("starred");
                 }
@@ -236,6 +251,7 @@ require.def("stream/status",
             } else {
               rest.post("/1/favorites/destroy/"+id+".json", function (tweetData, status) {
                 if(status == "success") {
+                  $(document).trigger("status:favoriteDestroy")
                   tweet.data.favorited = false;
                   li.removeClass("starred");
                 }
@@ -278,7 +294,6 @@ require.def("stream/status",
               var tweet = li.data("tweet");
               tweet.fetchNotInStream()
             })
-            
           })
         }
       },
