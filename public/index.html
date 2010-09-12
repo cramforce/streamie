@@ -78,8 +78,11 @@
 				<input type="hidden" name="lat" value="" />
 				<input type="hidden" name="long" value="" />
 				<input type="hidden" name="display_coordinates" value="" />
+				<fieldset class="addons">
+					<a href="#" class="attachImage">Attach an Image</a>
+				</fieldset>
 				<fieldset> 
-					<textarea name="status" rows="5" cols="40" placeholder="Your Tweet…"></textarea> 
+					<textarea name="status" rows="5" cols="40" placeholder="Your Tweet…"></textarea>
 					<span class="characters">0</span> 
 					<input type="submit" value="Tweet" class="button" />
 				</fieldset>
@@ -120,6 +123,16 @@
 			<h2 class="h1">Timeline</h2>
 			<ol id="stream">
 			</ol>
+		</div>
+	</div>
+	<div id="imageUpload" class="popin">
+		<h2 class="h">Image Upload</h2>
+		<div class="msg">
+			<form id="imageUploadForm"><input type="file" name="file"></form>
+			<div class="progress"></div>
+		</div>
+		<div class="buttons">
+			<input type="button" value="Cancel" class="button close" />
 		</div>
 	</div>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>

@@ -4,9 +4,16 @@
   <input type="hidden" name="lat" value="" />
   <input type="hidden" name="long" value="" />
   <input type="hidden" name="display_coordinates" value="" />
+	<fieldset class="addons">
+		<a href="#" class="attachImage">Attach an Image</a>
+		<a class="close" title="Close">×</a>
+	</fieldset>
 	<fieldset>
 		<textarea name="status" rows="5" cols="40" placeholder="Your Tweet…"><%=tweet.direct_message ? 'd ' : ''  %><%= (data.user ? "@"+data.user.screen_name+' ' : '' ) || '' %></textarea>
 		<span class="characters">0</span>
 		<input type="submit" value="Submit" class="button" />
 	</fieldset>
+	<!-- <div class="extra">
+		<label for="file">Image-Upload <input type="file" name="file" /></label>
+	</div> -->
 </form>
