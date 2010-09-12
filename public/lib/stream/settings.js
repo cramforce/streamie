@@ -110,7 +110,7 @@ require.def("stream/settings",
       get: function (namespace, key) {
         //return setting if possible
         if (namespace in settings &&
-          key in namespace[settings]) {
+          key in settings[namespace]) {
             return settings[namespace][key];
           }
         //no setting? return defaultValue if possible
