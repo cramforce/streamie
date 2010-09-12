@@ -16,14 +16,15 @@ require.def("stream/status",
         }));
         form = li.find("form.status");
         var textarea = form.find("[name=status]");
+        textarea.data("init-val", textarea.val());
         textarea.focus();
         form.bind("status:send", function () {
           form.hide();
           li.removeClass("form");
           $(window).scrollTop(0); // Good behavior?
         })
-        li.addClass("form");
       }
+      li.addClass("form");
       return form;
     }
     
@@ -76,7 +77,9 @@ require.def("stream/status",
             
             // post to twitter
             rest.post(form.attr("action"), form.serialize(), function () {
-              form.find("textarea").val("");
+              var textarea = form.find("textarea");
+              var val = textarea.data("init-val") || "";
+              textarea.val(val);
               // { custom-event: status:send }
               form.trigger("status:send");
             })
