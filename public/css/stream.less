@@ -209,47 +209,47 @@
 					}
 				}
 			}
-		}
-		&.reply{
-			> a{
-				left:auto;
-				right:0;
-				img{
-					#client-border-radius > .small;
-				}
-			}
-			div.status{
-				margin:0 65px 0 0;
-				&:after{
+			&.reply{
+				> a{
 					left:auto;
-					right:-16px;
-					border-color:transparent transparent transparent #fff;
+					right:0;
+					img{
+						#client-border-radius > .small;
+					}
 				}
-			}
-			&.mention{
-			  .status{
-				&:after{
-					border-color:transparent transparent transparent @client-color-mention;
+				div.status{
+					margin:0 65px 0 0;
+					&:after{
+						left:auto;
+						right:-16px;
+						border-color:transparent transparent transparent #fff;
+					}
 				}
-			  }
-			}
-			&.retweet{
-			  .status{
-				&:after{
-					border-color:transparent transparent transparent @client-color-rt;
+				&.mention{
+				  .status{
+					&:after{
+						border-color:transparent transparent transparent @client-color-mention;
+					}
+				  }
 				}
-			  }
-			  .retweet-user-href-icon {
-			    margin:32px 32px 0 0;
-			  }
-
-			}
-			&.direct{
-			  .status{
-				&:after{
-					border-color:transparent transparent transparent @client-color-dm;
+				&.retweet{
+				  .status{
+					&:after{
+						border-color:transparent transparent transparent @client-color-rt;
+					}
+				  }
+				  .retweet-user-href-icon {
+					margin:32px 32px 0 0;
+				  }
+	
 				}
-			  }
+				&.direct{
+				  .status{
+					&:after{
+						border-color:transparent transparent transparent @client-color-dm;
+					}
+				  }
+				}
 			}
 		}
 	}
