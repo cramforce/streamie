@@ -21,6 +21,15 @@ require.def("stream/popin",
       $("#overlay").hide();
     }
     
+    var current;
+    
+    $(document).bind("key:escape", function (e) {
+      if(current) {
+        current.trigger("close");
+        return false;
+      }
+    });
+    
     return {
       // show a popin from the given id
       show: function (id, options) { // options.modal
@@ -39,13 +48,16 @@ require.def("stream/popin",
         ele.bind("close", function (e) {
           hideModal();
           ele.removeClass("show");
+          current = null;
         });
         
         if(options.modal) {
           makeModal(ele);
+          current = ele;
         }
         
         ele.addClass("show");
+        ele.focus();
         
         return {
           close: function () {
