@@ -64,7 +64,7 @@ require.def("stream/status",
         func: function oberserve (stream) {
           
           function shortenDirectMessagePrefix(val) {
-            return val.replace(/d\s+\@?\w+\s/, ""); // remove direct message prefix
+            return val.replace(/^d\s+\@?\w+\s/, ""); // remove direct message prefix
           }
           
           // When the user hits escape, close the form
