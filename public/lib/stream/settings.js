@@ -121,7 +121,7 @@ require.def("stream/settings",
           }
         //oops, this key was probably not registered in the namespace
         console.log("[settings] key "+key+" not found in namespace "+namespace);
-        return undefined;
+        return null;
       },
       
       // set a key in a namespace
