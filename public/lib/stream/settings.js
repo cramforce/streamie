@@ -108,18 +108,20 @@ require.def("stream/settings",
       
       // synchronous get of a settings key in a namespace
       get: function (namespace, key) {
-        var ns = settings[namespace];
-        if(ns) {
-          if(key in ns) {
-            return ns[key]
+        //return setting if possible
+        if (namespace in settings &&
+          key in namespace[settings]) {
+            return settings[namespace][key];
           }
-          else {
+        //no setting? return defaultValue if possible
+        //assumes that if namespace and key exist, they have the expected properties
+        if (namespace in defaultSettings &&
+          key in defaultSettings[namespace].settings) {
             return defaultSettings[namespace].settings[key].defaultValue;
           }
-          return defaultValue;
-        } else {
-          return defaultSettings[namespace].settings[key].defaultValue;
-        }
+        //oops, this key was probably not registered in the namespace
+        console.log("[settings] key "+key+" not found in namespace "+namespace);
+        return undefined;
       },
       
       // set a key in a namespace
