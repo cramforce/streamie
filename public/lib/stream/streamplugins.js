@@ -18,7 +18,6 @@ require.def("stream/streamplugins",
     var ConversationCounter = 0;
     
     return {
-<<<<<<< HEAD
       // translate 
       translate: {
         func: function tweetsOnly (tweet, stream) {
