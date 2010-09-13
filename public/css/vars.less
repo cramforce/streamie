@@ -1,8 +1,8 @@
 @client-red:#900;
-//@client-grey:#666;
-//@client-light:#f9f8f6;
-//@client-error:#5a1d1c;
-//@client-notice:#fafad1;
+@client-color-tweet:#fff;
+@client-color-mention:#7f9d83;
+@client-color-rt:#e5e5e5; //#d58383
+@client-color-dm:#84b0c1;
 
 #client-shadow {
 	.small{
@@ -187,7 +187,7 @@
 	
 	.actions {
 		@timer:0.3s;
-		@style:opacity,color;
+		@style:opacity,color ease-out,ease-out;
 		-webkit-transition: @style @timer;
 		-moz-transition: @style @timer;
 		-o-transition: @style @timer;

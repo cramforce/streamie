@@ -18,6 +18,7 @@ require.def("stream/streamplugins",
     var ConversationCounter = 0;
     
     return {
+<<<<<<< HEAD
       // translate 
       translate: {
         func: function tweetsOnly (tweet, stream) {
@@ -98,7 +99,20 @@ require.def("stream/streamplugins",
         }
       },
             
-      // turns retweets into something similar to tweets
+      // Turns direct messages into something similar to a tweet
+      // Because Streamie uses a stream methaphor for everything it does not make sense to
+      // make a special case for direct messages
+      handleDirectMessage: {
+        func: function handleDirectMessage (tweet) {
+          if(tweet.data.sender) {
+            tweet.direct_message = true;
+            tweet.data.user = tweet.data.sender; // the user is the sender
+          }
+          this();
+        }
+      },
+      
+      // Turns retweets into something similar to tweets
       handleRetweet: {
         func: function handleRetweet (tweet) {
           if(tweet.data.retweeted_status) {
@@ -107,6 +121,7 @@ require.def("stream/streamplugins",
               tweet.data = tweet.data.retweeted_status;
               tweet.retweet = orig;
             } else {
+              console.log(JSON.stringify(tweet, null, " "));
               return;
             }
           }
@@ -122,6 +137,9 @@ require.def("stream/streamplugins",
               $(document).trigger("tweet:first");
             }
             stream.count++;
+            if(tweet.data.user.id == stream.user.user_id) {
+              tweet.yourself = true;
+            }
             this();
           }
         }
@@ -175,8 +193,9 @@ require.def("stream/streamplugins",
       
       // render the template (the underscore.js way)
       renderTemplate: {
-        func: function renderTemplate (tweet) {
+        func: function renderTemplate (tweet, stream) {
           tweet.html = tweet.template({
+            stream: stream,
             tweet: tweet,
             helpers: helpers
           });
@@ -257,10 +276,12 @@ require.def("stream/streamplugins",
       htmlEncode: {
         GT_RE: /\&gt\;/g,
         LT_RE: /\&lt\;/g,
+        QUOT_RE: /\&quot\;/g,
         func: function htmlEncode (tweet, stream, plugin) {
           var text = tweet.data.text;
           text = text.replace(plugin.GT_RE, ">"); // these are preencoded in Twitter tweets
           text = text.replace(plugin.LT_RE, "<");
+          text = text.replace(plugin.QUOT_RE, '"'); // Some clients encode " to &quot; (only a few) If you're tweet contains the literal text &quot; you are out of luck
           text = helpers.html(text);
           tweet.textHTML = text;
           this();
@@ -369,13 +390,18 @@ require.def("stream/streamplugins",
       keepScrollState: {
         WIN: $(window),
         func: function keepScrollState (tweet, stream, plugin) {
-          if(settings.get("stream", "keepScrollState")) {
-            if(!tweet.prefill || !tweet.seenBefore) {
-              var win = plugin.WIN;
-              var cur = win.scrollTop();
-              var next = tweet.node.next();
-              if(next.length > 0) {
-                var top = cur + next.offset().top - tweet.node.offset().top;
+          var next = tweet.node.next();
+          if(next.length > 0) {
+            var height = next.offset().top - tweet.node.offset().top;
+            tweet.height = height;
+            if(settings.get("stream", "keepScrollState")) {
+              if(!tweet.prefill || !tweet.seenBefore) {
+                var win = plugin.WIN;
+                var cur = win.scrollTop();
+              
+                
+                var top = cur + height;
+                
                 win.scrollTop( top );
               }
             }

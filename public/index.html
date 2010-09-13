@@ -71,10 +71,11 @@
 		<div id="header">
 			<h1 id="logo"><a href="#" target="_self">streamie (early ⍺) for <span id="currentuser-screen_name"></span></a></h1>
 			<ul id="mainnav">
-				<li class="activatable"><a href="#mention" title="Mentions" target="_self">@</a></li>
+				<li class="activatable rpl"><a href="#mention" title="Mentions" target="_self">@</a></li>
 				<li class="activatable timeline active"><a href="#all" title="Show All" target="_self">⚛</a></li>
 				<li class="activatable rt"><a href="#retweet" title="Retweets" target="_self">♻</a></li>
-				<li class="activatable rt"><a href="#starred" title="Favorites" target="_self">★</a></li>
+				<li class="activatable fv"><a href="#starred" title="Favorites" target="_self">★</a></li>
+				<li class="activatable dm"><a href="#direct" title="Direct Messages" target="_self">✉</a></li>
 				<li class="settings"><a href="#settings" title="Settings" target="_self">⚙</a></li>
 				<li class="add"><a href="#add" title="New Tweet" target="_self">✍</a></li>
 			</ul>
@@ -83,8 +84,11 @@
 				<input type="hidden" name="lat" value="" />
 				<input type="hidden" name="long" value="" />
 				<input type="hidden" name="display_coordinates" value="" />
+				<fieldset class="addons">
+					<a href="#" class="attachImage">Attach an Image</a>
+				</fieldset>
 				<fieldset> 
-					<textarea name="status" rows="5" cols="40" placeholder="Your Tweet…"></textarea> 
+					<textarea name="status" rows="5" cols="40" placeholder="Your Tweet…"></textarea>
 					<span class="characters">0</span> 
 					<input type="submit" value="Tweet" class="button" />
 				</fieldset>
@@ -127,7 +131,18 @@
 			</ol>
 		</div>
 	</div>
+	<div id="imageUpload" class="popin">
+		<h2 class="h">Image Upload</h2>
+		<div class="msg">
+			<form id="imageUploadForm"><input type="file" name="file"></form>
+			<div class="progress"></div>
+		</div>
+		<div class="buttons">
+			<input type="button" value="Cancel" class="button close" />
+		</div>
+	</div>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script src="ext/socket.io/socket.io.js"></script>
 	<!-- We use require.js for loading dependencies http://requirejs.org/ -->
   <script src="ext/require.js"></script>
   <script>
@@ -137,7 +152,7 @@
         "stream": "/lib/stream"
       },
     },
-    ["stream/app", "ext/socket.io/socket.io.js"],
+    ["stream/app"],
       function(app) {
         app.start();
       }
