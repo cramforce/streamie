@@ -62,8 +62,7 @@ require.def("stream/initplugins",
         func: function navigation (stream) {
           var mainstatus = $("#mainstatus");
           
-          // close mainstatus when user hits escape
-          $(document).bind("key:escape", function () {
+          mainstatus.bind("close", function () {
             if(mainstatus.hasClass("show")) {
               mainstatus.removeClass("show");
             }

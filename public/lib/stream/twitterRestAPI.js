@@ -9,14 +9,38 @@
  * For examples of usage of API calls, see
  * streamplugins.js/prefillTimeline &
  * status.js
+ *
+ * In development load the page with ?cache in the URL to fetch data from localStorage
+ *
  */
 
 require.def("stream/twitterRestAPI",
   function() {
     
+    var devCacheEnabled = location.search.match(/cache/); // enable an API cache to make loading faste in development
+    var DevCache = {};
+    
     function handler(method, url, requestData, callback) {
       
+      if(devCacheEnabled) {
+        var cache = sessionStorage.getItem("devcache:"+url);
+        if(cache) {
+          cache = JSON.parse(cache);
+          setTimeout(function () {
+            callback(cache.data, cache.status);
+          }, 0)
+        }
+      }
+      
       var success = function(data, status, xhr) {
+        if(devCacheEnabled) {
+          if(status == "success") {
+            sessionStorage.setItem("devcache:"+url, JSON.stringify({
+              data: data,
+              status: status
+            }));
+          }
+        }
         callback.apply(this, arguments);
       };
       
