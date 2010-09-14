@@ -35,13 +35,15 @@ require.def("stream/streamplugins",
 		return;
 	  }
 	  var dst_lang	= settings.get("stream", "preferedLanguage");
-	  google.language.translate(tweet.data.text, "", dst_lang, function(result){
+	  var gtranslate_proc	= new gTranslateProc(tweet.data.text);
+	  google.language.translate(gtranslate_proc.prepared_text, "", dst_lang, function(result){
             //console.log("tweet to translate [", result, "] ", tweet);
             if(result.error) return;
 	    var src_lang	= result.detectedSourceLanguage;
 	    if( src_lang == dst_lang )	return;
-            //console.log("[", src_lang, "] ", tweet.data.text)
-            //console.log("[", dst_lang, "] ", result.translation);
+            console.log("[", src_lang, "] ", tweet.data.text)
+            console.log("[", dst_lang, "] ", result.translation);
+	    
 	    /**
 	     * - UI issue
 	     *   - how to show users than this tweet as been translated
@@ -58,46 +60,14 @@ require.def("stream/streamplugins",
 	     *   - with a post processing it is possible to reduce damage.
 	     *     - if no space after symbol in src, remove it from dst
 	    */
-	    /**
-		* Some postprocessing to workaround google translate
-		* - google translate issue
-		*   - it changes symbols
-		*   - "nice domain .fr" => "nice domain. fr"
-		*   - "#supertag" => "# supertag"
-		*   - "@supername" => "@ supername"
-		*   - apparently, cant escape words from translation
-	       */
-	       function twitter_gtranslate_pproc(src_text, dst_text){
-		       var result	= dst_text;
-	       
-		       // for @username and #tag
-		       var src_match	= src_text.match(/[@#]\w+/g);
-		       var dst_match	= dst_text.match(/[@#]\s+\w+/g);
-		       if( src_match && dst_match && src_match.length == dst_match.length ){
-				for(var i = 0; dst_match && i < dst_match.length; i++){
-					result	= result.replace(dst_match[i], src_match[i]);
-				}
-		       }
-		       
-		       // for ponctuation
-		       var src_match	= src_text.match(/ [.]\w+/g);
-		       var dst_match	= dst_text.match(/[.] \w+/g);
-		       if( src_match && dst_match && src_match.length == dst_match.length ){
-		         for(var i = 0; dst_match && i < dst_match.length; i++){
-			       result	= result.replace(dst_match[i], " "+src_match[i]);
-		         }
-		       }
-		       // return the just-built result
-		       return result;
-	       }
 	    tweet.translate	= {
 		src_lang	: src_lang,
 		cur_lang	: dst_lang,
 		texts		: {}
 	    }
+	    
 	    var src_text	= tweet.data.text;
-	    var dst_text	= result.translation;
-	    dst_text	= twitter_gtranslate_pproc(src_text, dst_text)
+	    var dst_text	= gtranslate_proc.process_result(result.translation);
 	    tweet.translate.texts[src_lang]	= src_text;
 	    tweet.translate.texts[dst_lang]	= dst_text;
 	    // modify the dom directly
