@@ -34,7 +34,7 @@ require.def("stream/settingsDialog",
       });
       
       // listen for changes on the settings. Immediately update settings.
-      $("#header").delegate("#settingsForm input.setting", "change", function () {
+      $("#header").delegate("#settingsForm input.setting, #settingsForm select.setting", "change", function () {
         var input   = $(this);
         var name    = this.name;
         var checked = input.is(":checkbox") ? this.checked : input.val();
