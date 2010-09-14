@@ -11,19 +11,30 @@ require.def("stream/streamplugins",
     settings.registerKey("stream", "showRetweets", "Show Retweets",  true);
     settings.registerKey("stream", "keepScrollState", "Keep scroll level when new tweets come in",  true); 
     settings.registerKey("stream", "translate", "Automatically translate to your prefered language", true ); 
-    settings.registerKey("stream", "preferedLanguage", "Your prefered language is ", "fr", { "en": "English", "fr": "French" } ); 
+    settings.registerKey("stream", "preferedLanguage", "Prefered language", "fr", { "en": "English", "fr": "French" } ); 
     
     var template = _.template(templateText);
     
     var Tweets = {};
     var Conversations = {};
     var ConversationCounter = 0;
+
+    settings.subscribe("stream", "translate", function(value){
+	console.log("translate value is now "+value);
+    });	
+    settings.subscribe("stream", "preferedLanguage", function(value){
+	console.log("preferedLanguage value is now "+value);
+    });	
     
     return {
       // translate 
       translate: {
-        func: function tweetsOnly (tweet, stream) {
-	  var dst_lang	= "en";
+        func: function translate (tweet, stream) {
+	  if(settings.get("stream", "translate") == false){
+		this();
+		return;
+	  }
+	  var dst_lang	= settings.get("stream", "preferedLanguage");
 	  google.language.translate(tweet.data.text, "", dst_lang, function(result){
             //console.log("tweet to translate [", result, "] ", tweet);
             if(result.error) return;
