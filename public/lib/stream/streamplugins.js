@@ -10,6 +10,8 @@ require.def("stream/streamplugins",
     settings.registerNamespace("stream", "Stream");
     settings.registerKey("stream", "showRetweets", "Show Retweets",  true);
     settings.registerKey("stream", "keepScrollState", "Keep scroll level when new tweets come in",  true); 
+    settings.registerKey("stream", "translate", "Automatically translate to your prefered language", true ); 
+    settings.registerKey("stream", "preferedLanguage", "Your prefered language is ", "fr", { "en": "English", "fr": "French" } ); 
     
     var template = _.template(templateText);
     
@@ -27,8 +29,8 @@ require.def("stream/streamplugins",
             if(result.error) return;
 	    var src_lang	= result.detectedSourceLanguage;
 	    if( src_lang == dst_lang )	return;
-            console.log("[", src_lang, "] ", tweet.data.text)
-            console.log("[", dst_lang, "] ", result.translation);
+            //console.log("[", src_lang, "] ", tweet.data.text)
+            //console.log("[", dst_lang, "] ", result.translation);
 	    /**
 	     * - UI issue
 	     *   - how to show users than this tweet as been translated

@@ -135,7 +135,7 @@ require.def("stream/settings",
         console.log("[settings] set "+namespace+"."+key+" = "+value);
         persist(); // maybe do this somewhat lazily, like once a second
       },
-      
+
       // returns sorted (by name) list of namespaces
       namespaces: function () {
         var namespaces = Object.keys(defaultSettings).sort().map(function (name) {

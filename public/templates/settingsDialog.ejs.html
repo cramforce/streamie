@@ -5,8 +5,24 @@
 		<legend class="h4"><%= ns.name %></legend>
 		<% ns.keys().forEach(function (key) { %>
 		<% var value = settings.get(ns.name, key), name  = "settings."+ns.name+"."+key; %>
+		<% var values = ns.settings[key].values; %>
 		<div class="formrow">
-			<label><input type="checkbox" name="<%=name%>" id="<%=name%>" <%= value ? 'checked' : ''  %> class="setting" /> <%= ns.settings[key].label %></label>
+			<label>
+				<% if( typeof value == "boolean" ){ %>
+					<input name="<%=name%>" id="<%=name%>" class="setting" type="checkbox" <%= value ? 'checked' : ''  %> />
+				<% }else if( jQuery.isPlainObject(values) ){ %>
+					<select name="<%=name%>" id="<%=name%>" class="setting">
+						<% _.keys(values).forEach(function(x){ %>
+							<option value="<%=x%>"  <%= (x == value) ? 'selected' : ''  %> ><%=values[x]%></option>						
+						<% }); %>
+					</select>
+					<% console.log("key="+key+" isplainobject="+jQuery.isPlainObject(values)); console.dir(values); %>
+					<% console.log("keys"); console.dir(_.keys(values)); %>
+				<% }else{ %>
+					TES MOCHE <% console.log("not bool"); %>
+				<% } %>
+				<%= ns.settings[key].label %>
+			</label>			
 		</div>
 		<% });%>
 	</fieldset>
