@@ -38,7 +38,7 @@ require.def("stream/streamplugins",
 	  var gtranslate_proc	= new gTranslateProc(tweet.data.text);
 	  google.language.translate(gtranslate_proc.prepared_text, "", dst_lang, function(result){
             //console.log("tweet to translate [", result, "] ", tweet);
-            if(result.error) return;
+            if(result.error)	return;
 	    var src_lang	= result.detectedSourceLanguage;
 	    if( src_lang == dst_lang )	return;
             console.log("[", src_lang, "] ", tweet.data.text)
