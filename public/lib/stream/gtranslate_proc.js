@@ -18,12 +18,17 @@ var gTranslateProc	= function(src_text){
 
 	// to process the result
 	var do_process_result	= function(res_text){
+		// see if some NOTRANSLATE are to be replaced
 		var res_match	= res_text.match(new RegExp(NOTRANSLATE, 'g'));
-		var dst_text	= res_text;
+		if( !res_match )	return res_text;
+		// log to debug
 		console.assert(src_match.length == res_match.length);
+		// replace each instance
+		var dst_text	= res_text;
 		for(var i = 0; res_match && i < res_match.length; i++){
 			dst_text	= dst_text.replace(NOTRANSLATE, src_match[i]);
 		}
+		// return resulting text
 		return dst_text;		
 	}
 
@@ -35,8 +40,9 @@ var gTranslateProc	= function(src_text){
 }
 
 
-if( false ){
+if( true ){
 	var src_text	= "@bonjour, les amis #love";
+	src_text	= "Featuring Socially Positive partner @VideoVolunteers 'Telling the Untold' http://bit.ly/bmLBnP #nonprofits #filmmaking #socialcause";
 	var gtranslate_proc	= new gTranslateProc(src_text);
 	console.log("prepared text="+ gtranslate_proc.prepared_text);
 	console.log("processed result="+gtranslate_proc.process_result(gtranslate_proc.prepared_text));
