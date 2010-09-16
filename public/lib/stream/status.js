@@ -91,12 +91,16 @@ require.def("stream/status",
             if(val.length > maxlength) return false; // too long for Twitter
             
             // post to twitter
-            rest.post(form.attr("action"), form.serialize(), function () {
-              var textarea = form.find("textarea");
-              var val = textarea.data("init-val") || "";
-              textarea.val(val);
-              // { custom-event: status:send }
-              form.trigger("status:send");
+            rest.post(form.attr("action"), form.serialize(), function (data, status) {
+              if(status == "success") {
+                var textarea = form.find("textarea");
+                var val = textarea.data("init-val") || "";
+                textarea.val(val);
+                // { custom-event: status:send }
+                form.trigger("status:send");
+              } else {
+                alert("Posting the tweet failed. Sorry :(")
+              }
             })
             return false;
           });
