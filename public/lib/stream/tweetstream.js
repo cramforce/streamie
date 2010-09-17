@@ -80,6 +80,12 @@ require.def("stream/tweetstream",
         next();
       },
       
+      // same as process() but work even if tweet has been already processed()
+      reProcess: function (tweet){
+	tweet.streamDirty	= true;
+	this.process(tweet)
+      },
+      
       count: 0 // count is incremented in the streamplugin/tweetsOnly
     };
     
