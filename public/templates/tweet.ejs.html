@@ -5,7 +5,7 @@
 		<h3 class="h user-name"><%= tweet.direct_message ? '<strong>Direct Message from</strong> ' : ''%><a href="http://twitter.com/<%= tweet.data.user.screen_name %>" class="user-href"><%= tweet.yourself ? 'you' : tweet.data.user.name %></a><% if(tweet.retweet) { %> via <a href="http://twitter.com/<%= tweet.retweet.user.screen_name %>" class="retweet-user-href"><%= tweet.retweet.user.name %></a><% }%>
 		  <% if(tweet.data.geo && tweet.data.geo.coordinates) { %> <a class="status-geo" href="http://maps.google.com/maps?q=<%= tweet.data.geo.coordinates.join(',') %>">from here ⌘</a><% } %></h3>
 		<p class="text"><%= tweet.textHTML %></p>
-		<div class="time created_at"></div>
+		<div class="time created_at"><a href="<%= tweet.direct_message ? 'http://twitter.com/direct_messages/create/'+tweet.data.sender.screen_name : 'http://twitter.com/'+tweet.data.user.screen_name+'/status/'+tweet.data.id %>"></a></div>
 		<ul class="actions">
 		  <li title="Retweet" class="retweet" tabindex="0"></li>
 		  <li title="Reply" class="reply" tabindex="0"></li>
@@ -17,3 +17,5 @@
 		<% } %>
 	</div>
 </li>
+
+

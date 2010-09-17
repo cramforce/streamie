@@ -237,7 +237,7 @@ require.def("stream/streamplugins",
             };
             
             if(tweet.node) {
-              tweet.node.find(".created_at").text(text);
+              tweet.node.find(".created_at a").text(text);
             }
           }
           update()
