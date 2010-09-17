@@ -201,44 +201,17 @@ require.def("stream/initplugins",
       
       // display state in the favicon
       favicon: {
-        
-        canvases: {}, // cache for canvas objects
-        colorCanvas: function (color) {
-          // remove the current favicon. Just changung the href doesnt work.
-          var favicon = $("link[rel~=icon]")
-          favicon.remove()
-          var canvas = this.canvases[color];
-          if(!canvas) {
-            // make a quick canvas.
-            canvas = document.createElement("canvas");
-            canvas.width = 16;
-            canvas.height = 16;
-            var ctx = canvas.getContext("2d");
-            ctx.fillStyle = color;  
-            ctx.fillRect(0, 0, 16, 16);
-            this.canvases[color] = canvas
-          }
-          
-          // convert canvas to DataURL
-          var url = canvas.toDataURL();
-
-// TODO remove this function and put all that in  favicon function
-if(color == "#000000")	url	= "/images/favicon-allread.ico";
-else			url	= "/images/favicon-unread.ico";
-//console.log("url="+url);
-//console.assert(false);
-
-          // put in a new favicon
-          $("head").append($('<link rel="shortcut icon" type="image/x-icon" href="'+url+'" />'));
-        },
-        
         func: function favicon (stream, plugin) {
           $(document).bind("notify:tweet:unread", function (e, count) {
-            var color = "#000000";
-            if(count > 0) {
-              color = "#278BF5";
-            }
-            plugin.colorCanvas(color);
+	    var url	= "/images/favicon-allread.ico";
+	    if( count > 0 ){
+		url	= "/images/favicon-unread.ico";
+	    }
+            // remove the current favicon. Just changung the href doesnt work.
+            var favicon = $("link[rel~=icon]")
+            favicon.remove()
+            // put in a new favicon
+            $("head").append($('<link rel="shortcut icon" type="image/x-icon" href="'+url+'" />'));
           })
         }
       },
