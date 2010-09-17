@@ -26,61 +26,7 @@ require.def("stream/streamplugins",
 	console.log("preferedLanguage value is now "+value);
     });	
     
-    return {
-      // translate 
-      translate: {
-        func: function translate (tweet, stream) {
-	  if(settings.get("stream", "translate") == false){
-		this();
-		return;
-	  }
-	  var dst_lang	= settings.get("stream", "preferedLanguage");
-	  var gtranslate_proc	= new gTranslateProc(tweet.data.text);
-	  google.language.translate(gtranslate_proc.prepared_text, "", dst_lang, function(result){
-            //console.log("tweet to translate [", result, "] ", tweet);
-            if(result.error)	return;
-	    var src_lang	= result.detectedSourceLanguage;
-	    if( src_lang == dst_lang )	return;
-            console.log("[", src_lang, "] ", tweet.data.text)
-            console.log("[", dst_lang, "] ", result.translation);
-	    
-	    /**
-	     * - UI issue
-	     *   - how to show users than this tweet as been translated
-	     *   - how to show users that a translation is available
-	     *   - how to allow translation back and forth
-	     * - tweet processing.
-	     *   - translating cause link to be unclickable
-	     * - google translate.
-	     *   - it changes symbols
-	     *   - "nice domain .fr" => "nice domain. fr"
-	     *   - "#supertag" => "# supertag"
-	     *   - "@supername" => "@ supername"
-	     *   - apparently, cant escape words from translation
-	     *   - with a post processing it is possible to reduce damage.
-	     *     - if no space after symbol in src, remove it from dst
-	    */
-	    tweet.translate	= {
-		src_lang	: src_lang,
-		cur_lang	: dst_lang,
-		texts		: {}
-	    }
-	    
-	    var src_text	= tweet.data.text;
-	    var dst_text	= gtranslate_proc.process_result(result.translation);
-	    tweet.translate.texts[src_lang]	= src_text;
-	    tweet.translate.texts[dst_lang]	= dst_text;
-	    // modify the dom directly
-            if( tweet.node ){
-	      tweet.node.find("p.text").css({color:"red"});
-              tweet.node.find("p.text").html(tweet.translate.texts[tweet.translate.cur_lang]);
-	      //stream.process(tweet);
-            }
-	  });
-	  this();
-        }
-      },
-            
+    return {            
       // Turns direct messages into something similar to a tweet
       // Because Streamie uses a stream methaphor for everything it does not make sense to
       // make a special case for direct messages
@@ -164,7 +110,65 @@ require.def("stream/streamplugins",
           this();
         }
       },
-      
+
+      // translate 
+      translate: {
+        func: function translate (tweet, stream) {
+	  // if stream.translate setting is disable, or translate has been already tried, do nothing and go on
+	  if( settings.get("stream", "translate") == false || tweet.translateProcess ){
+console.log("dont translate this one");console.dir(tweet);
+		this();
+		return;
+	  }
+	  var dst_lang	= settings.get("stream", "preferedLanguage");
+	  console.log("streamplugins translate:" + tweet.data.text);
+	  var gtranslate_proc	= new gTranslateProc(tweet.data.text);
+	  tweet.translateProcess= true;
+	  google.language.translate(gtranslate_proc.prepared_text, "", dst_lang, function(result){
+            //console.log("tweet to translate [", result, "] ", tweet);
+            if(result.error)	return;
+	    var src_lang	= result.detectedSourceLanguage;
+	    if( src_lang == dst_lang )	return;
+            //console.log("[", src_lang, "] ", tweet.data.text)
+            //console.log("[", dst_lang, "] ", result.translation);
+	    
+	    /**
+	     * - UI issue
+	     *   - how to show users than this tweet as been translated
+	     *   - how to show users that a translation is available
+	     *   - how to allow translation back and forth
+	     * - tweet processing.
+	     *   - translating cause link to be unclickable
+	     * - google translate.
+	     *   - it changes symbols
+	     *   - "nice domain .fr" => "nice domain. fr"
+	     *   - "#supertag" => "# supertag"
+	     *   - "@supername" => "@ supername"
+	     *   - apparently, cant escape words from translation
+	     *   - with a post processing it is possible to reduce damage.
+	     *     - if no space after symbol in src, remove it from dst
+	    */
+	    tweet.translate	= {
+		src_lang	: src_lang,
+		cur_lang	: dst_lang,
+		texts		: {}
+	    }
+	    
+	    var src_text	= tweet.data.text;
+	    var dst_text	= gtranslate_proc.process_result(result.translation);
+	    tweet.translate.texts[src_lang]	= src_text;
+	    tweet.translate.texts[dst_lang]	= dst_text;
+	    // modify the dom directly
+            if( tweet.node ){
+	      tweet.node.find("p.text").css({color:"red"});
+              tweet.node.find("p.text").html(tweet.translate.texts[tweet.translate.cur_lang]);
+	      //stream.process(tweet);
+            }
+	  });
+	  this();
+        }
+      },
+
       // set the tweet template
       template: {
         func: function templatePlugin (tweet) {
