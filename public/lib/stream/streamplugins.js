@@ -312,7 +312,7 @@ console.log("dont translate this one");console.dir(tweet);
           this();
         }
       },
-      
+
       // format text to HTML hotlinking, links, things that looks like links, scree names and hash tags
       formatTweetText: {
         //from http://gist.github.com/492947 and http://daringfireball.net/2010/07/improved_regex_for_matching_urls
