@@ -27,13 +27,13 @@ require.def("stream/app",
       streamPlugin.avoidDuplicates,
       streamPlugin.conversations,
       streamPlugin.mentions,
+      streamPlugin.translate,
       streamPlugin.template,
       streamPlugin.htmlEncode,
       streamPlugin.formatTweetText,
       streamPlugin.executeLinkPlugins,
       streamPlugin.renderTemplate,
       streamPlugin.age,
-      streamPlugin.translate,
       streamPlugin.prepend,
       streamPlugin.keepScrollState,
       streamPlugin.newTweetEvent
@@ -114,6 +114,8 @@ require.def("stream/app",
               if(data.direct_message) {
                 data = data.direct_message;
               }
+console.log("slota");
+console.dir(data);
               stream.process(tweetModule.make(data));
             }
             else {
