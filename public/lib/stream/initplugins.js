@@ -222,6 +222,12 @@ require.def("stream/initplugins",
           // convert canvas to DataURL
           var url = canvas.toDataURL();
 
+// TODO remove this function and put all that in  favicon function
+if(color == "#000000")	url	= "/images/favicon-allread.ico";
+else			url	= "/images/favicon-unread.ico";
+//console.log("url="+url);
+//console.assert(false);
+
           // put in a new favicon
           $("head").append($('<link rel="shortcut icon" type="image/x-icon" href="'+url+'" />'));
         },
