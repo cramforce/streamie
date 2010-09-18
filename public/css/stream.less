@@ -7,6 +7,20 @@
 			margin:0 0 20px 0;
 			#client-transition-time > .short;
 			z-index: 0;
+			-webkit-transform-style: preserve-3d;
+			-webkit-transition-property: -webkit-transform;
+			-webkit-transition-duration: 1.5s;
+			-webkit-backface-visibility: hidden;
+			&.flipped{
+				-webkit-transform: rotateY(180deg);
+				+ .back{
+					-webkit-transform: rotateY(0deg);
+				}
+			}
+			&.back{
+				position:absolute;
+				-webkit-transform: rotateY(180deg);
+			}
 			&:hover{
 				z-index:1;
 			}
@@ -85,6 +99,9 @@
 							}
 						}
 					}
+				}
+				pre.text{
+					overflow:hidden;
 				}
 				.actions{
 				  	position:absolute;
