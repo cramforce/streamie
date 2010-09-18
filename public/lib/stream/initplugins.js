@@ -200,16 +200,15 @@ require.def("stream/initplugins",
       },
       
       // display state in the favicon
-      favicon: {
+      favicon: {        
+        canvases: {}, // cache for canvas objects
         func: function favicon (stream, plugin) {
           $(document).bind("notify:tweet:unread", function (e, count) {
-	    var url	= "/images/favicon-allread.ico";
-	    if( count > 0 ){
-		url	= "/images/favicon-unread.ico";
-	    }
-            // remove the current favicon. Just changung the href doesnt work.
+            // remove the current favicon. Just changing the href doesnt work.
             var favicon = $("link[rel~=icon]")
             favicon.remove()
+            url = count > 0 ? "images/streamie-full.ico" : "images/streamie-empty.ico";
+
             // put in a new favicon
             $("head").append($('<link rel="shortcut icon" type="image/x-icon" href="'+url+'" />'));
           })
