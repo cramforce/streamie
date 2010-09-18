@@ -6,6 +6,8 @@ require.def("stream/status",
     settings.registerNamespace("status", "Status");
     settings.registerKey("status", "autocompleteScreenNames", "As-you-type autocomplete for screen names",  true);
     
+    var TWEET_MAX_LENGTH = 140;
+    
     // get (or make) a form the reply to a tweet
     function getReplyForm(li) { // tweet li
       var form = li.find("form.status");
@@ -84,19 +86,23 @@ require.def("stream/status",
           $(document).delegate("form.status", "submit", function (e) {
             var form = $(this);
             var status = form.find("[name=status]");
-            var maxlength = 140;
+            
             var val = status.val();
             val = shortenDirectMessagePrefix(val);
             
-            if(val.length > maxlength) return false; // too long for Twitter
+            if(val.length > TWEET_MAX_LENGTH) return false; // too long for Twitter
             
             // post to twitter
-            rest.post(form.attr("action"), form.serialize(), function () {
-              var textarea = form.find("textarea");
-              var val = textarea.data("init-val") || "";
-              textarea.val(val);
-              // { custom-event: status:send }
-              form.trigger("status:send");
+            rest.post(form.attr("action"), form.serialize(), function (data, status) {
+              if(status == "success") {
+                var textarea = form.find("textarea");
+                var val = textarea.data("init-val") || "";
+                textarea.val(val);
+                // { custom-event: status:send }
+                form.trigger("status:send");
+              } else {
+                alert("Posting the tweet failed. Sorry :(")
+              }
             })
             return false;
           });
@@ -108,7 +114,14 @@ require.def("stream/status",
             var length = val.length;
             
             if(length != last) {
-              $(e.target).closest("form").find(".characters").text( length );
+              var text = TWEET_MAX_LENGTH - length;
+              if(text < 0) {
+                text = '<span class="toolong">'+text+'</span>'
+              }
+              else if(text < 20) {
+                text = '<span class="warn">'+text+'</span>'
+              }
+              $(e.target).closest("form").find(".characters").html( text );
               last = length;
             }
           }

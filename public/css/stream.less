@@ -91,6 +91,7 @@
 					bottom:5px;
 					right:7px;
 					color:#000;
+					#client-font > .Arial;
 					li{
 						display:inline;
 						font-size:15px;
@@ -289,6 +290,68 @@ body.direct #content #stream {
 		display:none;
 		&.direct{
 			display:block;
+		}
+	}
+}
+
+html.no-utf8{
+	#content{
+		#stream{
+			li.tweet{
+				div.status{
+					.actions{
+						li{
+							background:transparent url("/images/ic_actions.png") no-repeat 0 0;
+							display:inline-block;
+							height:15px;
+							width:15px;
+							font-size:10px;
+							bottom:0;
+							#client-transition-time > .no;
+							&.retweet{
+								bottom:-1px;
+								background-position:center 2px;
+								&:hover{
+									background-position:center -149px;
+								}
+							}
+							&.reply{
+								bottom:-1px;
+								background-position:center -28px;
+								&:hover{
+									background-position:center -179px;
+								}
+							}
+							&.quote{
+								background-position:center -59px;
+								&:hover{
+									background-position:center -210px;
+								}
+							}
+							&.favorite{
+								background-position:center -87px;
+								&:hover{
+									background-position:center -238px;
+								}
+							}
+							&:after{
+								display:none;
+							}
+						}
+					}
+				}
+				&.starred{
+				  .status .actions li.favorite{
+						background-position:center -118px;
+						&:hover{
+							background-position:center -269px;
+						}
+						&:after{
+							display:none;
+						}
+					}
+				}
+			}
 		}
 	}
 }
