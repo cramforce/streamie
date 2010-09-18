@@ -201,7 +201,6 @@ require.def("stream/initplugins",
       
       // display state in the favicon
       favicon: {        
-        canvases: {}, // cache for canvas objects
         func: function favicon (stream, plugin) {
           $(document).bind("notify:tweet:unread", function (e, count) {
             // remove the current favicon. Just changing the href doesnt work.
