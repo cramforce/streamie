@@ -21,9 +21,11 @@ require.def("stream/streamplugins",
 
     settings.subscribe("stream", "translate", function(value){
       console.log("translate value is now "+value);
+      //window.location.reload();
     });	
     settings.subscribe("stream", "preferedLanguage", function(value){
       console.log("preferedLanguage value is now "+value);
+      //window.location.reload();
     });	
     
     return {            
