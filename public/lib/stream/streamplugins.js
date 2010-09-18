@@ -19,6 +19,11 @@ require.def("stream/streamplugins",
     var Conversations = {};
     var ConversationCounter = 0;
 
+    var reProcessTweets	= function(stream){
+	Tweets.forEach(function(tweet){
+		stream.reProcess(tweet);
+	})
+    }
     settings.subscribe("stream", "translate", function(value){
 	console.log("translate value is now "+value);
     });	
@@ -116,7 +121,6 @@ require.def("stream/streamplugins",
         func: function translate (tweet, stream) {
 	  // if stream.translate setting is disable, or translate has been already tried, do nothing and go on
 	  if( settings.get("stream", "translate") == false || tweet.translateProcess ){
-console.log("dont translate this one");console.dir(tweet);
 		this();
 		return;
 	  }
@@ -137,16 +141,7 @@ console.log("dont translate this one");console.dir(tweet);
 	     *   - how to show users than this tweet as been translated
 	     *   - how to show users that a translation is available
 	     *   - how to allow translation back and forth
-	     * - tweet processing.
-	     *   - translating cause link to be unclickable
-	     * - google translate.
-	     *   - it changes symbols
-	     *   - "nice domain .fr" => "nice domain. fr"
-	     *   - "#supertag" => "# supertag"
-	     *   - "@supername" => "@ supername"
-	     *   - apparently, cant escape words from translation
-	     *   - with a post processing it is possible to reduce damage.
-	     *     - if no space after symbol in src, remove it from dst
+	     *     - toggle as tweet action is ok
 	    */
 	    tweet.translate	= {
 		src_lang	: src_lang,
@@ -158,12 +153,8 @@ console.log("dont translate this one");console.dir(tweet);
 	    var dst_text	= gtranslate_proc.process_result(result.translation);
 	    tweet.translate.texts[src_lang]	= src_text;
 	    tweet.translate.texts[dst_lang]	= dst_text;
-	    // modify the dom directly
-            if( tweet.node ){
-	      tweet.node.find("p.text").css({color:"red"});
-              tweet.node.find("p.text").html(tweet.translate.texts[tweet.translate.cur_lang]);
-	      //stream.process(tweet);
-            }
+		// reprocess this tweet
+		stream.reProcess(tweet);
 	  });
 	  this();
         }
@@ -247,9 +238,13 @@ console.log("dont translate this one");console.dir(tweet);
       // put the tweet into the stream
       prepend: {
         func: function prepend (tweet, stream) {
+          var previous_node	= tweet.node;
           tweet.node = $(tweet.html);
           tweet.node.data("tweet", tweet); // give node access to its tweet
-          if(tweet.data._after) {
+          if( tweet.streamDirty ){
+		console.assert(previous_node);
+		previous_node.replaceWith(tweet.node);		
+          } else if(tweet.data._after) {
             var target = tweet.data._after;
             target.node.after(tweet.node);
             tweet.fetchNotInStream();

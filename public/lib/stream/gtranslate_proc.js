@@ -32,7 +32,6 @@ var gTranslateProc	= function(src_text){
 		return dst_text;		
 	}
 
-	
 	return {
 		prepared_text	: mid_text,
 		process_result	: do_process_result

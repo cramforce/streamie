@@ -53,7 +53,7 @@ require.def("stream/status",
 			//console.log("translate toggle");	console.log(avail_langs);
 			console.log("translateToggle click before stream.process")
 			// switch to the next language
-			if(false){
+			if(true){
 				var avail_langs	= _.keys(tweet.translate.texts);
 				var cur_idx	= _.indexOf(avail_langs, tweet.translate.cur_lang);
 				cur_idx		= (cur_idx+1) % avail_langs.length;
