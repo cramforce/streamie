@@ -177,8 +177,8 @@ require.def("stream/streamplugins",
         func: function avoidDuplicates (tweet, stream) {
           var id = tweet.data.id;
           if(Tweets[id] && tweet.streamDirty) {
-	    this();
-	  } else if(Tweets[id]) {
+      	    this();
+      	  } else if(Tweets[id]) {
             // duplicate detected -> do not continue;
           } else {
             Tweets[id] = tweet;
