@@ -6,9 +6,10 @@
 		  <% if(tweet.data.geo && tweet.data.geo.coordinates) { %> <a class="status-geo" href="http://maps.google.com/maps?q=<%= tweet.data.geo.coordinates.join(',') %>">from here ⌘</a><% } %></h3>
 		<p class="text"><%= tweet.textHTML %></p>
 		<div class="time created_at"></div>
-		<div class="language"></div>
 		<ul class="actions">
-		  <li title="Translate" class="translate_toggle" tabindex="0"></li>
+		  <% if( tweet.translate ){ %>
+		    <li title="Translate" class="translate_toggle" tabindex="0"></li>
+		  <% } %>
 		  <li title="Retweet" class="retweet" tabindex="0"></li>
 		  <li title="Reply" class="reply" tabindex="0"></li>
 		  <li title="Quote" class="quote" tabindex="0"></li>
