@@ -234,8 +234,8 @@ require.def("stream/streamplugins",
           tweet.node = $(tweet.html);
           tweet.node.data("tweet", tweet); // give node access to its tweet
           if( tweet.streamDirty ){
-		console.assert(previous_node);
-		previous_node.replaceWith(tweet.node);		
+            console.assert(previous_node);
+            previous_node.replaceWith(tweet.node);		
           } else if(tweet.data._after) {
             var target = tweet.data._after;
             target.node.after(tweet.node);
@@ -250,11 +250,11 @@ require.def("stream/streamplugins",
       // htmlencode the text to avoid XSS
       htmlEncode: {
         func: function htmlEncode (tweet, stream, plugin) {
-	  if( ! tweet.translate ){
-		var text	= tweet.data.text;
-	  }else{
-		var text	= tweet.translate.texts[tweet.translate.cur_lang];
-	  }
+          if( ! tweet.translate ){
+            var text	= tweet.data.text;
+          }else{
+            var text	= tweet.translate.texts[tweet.translate.cur_lang];
+          }
           text = helpers.htmlDecode(text);
           text = helpers.htmlEncode(text);
           tweet.textHTML = text;
