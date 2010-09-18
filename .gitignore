@@ -1,4 +1,4 @@
 lib/startup.bash
 lib/data/
-*.pkf
+*.kpf
 *bbproject*
