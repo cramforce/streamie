@@ -16,10 +16,8 @@
 							<option value="<%=x%>"  <%= (x == value) ? 'selected' : ''  %> ><%=values[x]%></option>						
 						<% }); %>
 					</select>
-					<% console.log("key="+key+" isplainobject="+jQuery.isPlainObject(values)); console.dir(values); %>
-					<% console.log("keys"); console.dir(_.keys(values)); %>
 				<% }else{ %>
-					TES MOCHE <% console.log("not bool"); %>
+					<% console.assert(false); %>
 				<% } %>
 				<%= ns.settings[key].label %>
 			</label>			
