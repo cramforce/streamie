@@ -19,16 +19,11 @@ require.def("stream/streamplugins",
     var Conversations = {};
     var ConversationCounter = 0;
 
-    var reProcessTweets	= function(stream){
-	Tweets.forEach(function(tweet){
-		stream.reProcess(tweet);
-	})
-    }
     settings.subscribe("stream", "translate", function(value){
-	console.log("translate value is now "+value);
+      console.log("translate value is now "+value);
     });	
     settings.subscribe("stream", "preferedLanguage", function(value){
-	console.log("preferedLanguage value is now "+value);
+      console.log("preferedLanguage value is now "+value);
     });	
     
     return {            
@@ -119,44 +114,41 @@ require.def("stream/streamplugins",
       // translate 
       translate: {
         func: function translate (tweet, stream) {
-	  // if stream.translate setting is disable, or translate has been already tried, do nothing and go on
-	  if( settings.get("stream", "translate") == false || tweet.translateProcess ){
-		this();
-		return;
-	  }
-	  var dst_lang	= settings.get("stream", "preferedLanguage");
-	  console.log("streamplugins translate:" + tweet.data.text);
-	  var gtranslate_proc	= new gTranslateProc(tweet.data.text);
-	  tweet.translateProcess= true;
-	  google.language.translate(gtranslate_proc.prepared_text, "", dst_lang, function(result){
+          // if stream.translate setting is disable, or translate has been already tried, do nothing and go on
+          if( settings.get("stream", "translate") == false || tweet.translateProcess ){
+            this();
+            return;
+          }
+          var dst_lang	= settings.get("stream", "preferedLanguage");
+          var gtranslate_proc	= new gTranslateProc(tweet.data.text);
+          tweet.translateProcess= true;
+          google.language.translate(gtranslate_proc.prepared_text, "", dst_lang, function(result){
             //console.log("tweet to translate [", result, "] ", tweet);
             if(result.error)	return;
-	    var src_lang	= result.detectedSourceLanguage;
-	    if( src_lang == dst_lang )	return;
+            var src_lang	= result.detectedSourceLanguage;
+            if( src_lang == dst_lang )	return;
             //console.log("[", src_lang, "] ", tweet.data.text)
-            //console.log("[", dst_lang, "] ", result.translation);
-	    
-	    /**
-	     * - UI issue
-	     *   - how to show users than this tweet as been translated
-	     *   - how to show users that a translation is available
-	     *   - how to allow translation back and forth
-	     *     - toggle as tweet action is ok
-	    */
-	    tweet.translate	= {
-		src_lang	: src_lang,
-		cur_lang	: dst_lang,
-		texts		: {}
-	    }
-	    
-	    var src_text	= tweet.data.text;
-	    var dst_text	= gtranslate_proc.process_result(result.translation);
-	    tweet.translate.texts[src_lang]	= src_text;
-	    tweet.translate.texts[dst_lang]	= dst_text;
-		// reprocess this tweet
-		stream.reProcess(tweet);
-	  });
-	  this();
+            //console.log("[", dst_lang, "] ", result.translation);	    
+            /**
+             * - UI issue
+             *   - how to show users than this tweet as been translated
+             *   - how to show users that a translation is available
+             *   - how to allow translation back and forth
+             *     - toggle as tweet action is ok
+            */
+            tweet.translate	= {
+              src_lang	: src_lang,
+              cur_lang	: dst_lang,
+              texts		: {}
+            }
+            var src_text	= tweet.data.text;
+            var dst_text	= gtranslate_proc.process_result(result.translation);
+            tweet.translate.texts[src_lang]	= src_text;
+            tweet.translate.texts[dst_lang]	= dst_text;
+            // reprocess this tweet
+            stream.reProcess(tweet);
+      	  });
+          this();
         }
       },
 
