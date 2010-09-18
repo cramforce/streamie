@@ -39,10 +39,10 @@ var gTranslateProc	= function(src_text){
 }
 
 
-if( true ){
-	var src_text	= "@bonjour, les amis #love";
-	src_text	= "Featuring Socially Positive partner @VideoVolunteers 'Telling the Untold' http://bit.ly/bmLBnP #nonprofits #filmmaking #socialcause";
-	var gtranslate_proc	= new gTranslateProc(src_text);
-	console.log("prepared text="+ gtranslate_proc.prepared_text);
-	console.log("processed result="+gtranslate_proc.process_result(gtranslate_proc.prepared_text));
-}
+//if( true ){
+//	var src_text	= "@bonjour, les amis #love";
+//	src_text	= "Featuring Socially Positive partner @VideoVolunteers 'Telling the Untold' http://bit.ly/bmLBnP #nonprofits #filmmaking #socialcause";
+//	var gtranslate_proc	= new gTranslateProc(src_text);
+//	console.log("prepared text="+ gtranslate_proc.prepared_text);
+//	console.log("processed result="+gtranslate_proc.process_result(gtranslate_proc.prepared_text));
+//}

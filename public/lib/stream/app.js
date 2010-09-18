@@ -114,8 +114,6 @@ require.def("stream/app",
               if(data.direct_message) {
                 data = data.direct_message;
               }
-console.log("slota");
-console.dir(data);
               stream.process(tweetModule.make(data));
             }
             else {
