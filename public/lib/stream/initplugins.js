@@ -62,8 +62,7 @@ require.def("stream/initplugins",
         func: function navigation (stream) {
           var mainstatus = $("#mainstatus");
           
-          // close mainstatus when user hits escape
-          $(document).bind("key:escape", function () {
+          mainstatus.bind("close", function () {
             if(mainstatus.hasClass("show")) {
               mainstatus.removeClass("show");
             }
@@ -252,7 +251,7 @@ require.def("stream/initplugins",
               if(status == "success") {
                 all = all.concat(tweets)
               };
-              if(returns == 5) { // all four APIs returned, we can start drawing
+              if(returns == 6) { // all four APIs returned, we can start drawing
                 var seen = {};
                 all = all.filter(function (tweet) { // filter out dupes
                   var ret = !seen[tweet.id];
@@ -296,6 +295,7 @@ require.def("stream/initplugins",
             rest.get("/1/statuses/friends_timeline.json?count=100", handleSince);
             rest.get("/1/favorites.json", handle);
             rest.get("/1/direct_messages.json", handle)
+            rest.get("/1/direct_messages/sent.json", handle)
           }
           
           $(document).bind("awake", function (e, duration) { // when we awake, we might have lost some tweets

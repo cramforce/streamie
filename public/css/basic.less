@@ -120,7 +120,7 @@ b,strong{font-weight:bold;}
 			width:50px;
 			text-align:center;
 			#client-transition-time > .long;
-			border-bottom:0 solid #333;
+			border-bottom:0 solid #555;
 			&.active,
 			&:hover{
 				border-bottom-width:5px;
@@ -147,20 +147,71 @@ b,strong{font-weight:bold;}
 			}
 			&.timeline a{
 				font-size:37px;				
+			}	
+			&.fv,
+			&.rt{
+				a{
+					top:-2px;
+					font-size:25px;
+				}
+			}
+			&.dm{
+				a{
+					top:2px;
+					font-size:35px;
+				}
+			}
+			&.settings{
+				a{
+					font-size:35px;
+				}
 			}
 			&.add a{
-				top:-3px;
-			}	
-			&.rt a{
-				top:-2px;
-				font-size:25px;
-			}	
-			&.settings a{
-				font-size:35px;
+				top:-1px;
 			}
 		}
 	}
 	
+}
+
+html.no-utf8{
+	#header{
+		#mainnav{
+			li{
+				line-height:auto;
+				padding:0;
+				a{
+					background:transparent url("/images/ic_mainnav.png") no-repeat 0 0;
+					text-indent:-3000px;
+					display:block;
+					height:39px;
+					top:0 !important;
+					font-size:10px !important;
+				}
+				&.rpl a{
+					background-position:center 9px;
+				}
+				&.timeline a{
+					background-position:center -92px;
+				}
+				&.rt a{
+					background-position:center -190px;
+				}
+				&.fv a{
+					background-position:center -292px;
+				}
+				&.dm a{
+					background-position:center -392px;
+				}
+				&.settings a{
+					background-position:center -492px;
+				}
+				&.add a{
+					background-position:center -592px;
+				}
+			}
+		}
+	}
 }
 
 #content{

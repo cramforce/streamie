@@ -52,7 +52,6 @@ fieldset{
 	left:50%;
 	margin:0 0 0 -240px;
 	padding:10px 10px 40px;
-	color:#333;
 	opacity:0;
 	background:rgba(250,250,250,.95);
 	border:1px solid #111;
@@ -82,6 +81,9 @@ fieldset{
 			left:9px;
 			right:9px;
 		}
+		&.addons{
+			margin-bottom:2px;
+		}
 	}
 	&.show{
 		top:65px;
@@ -93,10 +95,11 @@ form.status{
 	position:relative;
 	margin:5px 0 0 0;
 	border-top:1px solid #333;
-	padding:10px 0 0 0;
+	padding:2px 0 0 0;
 	fieldset{
 		padding:0 0 35px;
 		margin-bottom:0;
+		position:relative;
 		textarea{
 			#border-box;
 			width:100%;
@@ -119,6 +122,29 @@ form.status{
 			left:9px;
 			right:9px;
 		}
+		&.addons{
+			margin-bottom:2px;
+			label:first-child{
+				float:left;
+				margin:0 0 0 -3px;
+			}
+			a{
+				float:right;
+				border-bottom:1px dotted #888;
+				&:hover{
+					color:#555;
+				}
+			}
+			.close{
+				position:absolute;
+				top:-2px;
+				right:1px;
+				font-size:15px;
+				&:hover{
+					color:#000;
+				}
+			}
+		}
 	}
 	&.show{
 		top:65px;
@@ -134,8 +160,8 @@ form.status{
 			height:60px;
 		}
 		.characters{
-			right:50px;
-			bottom:18px;
+			right:39px;
+			bottom:9px;
 			color:#aaa;
 		}
 		.button{
@@ -144,8 +170,8 @@ form.status{
 			-moz-transform: rotate(-90deg);
 			width:60px;
 			left:auto;
-			right:-9px;
-			bottom:29px;
+			right:-18px;
+			bottom:20px;
 		}
 	}
 	

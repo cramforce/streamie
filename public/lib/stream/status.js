@@ -1,6 +1,6 @@
 require.def("stream/status",
-  ["stream/twitterRestAPI", "stream/helpers", "stream/location", "stream/settings", "stream/keyValueStore", "text!../templates/status.ejs.html", "/ext/jquery.autocomplete.js"],
-  function(rest, helpers, location, settings, keyValue, replyFormTemplateText) {
+  ["stream/twitterRestAPI", "stream/helpers", "stream/popin", "stream/location", "stream/settings", "stream/keyValueStore", "text!../templates/status.ejs.html", "/ext/jquery.autocomplete.js"],
+  function(rest, helpers, popin, location, settings, keyValue, replyFormTemplateText) {
     var replyFormTemplate = _.template(replyFormTemplateText);
     
     settings.registerNamespace("status", "Status");
@@ -16,14 +16,17 @@ require.def("stream/status",
         }));
         form = li.find("form.status");
         var textarea = form.find("[name=status]");
+        textarea.data("init-val", textarea.val());
         textarea.focus();
         form.bind("status:send", function () {
+          form.trigger("close");
+        });
+        form.bind("close", function () {
           form.hide();
           li.removeClass("form");
-          $(window).scrollTop(0); // Good behavior?
-        })
-        li.addClass("form");
+        });
       }
+      li.addClass("form");
       return form;
     }
     
@@ -61,8 +64,21 @@ require.def("stream/status",
         func: function oberserve (stream) {
           
           function shortenDirectMessagePrefix(val) {
-            return val.replace(/d\s+\@\w+\s/, ""); // remove direct message prefix
+            return val.replace(/^d\s+\@?\w+\s/, ""); // remove direct message prefix
           }
+          
+          // When the user hits escape, close the form
+          $(document).bind("key:escape", function (e) {
+            var target = $(e.target);
+            if(target.is(":input") && target.closest("form.status").length > 0) {
+              target.trigger("close");
+            }
+          });
+          
+          $(document).delegate("form.status .close", "click", function (e) {
+            e.preventDefault();
+            $(this).trigger("close");
+          });
           
           // submit event
           $(document).delegate("form.status", "submit", function (e) {
@@ -76,7 +92,9 @@ require.def("stream/status",
             
             // post to twitter
             rest.post(form.attr("action"), form.serialize(), function () {
-              form.find("textarea").val("");
+              var textarea = form.find("textarea");
+              var val = textarea.data("init-val") || "";
+              textarea.val(val);
               // { custom-event: status:send }
               form.trigger("status:send");
             })
@@ -109,6 +127,60 @@ require.def("stream/status",
             if(interval) {
               clearInterval(interval);
             }
+          })
+        }
+      },
+      
+      mediaUpload: {
+        func: function imageUpload (stream) {
+          
+          var statusForm;
+          
+          $(document).delegate("form.status .attachImage", "click", function (e) {
+            e.preventDefault();
+            statusForm = $(this).closest("form.status");
+            popin.show("imageUpload");
+          });
+          
+          $(document).delegate("#imageUpload [name=file]", "change", function () {
+            var file = this;
+            var form = $(this).closest("form");
+            
+            if(typeof FormData == "undefined") {
+              alert("Media upload is not supported by your browser!");
+              return;
+            }
+            
+            var formData = new FormData();  
+            formData.append("image", file.files[0]);
+            
+            // use native XHR because jQuery does evil stuff that I couldn't work around.
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/imgur/2/upload.json");  
+            xhr.send(formData);
+            $("#imageUpload .progress").text("Uploading...");
+            
+            xhr.onreadystatechange = function () {
+              if(this.readyState == 4) {
+                $("#imageUpload .progress").text("");
+                if(this.status == 200) {
+                  console.log(this.responseText);
+                  var image = JSON.parse(this.responseText);
+                  var textarea = statusForm.find("[name=status]");
+                  var cur = textarea.val();
+                  
+                  var url = image.upload.links.imgur_page;
+                  
+                  textarea.val(cur + " " + url);
+                  textarea.change();
+                  
+                  $("#imageUpload").trigger("close");
+                  textarea.focus();
+                } else {
+                  console.log("[FileUpload Error] Status '"+xhr.statusText+"' URL: "+url);
+                }
+              }
+            };
           })
         }
       },
@@ -157,6 +229,7 @@ require.def("stream/status",
               rest.post("/1/statuses/retweet/"+id+".json", function (tweetData, status) {
                 if(status == "success") {
                   button.hide();
+                  $(document).trigger("status:retweet")
                   // todo: Maybe redraw the tweet with more fancy marker?
                 }
               })
@@ -191,6 +264,7 @@ require.def("stream/status",
             if(!tweet.data.favorited) {
               rest.post("/1/favorites/create/"+id+".json", function (tweetData, status) {
                 if(status == "success") {
+                  $(document).trigger("status:favorite")
                   tweet.data.favorited = true;
                   li.addClass("starred");
                 }
@@ -198,6 +272,7 @@ require.def("stream/status",
             } else {
               rest.post("/1/favorites/destroy/"+id+".json", function (tweetData, status) {
                 if(status == "success") {
+                  $(document).trigger("status:favoriteDestroy")
                   tweet.data.favorited = false;
                   li.removeClass("starred");
                 }
@@ -240,7 +315,6 @@ require.def("stream/status",
               var tweet = li.data("tweet");
               tweet.fetchNotInStream()
             })
-            
           })
         }
       },

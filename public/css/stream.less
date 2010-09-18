@@ -23,7 +23,7 @@
 			}
 			> a{
 				position:absolute;
-				top:0;
+				top:4px;
 				left:0;
 				img{
 					#client-border-radius > .small;
@@ -91,13 +91,13 @@
 					bottom:5px;
 					right:7px;
 					color:#000;
-					#client-transition-time > .actions;
 					li{
 						display:inline;
 						font-size:15px;
 						line-height:15px;
 						cursor:pointer;
 						opacity:0;
+						#client-transition-time > .actions;
 						&:hover{
 							opacity:1;
 							color:@client-red;
@@ -143,7 +143,7 @@
 					width:0;
 					height:0;
 					content:"\00a0";
-					border-color:transparent #fff transparent transparent;
+					border-color:transparent @client-color-tweet transparent transparent;
 					border-style:solid;
 					border-width:8px 8px;
 				}
@@ -154,37 +154,47 @@
 			&.form{
 			  .status{
 				.actions{
-					bottom:84px;
+					bottom:96px;
 				}
 			  }
 			}
 			&.mention{
 			  .status{
-			  	@color:#f69c9c;
-				border-color:@color !important;
+				//border-color:@client-color-mention !important;
+				background-color:@client-color-mention;
+				.h,.time,.in_reply_to_screen_nam{
+					color:#fff;
+				}
 				&:after{
-					border-right-color:@color;
+					border-right-color:@client-color-mention;
 				}
 			  }
 			}
 			&.retweet{
 			  .status{
-			  	@color:#999;
-				border-color:@color !important;
+				//border-color:@client-color-rt !important;
+				background-color:@client-color-rt;
 				&:after{
-					border-right-color:@color;
+					border-right-color:@client-color-rt;
 				}
 			  }
 			  .retweet-user-href-icon {
-			    margin: 32px;
+				#client-shadow > .small;
+			    margin:32px 0 0 32px;
+			    img{
+			    	display:block;
+			    }
 			  }
 			}
 			&.direct{
 			  .status{
-			  	@color:#0000ff;
-				border-color:@color !important;
+				//border-color:@client-color-dm !important;
+				background-color:@client-color-dm;
+				.h,.time{
+					color:#fff;
+				}
 				&:after{
-					border-right-color:@color;
+					border-right-color:@client-color-dm;
 				}
 			  }
 			}
@@ -196,7 +206,49 @@
 					}
 				}
 			}
-		}
+			&.yourself{
+				> a{
+					left:auto;
+					right:0;
+					img{
+						#client-border-radius > .small;
+					}
+				}
+				div.status{
+					margin:0 65px 0 0;
+					&:after{
+						left:auto;
+						right:-16px;
+						border-color:transparent transparent transparent #fff;
+					}
+				}
+				&.mention{
+				  .status{
+						&:after{
+							border-color:transparent transparent transparent @client-color-mention;
+						}
+				  }
+				}
+				&.retweet{
+				  .status{
+						&:after{
+							border-color:transparent transparent transparent @client-color-rt;
+						}
+				  }
+				  .retweet-user-href-icon {
+				    margin:32px 32px 0 0;
+				  }
+
+				}
+				&.direct{
+				  .status{
+						&:after{
+							border-color:transparent transparent transparent @client-color-dm;
+						}
+					}
+				}
+			}
+		}	
 	}
 }
 body.retweet #content #stream {
