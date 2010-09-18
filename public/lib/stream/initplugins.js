@@ -203,36 +203,15 @@ require.def("stream/initplugins",
       favicon: {
         
         canvases: {}, // cache for canvas objects
-        colorCanvas: function (color) {
-          // remove the current favicon. Just changung the href doesnt work.
-          var favicon = $("link[rel~=icon]")
-          favicon.remove()
-          var canvas = this.canvases[color];
-          if(!canvas) {
-            // make a quick canvas.
-            canvas = document.createElement("canvas");
-            canvas.width = 16;
-            canvas.height = 16;
-            var ctx = canvas.getContext("2d");
-            ctx.fillStyle = color;  
-            ctx.fillRect(0, 0, 16, 16);
-            this.canvases[color] = canvas
-          }
-          
-          // convert canvas to DataURL
-          var url = canvas.toDataURL();
-
-          // put in a new favicon
-          $("head").append($('<link rel="shortcut icon" type="image/x-icon" href="'+url+'" />'));
-        },
-        
         func: function favicon (stream, plugin) {
           $(document).bind("notify:tweet:unread", function (e, count) {
-            var color = "#000000";
-            if(count > 0) {
-              color = "#278BF5";
-            }
-            plugin.colorCanvas(color);
+            // remove the current favicon. Just changing the href doesnt work.
+            var favicon = $("link[rel~=icon]")
+            favicon.remove()
+            url = count > 0 ? "images/streamie-full.ico" : "images/streamie-empty.ico";
+
+            // put in a new favicon
+            $("head").append($('<link rel="shortcut icon" type="image/x-icon" href="'+url+'" />'));
           })
         }
       },
