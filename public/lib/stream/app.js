@@ -62,6 +62,7 @@ require.def("stream/app",
       status.favorite,
       status.conversation,
       status.autocomplete,
+      status.shortenURLs,
       status.showJSON,
       settingsDialog.init
     ];
