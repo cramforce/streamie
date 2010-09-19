@@ -333,20 +333,52 @@ require.def("stream/status",
       },
       
       // Double click on tweet text turns text into JSON; Hackability FTW!
+      // What you see below, is a combination of CSS transitions, JS animations
+      // and more voodoo. Why do we do it? Because we can!
       showJSON: {
         func: function showJSON (stream) {
           $(document).delegate("#stream p.text", "dblclick", function (e) {
-            var p = $(this);
-            var li = p.closest("li");
-            var tweet = li.data("tweet");
-            var pre   = $("<pre class='text'/>");
-            tweet = _.clone(tweet);
-            delete tweet.node; // chrome hates stringifying these;
-            pre.text(JSON.stringify( tweet, null, " " ));
-            p.hide().after(pre);
-            pre.bind("dblclick", function () {
-              pre.remove();
-              p.show();
+            var target = $(this)
+            var li = target.closest("li.tweet");
+            var copy = li.clone();
+            var p = copy.find("p.text");
+            
+            target.animate({ // initial size increase to fit the JSON
+              height: "400px"
+            }, 500, function () {
+            
+              copy.addClass("back");
+              copy.addClass("yourself");
+              var position = li.position();
+              copy.css({
+                top: position.top+"px",
+                left: position.left+"px"
+              });
+            
+              var tweet = li.data("tweet");
+              var pre   = $("<pre class='text json'/>");
+              tweet = _.clone(tweet);
+              delete tweet.node; // chrome hates stringifying these;
+            
+            
+              pre.text(JSON.stringify( tweet, null, " " ));
+              pre.width($(this).width())
+            
+              p.css("position", "absolute").after(pre);
+              pre.hide().fadeIn(1500);
+              p.hide();
+            
+              li.after(copy);
+            
+              target.height(); // measuring the height at this point helps. I love browsers!
+            
+              li.addClass("flipped");
+            
+              pre.bind("dblclick", function () {
+                copy.remove();
+                li.removeClass("flipped");
+                target.css("height", "auto");
+              });
             });
           })
         }
