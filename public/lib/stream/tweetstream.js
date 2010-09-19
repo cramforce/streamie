@@ -68,13 +68,13 @@ require.def("stream/tweetstream",
       // This callback mechanism allows you to to asynchronous (think Ajax or animations) things while processing a tweet
       // tweet is mutable. You can do stuff with it :)
       process: function (tweet) {
-        var self = this;
+        var that = this;
         var i = 0;
         function next () {
-          var plugin = self.plugins[i++];
+          var plugin = that.plugins[i++];
           if(plugin) {
             plugin.func.displayName = plugin.name;
-            plugin.func.call(next, tweet, self, plugin)
+            plugin.func.call(next, tweet, that, plugin)
           }
         }
         next();
