@@ -53,10 +53,10 @@ require.def("stream/status",
             // if not a translated tweet, do nothing
             if(!tweet.translate)  return;
             // switch to the next language
-            var avail_langs	= _.keys(tweet.translate.texts);
-            var cur_idx	= _.indexOf(avail_langs, tweet.translate.cur_lang);
-            cur_idx		= (cur_idx+1) % avail_langs.length;
-            tweet.translate.cur_lang	= avail_langs[cur_idx];     
+            var availLangs	= _.keys(tweet.translate.texts);
+            var curIdx	= _.indexOf(availLangs, tweet.translate.curLang);
+            curIdx		= (curIdx+1) % availLangs.length;
+            tweet.translate.curLang	= availLangs[curIdx];     
             // reprocess this tweet
             stream.reProcess(tweet);
           });

@@ -11,7 +11,7 @@ require.def("stream/streamplugins",
     settings.registerKey("stream", "showRetweets", "Show Retweets",  true);
     settings.registerKey("stream", "keepScrollState", "Keep scroll level when new tweets come in",  true); 
     settings.registerKey("stream", "translate", "Automatically translate to your prefered language", true ); 
-    settings.registerKey("stream", "preferedLanguage", "Prefered language", "fr", { "en": "English", "fr": "French" } ); 
+    settings.registerKey("stream", "preferedLanguage", "Prefered language", "en", { "en": "English", "fr": "French" } ); 
     
     var template = _.template(templateText);
     
@@ -121,16 +121,16 @@ require.def("stream/streamplugins",
             this();
             return;
           }
-          var dst_lang	= settings.get("stream", "preferedLanguage");
+          var dstLang	= settings.get("stream", "preferedLanguage");
           var gtranslate_proc	= new gTranslateProc(tweet.data.text);
           tweet.translateProcess= true;
-          google.language.translate(gtranslate_proc.prepared_text, "", dst_lang, function(result){
+          google.language.translate(gtranslate_proc.prepared_text, "", dstLang, function(result){
             //console.log("tweet to translate [", result, "] ", tweet);
             if(result.error)	return;
-            var src_lang	= result.detectedSourceLanguage;
-            if( src_lang == dst_lang )	return;
-            //console.log("[", src_lang, "] ", tweet.data.text)
-            //console.log("[", dst_lang, "] ", result.translation);	    
+            var srcLang	= result.detectedSourceLanguage;
+            if( srcLang == dstLang )	return;
+            //console.log("[", srcLang, "] ", tweet.data.text)
+            //console.log("[", dstLang, "] ", result.translation);	    
             /**
              * - UI issue
              *   - how to show users than this tweet as been translated
@@ -139,14 +139,14 @@ require.def("stream/streamplugins",
              *     - toggle as tweet action is ok
             */
             tweet.translate	= {
-              src_lang	: src_lang,
-              cur_lang	: dst_lang,
+              srcLang	: srcLang,
+              curLang	: dstLang,
               texts		: {}
             }
-            var src_text	= tweet.data.text;
+            var srcText	= tweet.data.text;
             var dst_text	= gtranslate_proc.process_result(result.translation);
-            tweet.translate.texts[src_lang]	= src_text;
-            tweet.translate.texts[dst_lang]	= dst_text;
+            tweet.translate.texts[srcLang]	= srcText;
+            tweet.translate.texts[dstLang]	= dst_text;
             // reprocess this tweet
             stream.reProcess(tweet);
       	  });
@@ -255,7 +255,7 @@ require.def("stream/streamplugins",
           if( ! tweet.translate ){
             var text	= tweet.data.text;
           }else{
-            var text	= tweet.translate.texts[tweet.translate.cur_lang];
+            var text	= tweet.translate.texts[tweet.translate.curLang];
           }
           text = helpers.htmlDecode(text);
           text = helpers.htmlEncode(text);
