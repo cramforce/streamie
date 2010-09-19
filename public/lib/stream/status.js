@@ -311,18 +311,6 @@ require.def("stream/status",
             var className = "conversation"+con.index;
             window.location.hash = "#"+className;
             
-            if(!con.styleAppended) {
-              con.styleAppended = true;
-              // add some dynamic style to the page to hide everything besides this conversation
-              var style = '<style type="text/css" id>'+
-                'body.'+className+' #content #stream li {display:none;}\n'+
-                'body.'+className+' #content #stream li.'+className+' {display:block;}\n'+
-                '</style>';
-            
-                style = $(style);
-                $("head").append(style);
-            }
-            
             $("li."+className).each(function () {
               var li = $(this);
               var tweet = li.data("tweet");

@@ -18,6 +18,7 @@ require.def("stream/initplugins",
       // when location.hash changes we set the hash to be the class of our HTML body
       hashState: {
         ScrollState: {},
+        StyleAppended: {},
         func: function hashState (stream, plugin) {
           var win = $(window);
           function change() {
@@ -29,6 +30,19 @@ require.def("stream/initplugins",
             var scrollState = plugin.ScrollState[val || "all"];
             if(scrollState != null) {
               win.scrollTop(scrollState);
+            }
+            
+            if(!plugin.StyleAppended[val] && val != "all") {
+              plugin.StyleAppended[val] = true;
+              var className = val;
+              // add some dynamic style to the page to hide everything besides things tagged with the current state
+              var style = '<style type="text/css" id>'+
+                'body.'+className+' #content #stream li {display:none;}\n'+
+                'body.'+className+' #content #stream li.'+className+' {display:block;}\n'+
+                '</style>';
+            
+              style = $(style);
+              $("head").append(style);
             }
           }
           win.bind("hashchange", change); // who cares about old browsers?
