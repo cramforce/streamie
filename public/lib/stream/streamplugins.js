@@ -339,6 +339,7 @@ require.def("stream/streamplugins",
           // if we have the rights and its enabled in the settings
           if (!tweet.seenBefore && 
             !tweet.prefill &&
+            !tweet.yourself &&
             plugin.current < 5 &&
             settings.get('notifications', 'enableWebkitNotifications') &&
             window.webkitNotifications && 
