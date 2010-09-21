@@ -381,8 +381,9 @@ require.def("stream/status",
           $(document).delegate("#stream p.text", "dblclick", function (e) {
             var target = $(this)
             var li = target.closest("li.tweet");
-            var copy = li.clone();
+            var copy = li.clone(); // used to display the JSON
             var p = copy.find("p.text");
+            copy.find(".actions").remove(); // do not make sense in the context
             
             target.animate({ // initial size increase to fit the JSON
               height: "400px"
