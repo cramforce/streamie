@@ -5,6 +5,7 @@ require.def("stream/status",
     
     settings.registerNamespace("status", "Status");
     settings.registerKey("status", "autocompleteScreenNames", "As-you-type autocomplete for screen names",  true);
+    settings.registerKey("status", "addLocation", "Add your current location to status updates",  true);
     
     var TWEET_MAX_LENGTH = 140;
     
@@ -301,17 +302,19 @@ require.def("stream/status",
         }
       },
       
-      // adds geo coordinates to statusses
+      // Adds geo coordinates to statusses
       location: {
         func: function locationPlugin () {
           $(document).delegate("textarea[name=status]", "focus", function () {
-            var form = $(this).closest("form");
+            if(settings.get("status", "addLocation")) {
+              var form = $(this).closest("form");
             
-            location.get(function (position) {
-              form.find("[name=lat]").val(position.coords.latitude)
-              form.find("[name=long]").val(position.coords.longitude)
-              form.find("[name=display_coordinates]").val("true");
-            })
+              location.get(function (position) {
+                form.find("[name=lat]").val(position.coords.latitude)
+                form.find("[name=long]").val(position.coords.longitude)
+                form.find("[name=display_coordinates]").val("true");
+              });
+            }
           });
         }
       },
