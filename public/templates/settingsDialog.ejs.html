@@ -1,15 +1,17 @@
 <form id="settingsForm" action="#">
 	<h2 class="h3">about:config</h2>
-	<% settings.namespaces().forEach(function (ns) { %>
-	<fieldset>
-		<legend class="h4"><%= ns.name %></legend>
-		<% ns.keys().forEach(function (key) { %>
-		<% var value = settings.get(ns.name, key), name  = "settings."+ns.name+"."+key; %>
-		<div class="formrow">
-			<label><input type="checkbox" name="<%=name%>" id="<%=name%>" <%= value ? 'checked' : ''  %> class="setting" /> <%= ns.settings[key].label %></label>
-		</div>
-		<% });%>
-	</fieldset>
-	<% }); %>
+	<div class="namespaces">
+  	<% settings.namespaces().forEach(function (ns) { %>
+  	<fieldset>
+  		<legend class="h4"><%= ns.name %></legend>
+  		<% ns.keys().forEach(function (key) { %>
+  		<% var value = settings.get(ns.name, key), name  = "settings."+ns.name+"."+key; %>
+  		<div class="formrow">
+  			<label><input type="checkbox" name="<%=name%>" id="<%=name%>" <%= value ? 'checked' : ''  %> class="setting" /> <%= ns.settings[key].label %></label>
+  		</div>
+  		<% });%>
+  	</fieldset>
+  	<% }); %>
+  </div>
 	<input type="button" value="Close" class="button close">
 </form>
