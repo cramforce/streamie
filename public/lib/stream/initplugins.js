@@ -34,7 +34,7 @@ require.def("stream/initplugins",
             
             if(!plugin.StyleAppended[val] && val != "all") {
               plugin.StyleAppended[val] = true;
-              var className = val;
+              var className = val.replace(/\W/g, "");
               // add some dynamic style to the page to hide everything besides things tagged with the current state
               var style = '<style type="text/css" id>'+
                 'body.'+className+' #content #stream li {display:none;}\n'+
