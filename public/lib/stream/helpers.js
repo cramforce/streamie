@@ -15,6 +15,7 @@ require.def("stream/helpers",
       // encode text into HTML to avoid XSS attacks.
       // underscore templates do not auto encode. If in doubt, use this!
       html: function html(text) {
+        text = ""+text;
         text = text.toString().replace(AMP_RE, "&amp;");
         text = text.replace(LT_RE, "&lt;");
         text = text.replace(GT_RE, "&gt;");
