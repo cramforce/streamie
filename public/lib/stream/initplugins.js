@@ -3,7 +3,7 @@
  */
 
 require.def("stream/initplugins",
-  ["stream/tweet", "stream/settings", "stream/twitterRestAPI", "stream/helpers", "text!../templates/tweet.ejs.html"],
+  ["stream/tweet", "stream/settings", "stream/twitterRestAPI", "stream/helpers", "text!../templates/tweet.ejs.html", "ext/cookie.js"],
   function(tweetModule, settings, rest, helpers, templateText) {
     
     settings.registerNamespace("general", "General");
@@ -34,7 +34,7 @@ require.def("stream/initplugins",
             
             if(!plugin.StyleAppended[val] && val != "all") {
               plugin.StyleAppended[val] = true;
-              var className = val.replace(/\W/g, "");
+              var className = val.replace(/[^\w-]/g, "");
               // add some dynamic style to the page to hide everything besides things tagged with the current state
               var style = '<style type="text/css" id>'+
                 'body.'+className+' #content #stream li {display:none;}\n'+
@@ -82,6 +82,15 @@ require.def("stream/initplugins",
             }
           });
           
+          // meta navigation
+          // Logout button
+          $("#meta").delegate(".logout", "click", function (e) {
+            e.preventDefault();
+            cookie.set("token", ""); // delete cookie
+            location.href = "/"; // reload page
+          });
+          
+          // main header
           $("#header").delegate("#mainnav a", "click", function (e) {
             var a = $(this);
             a.blur();
