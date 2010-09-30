@@ -196,7 +196,7 @@
 			  .status{
 				//border-color:@client-color-mention !important;
 				background-color:@client-color-mention;
-				.h,.time,.in_reply_to_screen_nam{
+				.h,.time,.text a,.in_reply_to_screen_name{
 					color:#fff;
 				}
 				&:after{
@@ -224,11 +224,24 @@
 			  .status{
 				//border-color:@client-color-dm !important;
 				background-color:@client-color-dm;
-				.h,.time{
+				.h,.time,.text a,.in_reply_to_screen_name{
 					color:#fff;
 				}
 				&:after{
 					border-right-color:@client-color-dm;
+				}
+			  }
+			}
+			&.hash-jsconf,
+			&.hash-jsconfeu{
+			  .status{
+				-webkit-animation: fadein 1s 5 alternate linear;
+				background-color:@client-color-yarrr;
+				.h,.time,.text a,.in_reply_to_screen_name{
+					color:#fff;
+				}
+				&:after{
+					border-right-color:@client-color-yarrr;
 				}
 			  }
 			}
