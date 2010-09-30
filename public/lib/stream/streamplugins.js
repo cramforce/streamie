@@ -246,7 +246,8 @@ require.def("stream/streamplugins",
         }
       },
       
-      // format text to HTML hotlinking, links, things that looks like links, scree names and hash tags
+      // Format text to HTML hotlinking, links, things that looks like links, scree names and hash tags
+      // Also filters out some more meta data and puts that on the tweet object. Currently: hashTags
       formatTweetText: {
         //from http://gist.github.com/492947 and http://daringfireball.net/2010/07/improved_regex_for_matching_urls
         GRUBERS_URL_RE: /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/ig,
@@ -264,7 +265,9 @@ require.def("stream/streamplugins",
             return pre+'<a href="http://twitter.com/'+name+'" class="user-href">@'+name+'</a>';
           });
           // hash tags
+          tweet.hashTags = [];
           text = text.replace(plugin.HASH_TAG_RE, function (all, pre, tag) {
+            tweet.hashTags.push(tag);
             return pre+'<a href="http://search.twitter.com/search?q='+encodeURIComponent(tag)+'" class="tag">#'+tag+'</a>';
           });
           

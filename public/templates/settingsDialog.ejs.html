@@ -1,13 +1,14 @@
+<% var h = helpers.html; %>
 <form id="settingsForm" action="#">
 	<h2 class="h3">about:config</h2>
 	<div class="namespaces">
   	<% settings.namespaces().forEach(function (ns) { %>
   	<fieldset>
-  		<legend class="h4"><%= ns.name %></legend>
+  		<legend class="h4"><%= h(ns.name) %></legend>
   		<% ns.keys().forEach(function (key) { %>
   		<% var value = settings.get(ns.name, key), name  = "settings."+ns.name+"."+key; %>
   		<div class="formrow">
-  			<label><input type="checkbox" name="<%=name%>" id="<%=name%>" <%= value ? 'checked' : ''  %> class="setting" /> <%= ns.settings[key].label %></label>
+  			<label><input type="checkbox" name="<%=h(name)%>" id="<%=h(name)%>" <%= value ? 'checked' : ''  %> class="setting" /> <%= h(ns.settings[key].label) %></label>
   		</div>
   		<% });%>
   	</fieldset>

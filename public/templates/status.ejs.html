@@ -1,6 +1,7 @@
+<% var h = helpers.html; %>
 <% var data = tweet.data || {};  %>
 <form action="/1/statuses/update.json" method="post" class="status" class="tweet">
-  <input type="hidden" name="in_reply_to_status_id" value="<%= data.id || '' %>">
+  <input type="hidden" name="in_reply_to_status_id" value="<%= h(data.id || '') %>">
   <input type="hidden" name="lat" value="" />
   <input type="hidden" name="long" value="" />
   <input type="hidden" name="display_coordinates" value="" />
@@ -10,7 +11,7 @@
 		<a class="close" title="Close">×</a>
 	</fieldset>
 	<fieldset>
-		<textarea name="status" rows="5" cols="40" placeholder="Your Tweet…"><%=tweet.direct_message ? 'd ' : ''  %><%= (data.user ? "@"+data.user.screen_name+' ' : '' ) || '' %></textarea>
+		<textarea name="status" rows="5" cols="40" placeholder="Your Tweet…"><%=h(tweet.direct_message ? 'd ' : ''  %><%= (data.user ? "@"+data.user.screen_name+' ' : '' ) || '') %></textarea>
 		<span class="characters">0</span>
 		<input type="submit" value="Submit" class="button" />
 	</fieldset>
