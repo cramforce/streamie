@@ -29,6 +29,7 @@ require.def("stream/twitterRestAPI",
           setTimeout(function () {
             callback(cache.data, cache.status);
           }, 0)
+          return;
         }
       }
       

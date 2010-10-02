@@ -111,7 +111,7 @@ require.def("stream/app",
             }
             else if(data.tweet) {
               // We actually received a tweet. Let the stream process it
-              var data = JSON.parse(data.tweet);
+              var data = data.tweet;
               if(data.direct_message) {
                 data = data.direct_message;
               }
