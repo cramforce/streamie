@@ -1,0 +1,29 @@
+{
+   "name": "streamie",
+   "description": "An extremely hackable full realtime twitter client",
+   "tags": [
+       "twitter",
+       "node",
+       "stream",
+       "client"
+   ],
+   "version": "0.1.0",
+   "author": "Malte Ubl <malte.ubl@gmail.com>",
+   "repository": {
+       "type": "git",
+       "url": "http://github.com/cramforce/streamie.git"
+   },
+   "bugs": "http://github.com/cramforce/streamie/issues",
+   "engines": [
+       "node >= 0.3.0"
+   ],
+   "main": "lib/server.js",
+   "dependencies": {
+       "socket.io": ">=",
+       "oauth": ">=",
+       "node-static": ">=",
+       "nStore": ">=",
+       "http-proxy": ">=",
+       "less": ">="       
+    }
+}
