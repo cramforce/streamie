@@ -29,7 +29,19 @@ require.def("stream/client",
       return transports;
     }
     
-    function connect (cb) {
+    function connect(cb) {
+      var wait = (connectFail < 0 ? 0 : connectFail) * 1000;
+      var max  = 30 * 1000;
+      if(wait > max) {
+        wait = max;
+      }
+      console.log("[Connect] waiting for "+wait);
+      setTimeout(function () {
+        _connect(cb)
+      }, wait);
+    }
+    
+    function _connect(cb) {
       window.WEB_SOCKET_SWF_LOCATION = "/foobar"; // we do not use flash, but socket.io still complaints
       var socket = new io.Socket(location.hostname, { 
         port: location.port || 80,
