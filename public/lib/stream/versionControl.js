@@ -26,6 +26,6 @@ require.def("stream/versionControl",
       })
     }
     
-    setInterval(check, 5 * 1000);
+    setInterval(check, 60 * 1000);
   }
 );
