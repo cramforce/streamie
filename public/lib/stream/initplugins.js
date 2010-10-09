@@ -296,8 +296,9 @@ require.def("stream/initplugins",
             // Make API calls
             rest.get("/1/statuses/friends_timeline.json?count=100", handleSince);
             rest.get("/1/favorites.json", handle);
-            rest.get("/1/direct_messages.json", handle)
-            rest.get("/1/direct_messages/sent.json", handle)
+            rest.get("/1/direct_messages.json", handle);
+            rest.get("/1/direct_messages/sent.json", handle);
+            console.log("[prefil] prefilling timeline");
           }
           
           $(document).bind("awake", function (e, duration) { // when we awake, we might have lost some tweets
