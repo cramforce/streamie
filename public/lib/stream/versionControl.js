@@ -13,15 +13,17 @@ require.def("stream/versionControl",
       $.get("/version.txt", function (data, status) {
         if(status == "success") {
           var version = data;
-          if(currentVersion) {
-            if(currentVersion != version) {
-              console.log("[VERSION CONTROL] new version "+version);
-              if(confirm("A new version of Streamie is available. Click OK to reload.")) {
-                window.location.reload();
+          if(version) {
+            if(currentVersion) {
+              if(currentVersion != version) {
+                console.log("[VERSION CONTROL] new version "+version);
+                if(confirm("A new version of Streamie is available. Click OK to reload.")) {
+                  window.location.reload();
+                }
               }
             }
+            currentVersion = version;
           }
-          currentVersion = version;
         }
       })
     }
