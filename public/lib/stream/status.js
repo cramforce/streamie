@@ -33,14 +33,23 @@ require.def("stream/status",
       return form;
     }
     
-    function setCaretAtEnd(form, text) { // if text is empty, use the current
+    // Sets status textarea text and sets caret or selection.
+    // If start is null, it default to the end of the text.
+    // If end is null, there will be no "selection"
+    function setCaret(form, text, start, end) { 
       var textarea = form.find("[name=status]");
       if(!text) {
         text = textarea[0].value
       }
       textarea.val(text);
       textarea.focus();
-      textarea[0].selectionStart = text.length;
+      if(start == null) {
+        start = text.length;
+      }
+      if(end == null) {
+        end = start
+      }
+      textarea[0].setSelectionRange(start, end);
     }
     
     return {
@@ -254,9 +263,22 @@ require.def("stream/status",
         func: function replyForm (stream) {
           $(document).delegate("#stream .actions .reply", "click", function (e) {
             var li = $(this).parents("li");
+            var tweet = li.data("tweet");
             var form = getReplyForm(li);
             form.show();
-            setCaretAtEnd(form);
+            
+            var author = tweet.data.user.screen_name;
+            var ats = ["@"+author];
+            tweet.mentions.forEach(function (at) {
+              if(at != author) {
+                ats.push("@"+at);
+              }
+            })
+            
+            var text  = ats.join(" ")+" ";
+            var start = ats[0].length + 1;
+            var end   = text.length;
+            setCaret(form, text, start, end);
           })
         }
       },
@@ -274,7 +296,7 @@ require.def("stream/status",
             var text = tweet.data.text + " /via @"+tweet.data.user.screen_name
             
             form.show();
-            setCaretAtEnd(form, text)
+            setCaret(form, text)
           })
         }
       },
