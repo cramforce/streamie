@@ -270,7 +270,7 @@ require.def("stream/status",
             var author = tweet.data.user.screen_name;
             var ats = ["@"+author];
             tweet.mentions.forEach(function (at) {
-              if(at != author) {
+              if(at != author && at != streamie.user.screen_name) {
                 ats.push("@"+at);
               }
             })
