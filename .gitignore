@@ -1,4 +1,5 @@
 lib/startup.bash
 lib/data/
-*.kpf
 *bbproject*
+config.json
+.DS_Store

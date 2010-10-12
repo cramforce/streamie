@@ -12,7 +12,7 @@ if(typeof console == "undefined") {
   }
 }
 require.def("stream/app",
-  ["stream/gTranslateProc", "stream/tweetstream", "stream/tweet", "stream/settings", "stream/streamplugins", "stream/initplugins", "stream/linkplugins", "stream/settingsDialog", "stream/client", "stream/status", "stream/tracking", "stream/modernizr", "/ext/underscore.js", "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"],
+  ["stream/gTranslateProc", "stream/tweetstream", "stream/tweet", "stream/settings", "stream/streamplugins", "stream/initplugins", "stream/linkplugins", "stream/settingsDialog", "stream/client", "stream/status", "stream/versionControl", "stream/tracking", "stream/modernizr", "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"],
   function(gTranslateProc, tweetstream, tweetModule, settings, streamPlugin, initPlugin, linkPlugin, settingsDialog, client, status) {
     
     // Stream plugins are called in the order defined here for each incoming tweet.
@@ -36,7 +36,8 @@ require.def("stream/app",
       streamPlugin.age,
       streamPlugin.prepend,
       streamPlugin.keepScrollState,
-      streamPlugin.newTweetEvent
+      streamPlugin.newTweetEvent,
+      streamPlugin.webkitNotify
     ];
     
     // initPlugins are loaded when the page is loaded and the backend web socket connection has been established
@@ -50,6 +51,7 @@ require.def("stream/app",
       initPlugin.notifyAfterPause,
       initPlugin.keyboardShortCuts,
       initPlugin.favicon,
+      initPlugin.registerWebkitNotifications,
       initPlugin.throttableNotifactions,
       initPlugin.background,
       status.observe,
@@ -61,6 +63,7 @@ require.def("stream/app",
       status.favorite,
       status.conversation,
       status.autocomplete,
+      status.shortenURLs,
       status.showJSON,
       status.translateToggle,
       settingsDialog.init
@@ -110,7 +113,7 @@ require.def("stream/app",
             }
             else if(data.tweet) {
               // We actually received a tweet. Let the stream process it
-              var data = JSON.parse(data.tweet);
+              var data = data.tweet;
               if(data.direct_message) {
                 data = data.direct_message;
               }

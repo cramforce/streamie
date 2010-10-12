@@ -18,6 +18,19 @@ require.def("stream/settingsDialog",
       $("#settings").addClass("show");
     }
     
+    function draw() {
+      $("#settings").html(template({
+        settings: settings,
+        helpers: helpers
+      }));
+    }
+    
+    $(document).bind("settings:set", function () { // settings change redraw;
+      if(visible) {
+        draw();
+      }
+    });
+    
     function bind() {
       $("#header").delegate(".settings > a", "click", function (e) {
         e.preventDefault();
@@ -25,10 +38,7 @@ require.def("stream/settingsDialog",
         if(visible) {
           hide()
         } else {
-          $("#settings").html(template({
-            settings: settings,
-            helpers: helpers
-          }));
+          draw();
           show();
         }
       });

@@ -14,6 +14,7 @@ require.def("stream/helpers",
     // encode text into HTML to avoid XSS attacks.
     // underscore templates do not auto encode. If in doubt, use this!
     function htmlEncode(text){
+      text = ""+text;
       text = text.toString().replace(EN_AMP_RE, "&amp;");
       text = text.replace(EN_LT_RE, "&lt;");
       text = text.replace(EN_GT_RE, "&gt;");
@@ -28,6 +29,7 @@ require.def("stream/helpers",
     var DE_SINGLE_RE = /\&#39\;/g;
   
     function htmlDecode(text){
+      text = ""+text;
       text = text.toString().replace(DE_GT_RE, ">");
       text = text.replace(DE_LT_RE, "<");
       text = text.replace(DE_QUOT_RE, '"');

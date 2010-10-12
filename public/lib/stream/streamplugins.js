@@ -293,7 +293,7 @@ require.def("stream/streamplugins",
             };
             
             if(tweet.node) {
-              tweet.node.find(".created_at").text(text);
+              tweet.node.find(".created_at a").text(text);
             }
           }
           update()
@@ -301,8 +301,9 @@ require.def("stream/streamplugins",
           this();
         }
       },
-
-      // format text to HTML hotlinking, links, things that looks like links, scree names and hash tags
+      
+      // Format text to HTML hotlinking, links, things that looks like links, scree names and hash tags
+      // Also filters out some more meta data and puts that on the tweet object. Currently: hashTags
       formatTweetText: {
         //from http://gist.github.com/492947 and http://daringfireball.net/2010/07/improved_regex_for_matching_urls
         GRUBERS_URL_RE: /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/ig,
@@ -320,7 +321,9 @@ require.def("stream/streamplugins",
             return pre+'<a href="http://twitter.com/'+name+'" class="user-href">@'+name+'</a>';
           });
           // hash tags
+          tweet.hashTags = [];
           text = text.replace(plugin.HASH_TAG_RE, function (all, pre, tag) {
+            tweet.hashTags.push(tag);
             return pre+'<a href="http://search.twitter.com/search?q='+encodeURIComponent(tag)+'" class="tag">#'+tag+'</a>';
           });
           
@@ -384,6 +387,41 @@ require.def("stream/streamplugins",
           }
           this();
         }
+      },
+      
+      // Notify the user via webkit notification
+      webkitNotify: {
+        // how many notifications are currently shown?
+        current: 0,
+        func: function webkitNotify(tweet, stream, plugin) {
+          // only show tweets not seen before, while not prefilling, 
+          // if we have the rights and its enabled in the settings
+          if (!tweet.seenBefore && 
+            !tweet.prefill &&
+            !tweet.yourself &&
+            plugin.current < 5 &&
+            settings.get('notifications', 'enableWebkitNotifications') &&
+            window.webkitNotifications && 
+            window.webkitNotifications.checkPermission() == 0) {
+            try {
+              var notification = 
+                window.webkitNotifications.createNotification(tweet.data.user.profile_image_url, 
+                  tweet.data.user.name, 
+                  tweet.data.text);
+              notification.show();
+              notification.onclose = function() {
+                --plugin.current;
+              } //onclose
+              ++plugin.current;               
+              //hide after 5 seconds
+              setTimeout(function() {
+                notification.cancel();
+              }, 5000);
+            } catch(e) {
+            }
+          }
+          this();
+        } 
       }
       
     }

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Streamie.org 
+     Thank you for viewing source!
+     
+     For more see http://github.com/cramforce/streamie
+     
+     Learn how to make your own version of streamie without having to run your own server:
+     http://j.mp/c6EFKk
+     
+     We use all the hot stuff
+     - Backend is built on node.js
+     - Web sockets via socket.io
+     - CSS via less.js
+     - Loading via require.js
+     - underscore.js to make the JavaScript saner
+     - yes, also jQuery for DOM manipulation
+     
+     
+     Simplified BSD License
+     
+     Copyright 2010 Malte Ubl. All rights reserved.
+
+     Redistribution and use in source and binary forms, with or without modification, are
+     permitted provided that the following conditions are met:
+
+        1. Redistributions of source code must retain the above copyright notice, this list of
+           conditions and the following disclaimer.
+
+        2. Redistributions in binary form must reproduce the above copyright notice, this list
+           of conditions and the following disclaimer in the documentation and/or other materials
+           provided with the distribution.
+
+     THIS SOFTWARE IS PROVIDED BY MALTE UBL ``AS IS'' AND ANY EXPRESS OR IMPLIED
+     WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+     FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL MALTE UBL OR
+     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+     CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+     SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+     ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+     ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+     The views and conclusions contained in the software and documentation are those of the
+     authors and should not be interpreted as representing official policies, either expressed
+     or implied, of Malte Ubl.
+-->
+
+<head>
+	<title>Streamie</title>
+	<meta charset="UTF-8" />
+	<base target="_blank" />
+	<meta name="language" content="en-US" />
+	<link rel="stylesheet/less" type="text/css" href="css/streamie.less" media="screen,projection,print" />
+	<!-- We use less.js: http://github.com/cloudhead/less.js/tree/ -->
+	<script src="ext/less-1.0.35.min.js"></script>
+	<script>
+	  less.refresh(true); // localstorage caching is bad for frequent releases
+	</script>
+</head>
+
+<body id="www-streamie-org" class="" style="background-image: url(http://a3.twimg.com/profile_background_images/2541465/purplesparks.jpg); ">
+	<div id="container">
+		<div id="header" style="display: block; ">
+			<h1 id="logo"><a href="#" target="_self">streamie (early alpha) for <span id="currentuser-screen_name">@helgri</span></a></h1>
+			<ul id="mainnav">
+				<li class="activatable rpl"><a href="#mention" title="Mentions" target="_self">@</a></li>
+				<li class="activatable timeline active"><a href="#all" title="Show All" target="_self">⚛</a></li>
+				<li class="activatable rt"><a href="#retweet" title="Retweets" target="_self">♻</a></li>
+				<li class="activatable fv"><a href="#starred" title="Favorites" target="_self">★</a></li>
+				<li class="activatable dm"><a href="#direct" title="Direct Messages" target="_self">✉</a></li>
+				<li class="settings"><a href="#settings" title="Settings" target="_self">⚙</a></li>
+				<li class="add"><a href="#add" title="New Tweet" target="_self">✍</a></li>
+			</ul>
+			<form action="/1/statuses/update.json" method="post" class="status tweet" id="mainstatus"> 
+				<input type="hidden" name="in_reply_to_status_id" value="">
+				<input type="hidden" name="lat" value="">
+				<input type="hidden" name="long" value="">
+				<input type="hidden" name="display_coordinates" value="">
+				<fieldset class="addons">
+					<a href="#" class="attachImage">Attach an Image</a>
+				</fieldset>
+				<fieldset> 
+					<textarea name="status" rows="5" cols="40" placeholder="Your Tweet…"></textarea>
+					<span class="characters">0</span> 
+					<input type="submit" value="Tweet" class="button">
+				</fieldset>
+			</form>
+			<div id="settings" class="panel"></div>
+		</div>
+		<div id="content">
+		  <div class="logo" style="display: none; "><img src="data:image/png;base64,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" alt="streamie" width="350" height="66"></div>
+			<div id="about" style="display: none; ">
+				<h2>Streamie</h2>
+				<p>
+					<a href="http://twitter.com/streamieorg">Streamie</a> is a full <b>realtime</b> Twitter client that runs in your web browser.<br>
+					New tweets will appear in your timeline immediately when someone posts them to Twitter.
+				</p>
+				<h2>Cutting Edge Web Technology</h2>
+				<p>
+					We take advantage of the latest web standards such as HTML5 and CSS3. We encourage you to update to the newest (even beta) versions 
+					of your <a href="http://www.google.com/landing/chrome/beta/">favorite web browser</a> to use streamie. If you cannot do that, 
+					streamie is not for you, if you can, the experience will be great.
+				</p>
+				<h2>Hackability</h2>
+				<p>
+					Streamie was designed with extreme <b>"hackability"</b> in mind and it is <a href="http://github.com/cramforce/streamie">fully open source</a>. 
+					If you are a programmer you can make your own version of streamie. The cool thing is: You do not have to run your own server so you can 
+					concentrate on actually building the features you want. The infrastructure is handled by us. 
+					<a href="http://www.nonblocking.io/2010/08/future-is-here-i-just-forked-running.html">Learn how to make your own version of streamie.</a>
+				</p>
+				<h2>Alpha</h2>
+				<p>
+				  While Streamie does work quite well, it is still alpha level software. If you're experiencing problems, please 
+				  <a href="http://github.com/cramforce/streamie/issues">report them.</a>
+				</p>
+				<h2>Get Started / Sign in with Twitter</h2>
+				<p><a href="/access" target="_self"><img src="http://a0.twimg.com/images/dev/buttons/sign-in-with-twitter-d.png" alt="Sign in with Twitter" /></a></p>
+				
+				<p class="subline">Thanks for reading. You might want to <a href="http://twitter.com/streamieorg">follow us on Twitter</a></p>
+			</div>
+			<h2 class="h1">Timeline</h2>
+			<ol id="stream">
+				<li class="tweet conversation166 new" style="height:913px;">
+					<a href="http://twitter.com/streamieorg" class="user-href"><img src="http://a3.twimg.com/profile_images/1112664967/lasers_normal.jpg" alt="streamieorg" width="48" height="48" class="profile_image_url"></a>
+					<div class="status">
+						<h3 class="h user-name"><a href="http://twitter.com/streamieorg" class="user-href">streamieorg</a></h3>
+						<p class="text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus.</p>
+						<div class="time created_at"><a href="http://twitter.com/streamieorg/status/24685882697">2 minutes</a></div>
+						<ul class="actions">
+							<li title="Like" class="like" tabindex="0"></li>
+							<li title="Retweet" class="retweet" tabindex="0"></li>
+							<li title="Reply" class="reply" tabindex="0"></li>
+							<li title="Quote" class="quote" tabindex="0"></li>
+							<li title="Starring" class="favorite" tabindex="0"></li>
+						</ul>
+					</div>
+					<div class="service show">
+						<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Ftwitter.com%2Fstreamieorg%2Fstatus%2F24685882697&amp;layout=button_count&amp;show_faces=false&amp;width=100&amp;action=like&amp;colorscheme=light&amp;height=21&amp;locale=en_US" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe>
+					</div>
+				</li>
+				<li class="tweet yourself back" style="top:90px;left:50%;width:608px;margin-left:-304px;">
+					<a href="http://twitter.com/streamieorg" class="user-href"><img src="http://a3.twimg.com/profile_images/1112664967/lasers_normal.jpg" alt="streamieorg" width="48" height="48" class="profile_image_url"></a>
+					<div class="status">
+						<h3 class="h user-name"><a href="http://twitter.com/streamieorg" class="user-href">streamieorg</a></h3>
+<pre class="text">{
+ "data": {
+  "in_reply_to_user_id": null,
+  "geo": null,
+  "in_reply_to_screen_name": null,
+  "retweeted": false,
+  "truncated": false,
+  "created_at": "Sat Sep 18 21:00:12 +0000 2010",
+  "source": "&lt;a href=\"http://leumund.ch/dienstleistungsboter-in-twitter-001129\" rel=\"nofollow\"&gt;zurvollenstunde&lt;/a&gt;",
+  "retweet_count": null,
+  "contributors": null,
+  "place": null,
+  "user": {
+   "statuses_count": 21085,
+   "description": "Immer auf die volle Stunde eine Nachricht mit der Zeit. ",
+   "listed_count": 186,
+   "favourites_count": 0,
+   "profile_sidebar_fill_color": "DDEEF6",
+   "url": "http://leumund.ch/2008/technologiebloggen/dienstleistungsboter-in-twitter/",
+   "contributors_enabled": false,
+   "notifications": false,
+   "time_zone": "Bern",
+   "lang": "en",
+   "geo_enabled": false,
+   "created_at": "Mon Apr 14 10:11:30 +0000 2008",
+   "profile_sidebar_border_color": "C0DEED",
+   "location": "GMT+1",
+   "verified": false,
+   "profile_use_background_image": true,
+   "follow_request_sent": false,
+   "following": true,
+   "profile_background_color": "C0DEED",
+   "profile_background_image_url": "http://s.twimg.com/a/1284676327/images/themes/theme1/bg.png",
+   "protected": false,
+   "profile_image_url": "http://a0.twimg.com/profile_images/633213348/06_normal.jpg",
+   "profile_text_color": "333333",
+   "followers_count": 1443,
+   "name": "zurvollenstunde",
+   "profile_background_tile": false,
+   "screen_name": "zurvollenstunde",
+   "id": 14383393,
+   "show_all_inline_media": false,
+   "utc_offset": 3600,
+   "friends_count": 0,
+   "profile_link_color": "0084B4"
+  },
+  "favorited": false,
+  "id": 24879390683,
+  "coordinates": null,
+  "in_reply_to_status_id": null,
+  "text": "Es ist jetzt 23 Uhr."
+ },
+ "prefill": true,
+ "conversation": {
+  "index": 151
+ },
+ "mentions": [],
+ "textHTML": "Es ist jetzt 23 Uhr.",
+ "html": "&lt;li class=\"tweet conversation151\"&gt;\n\t&lt;a href=\"http://twitter.com/zurvollenstunde\" class=\"user-href\"&gt;&lt;img src=\"http://a0.twimg.com/profile_images/633213348/06_normal.jpg\" alt=\"zurvollenstunde\" width=\"48\" height=\"48\" class=\"profile_image_url\" /&gt;&lt;/a&gt;\n\t\n\t&lt;div class=\"status\"&gt;\n\t\t&lt;h3 class=\"h user-name\"&gt;&lt;a href=\"http://twitter.com/zurvollenstunde\" class=\"user-href\"&gt;zurvollenstunde&lt;/a&gt;\n\t\t  &lt;/h3&gt;\n\t\t&lt;p class=\"text\"&gt;Es ist jetzt 23 Uhr.&lt;/p&gt;\n\t\t&lt;div class=\"time created_at\"&gt;&lt;/div&gt;\n\t\t&lt;ul class=\"actions\"&gt;\n\t\t  &lt;li title=\"Retweet\" class=\"retweet\" tabindex=\"0\"&gt;&lt;/li&gt;\n\t\t  &lt;li title=\"Reply\" class=\"reply\" tabindex=\"0\"&gt;&lt;/li&gt;\n\t\t  &lt;li title=\"Quote\" class=\"quote\" tabindex=\"0\"&gt;&lt;/li&gt;\n\t\t  &lt;li title=\"Starring\" class=\"favorite\" tabindex=\"0\"&gt;&lt;/li&gt;\n\t\t&lt;/ul&gt;\n    \n\t&lt;/div&gt;\n&lt;/li&gt;\n",
+ "created_at": "2010-09-18T21:00:12.000Z",
+ "age": 862163,
+ "height": 79
+}</pre>
+					</div>
+				</li>
+				<li class="tweet conversation166 new">
+					<a href="http://twitter.com/streamieorg" class="user-href"><img src="http://a3.twimg.com/profile_images/1112664967/lasers_normal.jpg" alt="streamieorg" width="48" height="48" class="profile_image_url"></a>
+					<div class="status">
+						<h3 class="h user-name"><a href="http://twitter.com/streamieorg" class="user-href">streamieorg</a></h3>
+						<p class="text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus.</p>
+						<div class="time created_at">2 minutes</div>
+						<ul class="actions">
+							<li title="Retweet" class="retweet" tabindex="0"></li>
+							<li title="Reply" class="reply" tabindex="0"></li>
+							<li title="Quote" class="quote" tabindex="0"></li>
+							<li title="Starring" class="favorite" tabindex="0"></li>
+						</ul>
+					</div>
+				</li>
+				<li class="tweet conversation166 new">
+					<a href="http://twitter.com/streamieorg" class="user-href"><img src="http://a3.twimg.com/profile_images/1112664967/lasers_normal.jpg" alt="streamieorg" width="48" height="48" class="profile_image_url"></a>
+					<div class="status">
+						<h3 class="h user-name"><a href="http://twitter.com/streamieorg" class="user-href">streamieorg</a></h3>
+						<p class="text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus.</p>
+						<div class="time created_at">2 minutes</div>
+						<ul class="actions">
+							<li title="Retweet" class="retweet" tabindex="0"></li>
+							<li title="Reply" class="reply" tabindex="0"></li>
+							<li title="Quote" class="quote" tabindex="0"></li>
+							<li title="Starring" class="favorite" tabindex="0"></li>
+						</ul>
+					</div>
+				</li>
+				<li class="tweet conversation166 new">
+					<a href="http://twitter.com/streamieorg" class="user-href"><img src="http://a3.twimg.com/profile_images/1112664967/lasers_normal.jpg" alt="streamieorg" width="48" height="48" class="profile_image_url"></a>
+					<div class="status">
+						<h3 class="h user-name"><a href="http://twitter.com/streamieorg" class="user-href">streamieorg</a></h3>
+						<p class="text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus.</p>
+						<div class="time created_at">2 minutes</div>
+						<ul class="actions">
+							<li title="Retweet" class="retweet" tabindex="0"></li>
+							<li title="Reply" class="reply" tabindex="0"></li>
+							<li title="Quote" class="quote" tabindex="0"></li>
+							<li title="Starring" class="favorite" tabindex="0"></li>
+						</ul>
+					</div>
+				</li>
+				<li class="tweet conversation166 new">
+					<a href="http://twitter.com/streamieorg" class="user-href"><img src="http://a3.twimg.com/profile_images/1112664967/lasers_normal.jpg" alt="streamieorg" width="48" height="48" class="profile_image_url"></a>
+					<div class="status">
+						<h3 class="h user-name"><a href="http://twitter.com/streamieorg" class="user-href">streamieorg</a></h3>
+						<p class="text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus.</p>
+						<div class="time created_at">2 minutes</div>
+						<ul class="actions">
+							<li title="Retweet" class="retweet" tabindex="0"></li>
+							<li title="Reply" class="reply" tabindex="0"></li>
+							<li title="Quote" class="quote" tabindex="0"></li>
+							<li title="Starring" class="favorite" tabindex="0"></li>
+						</ul>
+					</div>
+				</li>
+				<li class="tweet conversation166 new">
+					<a href="http://twitter.com/streamieorg" class="user-href"><img src="http://a3.twimg.com/profile_images/1112664967/lasers_normal.jpg" alt="streamieorg" width="48" height="48" class="profile_image_url"></a>
+					<div class="status">
+						<h3 class="h user-name"><a href="http://twitter.com/streamieorg" class="user-href">streamieorg</a></h3>
+						<p class="text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus.</p>
+						<div class="time created_at">2 minutes</div>
+						<ul class="actions">
+							<li title="Retweet" class="retweet" tabindex="0"></li>
+							<li title="Reply" class="reply" tabindex="0"></li>
+							<li title="Quote" class="quote" tabindex="0"></li>
+							<li title="Starring" class="favorite" tabindex="0"></li>
+						</ul>
+					</div>
+				</li>
+				<li class="tweet conversation166 new">
+					<a href="http://twitter.com/streamieorg" class="user-href"><img src="http://a3.twimg.com/profile_images/1112664967/lasers_normal.jpg" alt="streamieorg" width="48" height="48" class="profile_image_url"></a>
+					<div class="status">
+						<h3 class="h user-name"><a href="http://twitter.com/streamieorg" class="user-href">streamieorg</a></h3>
+						<p class="text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus.</p>
+						<div class="time created_at">2 minutes</div>
+						<ul class="actions">
+							<li title="Retweet" class="retweet" tabindex="0"></li>
+							<li title="Reply" class="reply" tabindex="0"></li>
+							<li title="Quote" class="quote" tabindex="0"></li>
+							<li title="Starring" class="favorite" tabindex="0"></li>
+						</ul>
+					</div>
+				</li>
+				<li class="tweet conversation166 new">
+					<a href="http://twitter.com/streamieorg" class="user-href"><img src="http://a3.twimg.com/profile_images/1112664967/lasers_normal.jpg" alt="streamieorg" width="48" height="48" class="profile_image_url"></a>
+					<div class="status">
+						<h3 class="h user-name"><a href="http://twitter.com/streamieorg" class="user-href">streamieorg</a></h3>
+						<p class="text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus.</p>
+						<div class="time created_at">2 minutes</div>
+						<ul class="actions">
+							<li title="Retweet" class="retweet" tabindex="0"></li>
+							<li title="Reply" class="reply" tabindex="0"></li>
+							<li title="Quote" class="quote" tabindex="0"></li>
+							<li title="Starring" class="favorite" tabindex="0"></li>
+						</ul>
+					</div>
+				</li>
+			</ol>
+		</div>
+	</div>
+	<div id="imageUpload" class="popin">
+		<h2 class="h">Image Upload</h2>
+		<div class="msg">
+			<form id="imageUploadForm"><input type="file" name="file"></form>
+			<div class="progress"></div>
+		</div>
+		<div class="buttons">
+			<input type="button" value="Cancel" class="button close">
+		</div>
+	</div>	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+</body> 
+</html>

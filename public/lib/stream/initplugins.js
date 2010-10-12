@@ -3,7 +3,7 @@
  */
 
 require.def("stream/initplugins",
-  ["stream/tweet", "stream/settings", "stream/twitterRestAPI", "stream/helpers", "text!../templates/tweet.ejs.html"],
+  ["stream/tweet", "stream/settings", "stream/twitterRestAPI", "stream/helpers", "text!../templates/tweet.ejs.html", "ext/cookie.js"],
   function(tweetModule, settings, rest, helpers, templateText) {
     
     settings.registerNamespace("general", "General");
@@ -18,6 +18,7 @@ require.def("stream/initplugins",
       // when location.hash changes we set the hash to be the class of our HTML body
       hashState: {
         ScrollState: {},
+        StyleAppended: {},
         func: function hashState (stream, plugin) {
           var win = $(window);
           function change() {
@@ -29,6 +30,19 @@ require.def("stream/initplugins",
             var scrollState = plugin.ScrollState[val || "all"];
             if(scrollState != null) {
               win.scrollTop(scrollState);
+            }
+            
+            if(!plugin.StyleAppended[val] && val != "all") {
+              plugin.StyleAppended[val] = true;
+              var className = val.replace(/[^\w-]/g, "");
+              // add some dynamic style to the page to hide everything besides things tagged with the current state
+              var style = '<style type="text/css" id>'+
+                'body.'+className+' #content #stream li {display:none;}\n'+
+                'body.'+className+' #content #stream li.'+className+' {display:block;}\n'+
+                '</style>';
+            
+              style = $(style);
+              $("head").append(style);
             }
           }
           win.bind("hashchange", change); // who cares about old browsers?
@@ -68,6 +82,15 @@ require.def("stream/initplugins",
             }
           });
           
+          // meta navigation
+          // Logout button
+          $("#meta").delegate(".logout", "click", function (e) {
+            e.preventDefault();
+            cookie.set("token", ""); // delete cookie
+            location.href = "/"; // reload page
+          });
+          
+          // main header
           $("#header").delegate("#mainnav a", "click", function (e) {
             var a = $(this);
             a.blur();
@@ -271,8 +294,9 @@ require.def("stream/initplugins",
             // Make API calls
             rest.get("/1/statuses/friends_timeline.json?count=100", handleSince);
             rest.get("/1/favorites.json", handle);
-            rest.get("/1/direct_messages.json", handle)
-            rest.get("/1/direct_messages/sent.json", handle)
+            rest.get("/1/direct_messages.json", handle);
+            rest.get("/1/direct_messages/sent.json", handle);
+            console.log("[prefil] prefilling timeline");
           }
           
           $(document).bind("awake", function (e, duration) { // when we awake, we might have lost some tweets
@@ -280,6 +304,57 @@ require.def("stream/initplugins",
           });
           
           prefill(); // do once at start
+        }
+      },
+      
+      registerWebkitNotifications: {
+        func: function registerWebkitNotifications() {
+          var permission = window.webkitNotifications &&
+            window.webkitNotifications.checkPermission();
+        
+          //- The user can only be asked for to allow webkitNotifications if she slicks
+          //  something. If we requestPermission() without user interaction, it is ignored
+          //  silently.
+          //- callback() is called when the user clicks on the settings dialog
+        
+          var callback = function(value, namespace, key) {
+            var permission = window.webkitNotifications &&
+              window.webkitNotifications.checkPermission();
+            if (value) {
+              // user tried to enable notifications, let's see if we have the rights
+              // if we have the rights or the user disabled webkitNotifications, there's
+              // nothing to be done here
+              if (permission === 1) {
+                // rights "not set" -> request
+                window.webkitNotifications.requestPermission(function() {
+                  // after the user allowed or disallowed webkitNotification rights, change the
+                  // gui accordingly
+                  settings.set(namespace, key, window.webkitNotifications.checkPermission() == 0);
+                }); 
+              } else if (permission == 2) {
+                // "blocked" -> tell the user how to unblock (it seems she wants to do that)
+                // todo: non-chrome users do what? 
+                // -> let's wait for the second browser to implement webkitNotifications
+                alert('To enable notifications, go to ' +
+                  '"Preferences > Under the Hood > Content Settings > Notifications > Exceptions"' +
+                  ' and remove blocking of "' + window.location.hostname + '"');
+                settings.set(namespace, key, false); //disable again
+              } 
+            }
+          } 
+        
+          if (window.webkitNotifications) {
+            // only register settings if browser allows that
+            settings.registerKey('notifications', 'enableWebkitNotifications', 'Chrome notifications',
+              permission === 0, [true, false]);
+            settings.subscribe('notifications', 'enableWebkitNotifications', callback);
+            if (permission !== 0) {
+              // override stored value, as an enabled buttons sucks if the feature is disabled :(
+              // if the user tries to enable it but blocked the webkitNotification rights,
+              // a js alert will be shown (see callback() above)
+              settings.set('notifications', 'enableWebkitNotifications', false);
+            }
+          } 
         }
       }
     }

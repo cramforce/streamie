@@ -1,29 +1,32 @@
+<% var h = helpers.html; %>
 <form id="settingsForm" action="#">
 	<h2 class="h3">about:config</h2>
+	<div class="namespaces">
 	<% settings.namespaces().forEach(function (ns) { %>
 	<fieldset>
-		<legend class="h4"><%= ns.name %></legend>
+		<legend class="h4"><%=h(ns.name)%></legend>
 		<% ns.keys().forEach(function (key) { %>
 		<% var value = settings.get(ns.name, key), name  = "settings."+ns.name+"."+key; %>
 		<% var values = ns.settings[key].values; %>
 		<div class="formrow">
 			<label>
 				<% if( typeof value == "boolean" ){ %>
-					<input name="<%=name%>" id="<%=name%>" class="setting" type="checkbox" <%= value ? 'checked' : ''  %> />
+					<input name="<%=h(name)%>" id="<%=h(name)%>" class="setting" type="checkbox" <%= value ? 'checked' : ''  %> />
 				<% }else if( jQuery.isPlainObject(values) ){ %>
-					<select name="<%=name%>" id="<%=name%>" class="setting">
+					<select name="<%=h(name)%>" id="<%=h(name)%>" class="setting">
 						<% _.keys(values).forEach(function(x){ %>
-							<option value="<%=x%>"  <%= (x == value) ? 'selected' : ''  %> ><%=values[x]%></option>						
+							<option value="<%=h(x)%>"  <%= (x == value) ? 'selected' : ''  %> ><%=h(values[x])%></option>						
 						<% }); %>
 					</select>
 				<% }else{ %>
 					<% console.assert(false); %>
 				<% } %>
-				<%= ns.settings[key].label %>
+				<%= h(ns.settings[key].label) %>
 			</label>			
 		</div>
 		<% });%>
 	</fieldset>
 	<% }); %>
+	</div>
 	<input type="button" value="Close" class="button close">
 </form>
