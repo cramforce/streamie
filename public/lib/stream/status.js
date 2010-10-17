@@ -275,8 +275,9 @@ require.def("stream/status",
               }
             })
             
-            var text  = ats.join(" ")+" ";
-            var start = ats[0].length + 1;
+            var prefix = (tweet.direct_message ? "d " : "");
+            var text  =  prefix + ats.join(" ")+" ";
+            var start = (prefix + ats[0]).length + 1;
             var end   = text.length;
             setCaret(form, text, start, end);
           })
