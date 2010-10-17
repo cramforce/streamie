@@ -30,6 +30,19 @@
 				-webkit-animation-duration: 2s;
 				-webkit-animation-iteration-count: 1;
 			}
+			&.collapsed{
+				> a,
+				div.status{
+					min-height:0;
+					height:0;
+					overflow:hidden;
+					#client-transition-time > .short;
+					*,
+					&:after{
+						opacity:0;
+					}
+				}
+			}
 			&.gap{
 				padding-bottom:10px;
 				border-bottom:4px dashed #999;
