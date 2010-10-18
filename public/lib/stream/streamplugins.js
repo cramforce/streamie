@@ -10,7 +10,7 @@ require.def("stream/streamplugins",
     settings.registerNamespace("stream", "Stream");
     settings.registerKey("stream", "showRetweets", "Show Retweets",  true);
     settings.registerKey("stream", "keepScrollState", "Keep scroll level when new tweets come in",  true); 
-    settings.registerKey("stream", "translate", "Automatically translate to your prefered language", true ); 
+    settings.registerKey("stream", "translate", "Automatically translate to your prefered language", false ); 
     settings.registerKey("stream", "preferedLanguage", "Prefered language", "en", { "en": "English", "fr": "French" } ); 
     
     var template = _.template(templateText);
