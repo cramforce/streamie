@@ -11,7 +11,15 @@ require.def("stream/streamplugins",
     settings.registerKey("stream", "showRetweets", "Show Retweets",  true);
     settings.registerKey("stream", "keepScrollState", "Keep scroll level when new tweets come in",  true); 
     settings.registerKey("stream", "translate", "Automatically translate to your prefered language", false ); 
-    settings.registerKey("stream", "preferedLanguage", "Prefered language", "en", { "en": "English", "fr": "French" } ); 
+
+    // convert google.language.Languages list of support languages to a settings values
+    var translateValues  = {};
+    for(var humanLang in google.language.Languages){
+      var codeLang  = google.language.Languages[humanLang];
+      if( codeLang.length == 0 ) continue;
+      translateValues[codeLang] = humanLang.charAt(0).toUpperCase() + humanLang.substring(1).toLowerCase();
+    }
+    settings.registerKey("stream", "preferedLanguage", "Prefered language", "en", translateValues ); 
     
     var template = _.template(templateText);
     
