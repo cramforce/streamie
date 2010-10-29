@@ -11,7 +11,7 @@ For hacking on Streamie, see: <http://www.nonblocking.io/2010/08/future-is-here-
 * `cd lib/`
 * `mkdir data`
 * `node server.js USAGE`
-** e.g. node server.js local.streamie.org:8888 YOURKEY YOURSECRET 8888
+  * e.g. node server.js local.streamie.org:8888 YOURKEY YOURSECRET 8888
 * Edit your /etc/hosts file and map local.streamie.org to 127.0.0.1
 * <http://local.streamie.org:8888/>
 * Now post anything, favorite, etc. Comes up almost before the UI finishes processing.
