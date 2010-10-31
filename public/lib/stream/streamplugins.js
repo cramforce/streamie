@@ -216,7 +216,9 @@ require.def("stream/streamplugins",
         }
       },
       
-      // 
+      // Group the tweet into conversations.
+      // This also tries to work for conversations between more than two people
+      // by tracking the "root" node of the conversation
       conversations: {
         func: function conversations (tweet, stream, plugin) {
           var id = tweet.data.id;
