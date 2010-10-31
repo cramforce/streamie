@@ -36,7 +36,26 @@ require.def("stream/streamplugins",
       //window.location.reload();
     });	
     
-    return {            
+    return {
+      
+      // Twitter changed some of the IDs to have a second variant that is represented
+      // as a string because JavaScript does not handle numbers above 2**43 well.
+      // Because we are JavaScript, we ignore the old variants and replace them with the
+      // string variants.
+      stringIDs: {
+        func: function stringIDs (tweet) {
+          var data = tweet.data;
+          data.id = data.id_str;
+          data.in_reply_to_user_id = data.in_reply_to_user_id_str;
+          if(data.retweeted_status) {
+            data = data.retweeted_status
+            data.id = data.id_str;
+            data.in_reply_to_user_id = data.in_reply_to_user_id_str;
+          }
+          this();
+        }
+      },
+      
       // Turns direct messages into something similar to a tweet
       // Because Streamie uses a stream methaphor for everything it does not make sense to
       // make a special case for direct messages
