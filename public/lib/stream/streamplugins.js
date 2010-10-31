@@ -46,11 +46,11 @@ require.def("stream/streamplugins",
         func: function stringIDs (tweet) {
           var data = tweet.data;
           data.id = data.id_str;
-          data.in_reply_to_user_id = data.in_reply_to_user_id_str;
+          data.in_reply_to_status_id = data.in_reply_to_status_id_str;
           if(data.retweeted_status) {
             data = data.retweeted_status
             data.id = data.id_str;
-            data.in_reply_to_user_id = data.in_reply_to_user_id_str;
+            data.in_reply_to_status_id = data.in_reply_to_status_id_str;
           }
           this();
         }
