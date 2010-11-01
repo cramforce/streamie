@@ -7,6 +7,9 @@ require.def("stream/streamplugins",
   ["stream/tweet", "stream/settings", "stream/twitterRestAPI", "stream/helpers", "stream/keyValueStore", "text!../templates/tweet.ejs.html"],
   function(tweetModule, settings, rest, helpers, keyValue, templateText) {
     
+    settings.registerNamespace("filter", "Filter");
+    settings.registerKey("filter", "longConversation", "Filter long (more than 3 tweets) conversations",  false);
+    
     settings.registerNamespace("stream", "Stream");
     settings.registerKey("stream", "showRetweets", "Show Retweets",  true);
     settings.registerKey("stream", "keepScrollState", "Keep scroll level when new tweets come in",  true); 
@@ -233,12 +236,15 @@ require.def("stream/streamplugins",
             tweet.conversation = Conversations[id] = Conversations[in_reply_to];
           } else {
             tweet.conversation = Conversations[id] = {
-              index: ConversationCounter++
+              index: ConversationCounter++,
+              tweets: 0
             };
             if(in_reply_to) {
               Conversations[in_reply_to] = tweet.conversation;
             }
           }
+          tweet.conversation.tweets++;
+          
           tweet.fetchNotInStream = function (cb) {
             var in_reply_to = tweet.data.in_reply_to_status_id;
             if(in_reply_to && !Tweets[in_reply_to]) {
@@ -385,9 +391,22 @@ require.def("stream/streamplugins",
       newTweetEvent: {
         func: function newTweetEvent (tweet) {
           // Do not fire for tweets
-          if(!tweet.prefill) {
+          if(!tweet.prefill && !tweet.filtered) {
             // { custom-event: tweet:new }
             tweet.node.trigger("tweet:new", [tweet])
+          }
+          this();
+        }
+      },
+      
+      filter: {
+        func: function filter (tweet) {
+          if(settings.get("stream", "showRetweets")) {
+            if(tweet.conversation.tweets > 3) {
+              tweet.filtered = {
+                reason: "long-conversation"
+              }
+            }
           }
           this();
         }
@@ -427,6 +446,7 @@ require.def("stream/streamplugins",
           // if we have the rights and its enabled in the settings
           if (!tweet.seenBefore && 
             !tweet.prefill &&
+            !tweet.filtered &&
             !tweet.yourself &&
             plugin.current < 5 &&
             settings.get('notifications', 'enableWebkitNotifications') &&

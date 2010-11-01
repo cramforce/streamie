@@ -31,8 +31,18 @@
 				-webkit-animation-iteration-count: 1;
 			}
 			&.collapsed{
-				> a,
+			    > a {
+			        top: 0;
+			        img {
+    				    width: 18px;
+    				    height: 18px;
+    				}
+			    }
+			    .retweet-user-href-icon {
+			        display:none;
+			    }
 				div.status{
+					cursor:pointer;
 					min-height:0;
 					height:0;
 					overflow:hidden;

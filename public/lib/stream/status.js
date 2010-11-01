@@ -414,6 +414,17 @@ require.def("stream/status",
         }
       },
       
+      // Uncollapse a tweet
+      uncollapse: {
+        func: function uncollapse (stream) {
+          $(document).delegate(".collapsed", "click", function (e) {
+            $(this).removeClass("collapsed");
+            e.preventDefault();
+            e.stopPropagation();
+          });
+        }
+      },
+      
       // Double click on tweet text turns text into JSON; Hackability FTW!
       // What you see below, is a combination of CSS transitions, JS animations
       // and more voodoo. Why do we do it? Because we can!
