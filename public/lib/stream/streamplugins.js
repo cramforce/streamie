@@ -401,7 +401,7 @@ require.def("stream/streamplugins",
       
       filter: {
         func: function filter (tweet) {
-          if(settings.get("stream", "showRetweets")) {
+          if(settings.get("filter", "longConversation")) {
             if(tweet.conversation.tweets > 3) {
               tweet.filtered = {
                 reason: "long-conversation"
