@@ -1,0 +1,20 @@
+{
+  "name": "Streamie",
+  "description": "Streamie is a realtime Twitter client that runs right in your browser.",
+  "version": "1",
+  "app": {
+    "urls": [
+      "*://streamie.org/"
+    ],
+    "launch": {
+      "web_url": "http://streamie.org/"
+    }
+  },
+  "icons": {
+    "128": "streamie-128.png"
+  },
+  "permissions": [
+    "unlimitedStorage",
+    "notifications"
+  ]
+}
