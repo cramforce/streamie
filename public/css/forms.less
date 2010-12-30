@@ -178,7 +178,7 @@ form.status{
 		}
 		.button{
 			#border-box;
-			-webkit-transform: rotate(-90deg); 
+			-webkit-transform: rotate(-91deg); /* 90 triggers a bug in webkit http://code.google.com/p/chromium/issues/detail?id=67004 */
 			-moz-transform: rotate(-90deg);
 			width:60px;
 			left:auto;
@@ -201,7 +201,7 @@ form.status{
 			}
 			.button{
 				#border-box;
-				-webkit-transform: rotate(-90deg); 
+				-webkit-transform:  rotate(-91deg); /* 90 triggers a bug in webkit http://code.google.com/p/chromium/issues/detail?id=67004 */
 				-moz-transform: rotate(-90deg);
 				width:60px;
 				left:auto;
