@@ -1,10 +1,10 @@
 #! /bin/sh
 
-npm install socket.io
-npm install oauth
-npm install node-static
-npm install nStore
-npm install http-proxy
-npm install less
+npm install socket.io@0.5.3
+npm install oauth@0.8.2
+npm install node-static@0.5.2
+npm install nStore@0.2.1
+npm install http-proxy@0.3.0
+npm install less@1.0.32
 git submodule init
 git submodule update

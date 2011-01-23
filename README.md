@@ -6,6 +6,7 @@ For hacking on Streamie, see: <http://www.nonblocking.io/2010/08/future-is-here-
 
 ## Setup ##
 
+* use node.js version 0.2.x
 * `sudo sh deps`
 * Go to [dev.twitter.com](http://dev.twitter.com/) and get oAuth secrets for local.streamie.org
 * `cp config.sample.json config.json` and edit config.json
