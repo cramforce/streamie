@@ -242,6 +242,13 @@ require.def("stream/initplugins",
       prefillTimeline: {
         func: function prefillTimeline (stream) { 
           
+          var bg = window.Background;
+          if(bg && bg.Streamie_Loaded) {
+            $('#stream').html( bg.$('#stream').html() );
+            $(document).trigger("tweet:first");
+            return;
+          }
+          
           function prefill () {
             var all = [];
             var returns = 0;
