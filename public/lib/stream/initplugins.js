@@ -103,7 +103,7 @@ require.def("stream/initplugins",
               } else {
                 mainstatus.addClass("show");
                 // Needs to be aligned after the .slide transition. Setting focus immeditately
-                // delayes the transition by about 2 seconds in Chrome.
+                // delays the transition by about 2 seconds in Chrome.
                 setTimeout(function() {
                   mainstatus.find("[name=status]").focus();
                 }, 500); 
