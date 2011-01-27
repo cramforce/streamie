@@ -100,6 +100,7 @@ require.def("stream/streamplugins",
             if(tweet.data.user.id == stream.user.user_id) {
               tweet.yourself = true;
             }
+            tweet.created_at = new Date(tweet.data.created_at);
             this();
           }
         }
@@ -295,44 +296,6 @@ require.def("stream/streamplugins",
           text = helpers.htmlDecode(text);
           text = helpers.htmlEncode(text);
           tweet.textHTML = text;
-          this();
-        }
-      },
-      
-      // calculate the age of the tweet and update it
-      // tweet.created_at now includes an actual Date
-      age: {
-        func: function age (tweet) {
-          tweet.created_at = new Date(tweet.data.created_at);
-          function update () {
-            var millis = (new Date()).getTime() - tweet.created_at.getTime();
-            
-            tweet.age = millis;
-            var units   = {
-              second: Math.round(millis/1000),
-              minute: Math.round(millis/1000/60),
-              hour:   Math.round(millis/1000/60/60),
-              day:    Math.round(millis/1000/60/60/24),
-              week:   Math.round(millis/1000/60/60/24/7),
-              month:  Math.round(millis/1000/60/60/24/30), // aproximately
-              year:   Math.round(millis/1000/60/60/24/365), // aproximately
-            };
-            var text = "";
-            for(var unit in units) { // hopefully nobody extends Object :) Should use Object.keys instead.
-              var val = units[unit];
-              if(val > 0) {
-                text = "";
-                text += val + " " + unit;
-                if(val > 1) text+="s "; // !i18n
-              }
-            };
-            
-            if(tweet.node) {
-              tweet.node.find(".created_at a").text(text);
-            }
-          }
-          update()
-          setInterval(update, 5000)
           this();
         }
       },
