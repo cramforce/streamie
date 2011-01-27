@@ -102,7 +102,11 @@ require.def("stream/initplugins",
                 mainstatus.removeClass("show");
               } else {
                 mainstatus.addClass("show");
-                mainstatus.find("[name=status]").focus();
+                // Needs to be aligned after the .slide transition. Setting focus immeditately
+                // delayes the transition by about 2 seconds in Chrome.
+                setTimeout(function() {
+                  mainstatus.find("[name=status]").focus();
+                }, 500); 
               }
             }
             if(li.hasClass("activatable")) { // special case for new tweet
