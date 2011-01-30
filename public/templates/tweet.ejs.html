@@ -11,10 +11,14 @@
 		  <% if( tweet.translate ){ %>
 		    <li title="Translate" class="translate_toggle" tabindex="0"></li>
 		  <% } %>
+			<% if( !tweet.direct_message ) { %>
 		  <li title="Retweet" class="retweet" tabindex="0"></li>
+			<% } %>
 		  <li title="Reply" class="reply" tabindex="0"></li>
+		  <% if( !tweet.direct_message ) { %>
 		  <li title="Quote" class="quote" tabindex="0"></li>
 		  <li title="Starring" class="favorite" tabindex="0"></li>
+		  <% } %>
 		</ul>
     <% if(tweet.data.in_reply_to_status_id) { %>
 		<div class="in_reply_to_screen_nam"><a href="http://twitter.com/<%= h(tweet.data.in_reply_to_screen_name) %>/status/<%=h(tweet.data.in_reply_to_status_id)%>" class="conversation" title="Show conversation">Conversation with <%= h(tweet.data.in_reply_to_screen_name) %></a></div>
