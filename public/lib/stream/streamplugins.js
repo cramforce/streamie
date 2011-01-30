@@ -311,7 +311,7 @@ require.def("stream/streamplugins",
           var text = tweet.textHTML;
           
           text = text.replace(plugin.GRUBERS_URL_RE, function(url){
-            return '<a href="'+((/^\w+\:\//.test(url)?'':'http://')+helpers.html(url))+'">'+helpers.html(url)+'</a>';
+            return '<a class="link" href="'+((/^\w+\:\//.test(url)?'':'http://')+helpers.html(url))+'">'+helpers.html(url)+'</a>';
           })
 					
           // screen names

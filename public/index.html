@@ -70,6 +70,7 @@
 </head>
 
 <body id="www-streamie-org" class="loading">
+	<div id="embed"></div>
 	<div id="container">
 		<div id="header">
 			<h1 id="logo"><a href="#" target="_self">streamie beta for <span id="currentuser-screen_name"></span></a></h1>
@@ -146,6 +147,7 @@
 		</div>
 	</div>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script src="http://scripts.embed.ly/jquery.embedly.min.js"></script>
 	<script src="/ext/underscore.js"></script>
 	<script src="ext/socket.io/socket.io.js"></script>
 	<!-- We use require.js for loading dependencies http://requirejs.org/ -->
@@ -163,6 +165,7 @@
       }
     );
   </script>
+  
   <script type="text/javascript">
 
     var _gaq = _gaq || [];

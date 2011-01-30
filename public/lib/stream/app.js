@@ -12,7 +12,7 @@ if(typeof console == "undefined") {
   }
 }
 require.def("stream/app",
-  ["stream/gTranslateProc", "stream/tweetstream", "stream/tweet", "stream/settings", "stream/streamplugins", "stream/initplugins", "stream/linkplugins", "stream/settingsDialog", "stream/client", "stream/status", "stream/versionControl", "stream/tracking", "stream/modernizr", "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"],
+  ["stream/gTranslateProc", "stream/tweetstream", "stream/tweet", "stream/settings", "stream/streamplugins", "stream/initplugins", "stream/linkplugins", "stream/settingsDialog", "stream/client", "stream/status", "stream/versionControl", "stream/tracking", "stream/modernizr"],
   function(gTranslateProc, tweetstream, tweetModule, settings, streamPlugin, initPlugin, linkPlugin, settingsDialog, client, status) {
     
     // Stream plugins are called in the order defined here for each incoming tweet.
@@ -55,6 +55,7 @@ require.def("stream/app",
       initPlugin.registerWebkitNotifications,
       initPlugin.throttableNotifactions,
       initPlugin.background,
+      initPlugin.embedly,
       status.age,
       status.observe,
       status.mediaUpload,

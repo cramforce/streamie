@@ -241,6 +241,33 @@ require.def("stream/initplugins",
         }
       },
       
+      // 
+      embedly: {        
+        func: function embedly (stream, plugin) {
+          var target = $('#embed');
+          var win  = $(window);
+          var last = null;
+          $('#stream').delegate('li.tweet', 'mouseenter', function(e) {
+            var li = $(this);
+            var tweet = li.data("tweet");
+            
+            //window.embedlyURLre = /http:\/\/(.*)/;
+            if(last != tweet.data.id) {
+              last = tweet.data.id;
+              target.html('Loading...');
+              li.find('a.link').embedly({
+                maxWidth: win.width() - 530,
+                key: "3e6705182cbb11e088ae4040f9f86dcd",
+                success: function(embedly) {
+                  target.html(embedly.code);
+                  target.css("top", win.scrollTop() + 80 + "px");
+                }
+              });
+            }
+          })
+        }
+      },
+      
       // Use the REST API to load the users's friends timeline, mentions and friends's retweets into the stream
       // this also happens when we detect that the user was offline for a while
       prefillTimeline: {
