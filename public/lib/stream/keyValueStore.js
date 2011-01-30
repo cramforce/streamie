@@ -50,6 +50,7 @@ require.def("stream/keyValueStore",
     Store.prototype._persistSync = function () {
       if(this.dirty) {
         window.localStorage["store:"+this.name] = JSON.stringify(this.storage);
+        this.dirty = false;
       }
     }
     
