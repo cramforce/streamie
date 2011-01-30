@@ -160,6 +160,10 @@ require.def("stream/status",
           $(document).delegate("form.status [name=status]", "focus", function (e) {
             updateCharCount(e)
             var textarea = $(e.target);
+            var interval = textarea.data("charUpdateInterval");
+            if(interval) {
+              clearInterval(interval);
+            }
             textarea.data("charUpdateInterval", setInterval(function () { updateCharCount(e) }, 200));
             textarea.trigger("status:focus", [textarea]);
           })
