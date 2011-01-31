@@ -263,15 +263,23 @@ require.def("stream/initplugins",
               target.html('Loading...');
               var api_url = 'http://api.embed.ly/1/oembed?maxwidth=' + width + '&url=' + encodeURIComponent(href) + '&callback=?';
               //jQuery JSON call
+              
+              var iframe = document.createElement('iframe');
+              iframe.width = '100%';
+              iframe.height = '100%';
+              iframe.src = a.attr('href');
+              
+              var $iframe = $(iframe);
+              $iframe.hide();
+              $('body').append($iframe);
+              
+              
               $.getJSON( api_url, function(obj) {
                 if(!obj.html && obj.type != "photo") {
-                  var iframe = document.createElement('iframe');
-                  iframe.width = '100%';
-                  iframe.height = '100%';
-                  iframe.src = a.attr('href');
+                  $iframe.remove();
+                  $iframe.show();
                   iframe.sandbox = true;
-
-                  target.html(iframe);
+                  target.html($iframe);
                 } else {
                   var embed = obj.html;
                   if(obj.type == "photo") {
@@ -279,6 +287,7 @@ require.def("stream/initplugins",
                     embed.src = obj.url;
                   }
                   target.html(embed);
+                  $iframe.remove();
                 }
               });
               
