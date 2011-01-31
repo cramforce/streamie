@@ -245,24 +245,45 @@ require.def("stream/initplugins",
       embedly: {        
         func: function embedly (stream, plugin) {
           var target = $('#embed');
-          var win  = $(window);
-          var last = null;
-          $('#stream').delegate('li.tweet', 'mouseenter', function(e) {
-            var li = $(this);
-            var tweet = li.data("tweet");
-            
-            //window.embedlyURLre = /http:\/\/(.*)/;
-            if(last != tweet.data.id) {
-              last = tweet.data.id;
+          
+          function resize() {
+            target.css('width', $(window).width() - 535);
+            target.css('height', $(window).height() - 85);
+          }
+          resize();
+          $(window).bind('resize', resize);
+          
+          $('#stream').delegate('a.link', 'click', function(e) {
+            if(e.button == 0) {
+              e.preventDefault();
+              var a = $(this);
+              var href = a.attr('href');
+              
               target.html('Loading...');
-              li.find('a.link').embedly({
+              var api_url = 'http://api.embed.ly/1/oembed?url=' + encodeURIComponent(href) + '&callback=?';
+              //jQuery JSON call
+              $.getJSON( api_url, function(obj) {
+                if(obj.type == 'error') {
+                  var iframe = document.createElement('iframe');
+                  iframe.width = '100%';
+                  iframe.height = '100%';
+                  iframe.src = a.attr('href');
+                  iframe.sandbox = true;
+
+                  target.html(iframe);
+                } else {
+                  target.html(obj.html);
+                }
+              });
+              
+              /*a.embedly({
                 maxWidth: win.width() - 530,
                 key: "3e6705182cbb11e088ae4040f9f86dcd",
                 success: function(embedly) {
                   target.html(embedly.code);
                   target.css("top", win.scrollTop() + 80 + "px");
                 }
-              });
+              });*/
             }
           })
         }
