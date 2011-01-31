@@ -245,9 +245,10 @@ require.def("stream/initplugins",
       embedly: {        
         func: function embedly (stream, plugin) {
           var target = $('#embed');
-          
+          var width;
           function resize() {
-            target.css('width', $(window).width() - 535);
+            width = $(window).width() - 535;
+            target.css('width', width);
             target.css('height', $(window).height() - 85);
           }
           resize();
@@ -260,10 +261,10 @@ require.def("stream/initplugins",
               var href = a.attr('href');
               
               target.html('Loading...');
-              var api_url = 'http://api.embed.ly/1/oembed?url=' + encodeURIComponent(href) + '&callback=?';
+              var api_url = 'http://api.embed.ly/1/oembed?maxwidth=' + width + '&url=' + encodeURIComponent(href) + '&callback=?';
               //jQuery JSON call
               $.getJSON( api_url, function(obj) {
-                if(obj.type == 'error') {
+                if(!obj.html && obj.type != "photo") {
                   var iframe = document.createElement('iframe');
                   iframe.width = '100%';
                   iframe.height = '100%';
@@ -272,7 +273,12 @@ require.def("stream/initplugins",
 
                   target.html(iframe);
                 } else {
-                  target.html(obj.html);
+                  var embed = obj.html;
+                  if(obj.type == "photo") {
+                    embed = new Image();
+                    embed.src = obj.url;
+                  }
+                  target.html(embed);
                 }
               });
               
