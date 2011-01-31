@@ -264,7 +264,7 @@ require.def("stream/initplugins",
               var api_url = 'http://api.embed.ly/1/oembed?maxwidth=' + width + '&url=' + encodeURIComponent(href) + '&callback=?';
               //jQuery JSON call
               $.getJSON( api_url, function(obj) {
-                if(obj.type == 'error') {
+                if(!obj.html && obj.type != "photo") {
                   var iframe = document.createElement('iframe');
                   iframe.width = '100%';
                   iframe.height = '100%';
@@ -273,7 +273,12 @@ require.def("stream/initplugins",
 
                   target.html(iframe);
                 } else {
-                  target.html(obj.html);
+                  var embed = obj.html;
+                  if(obj.type == "photo") {
+                    embed = new Image();
+                    embed.src = obj.url;
+                  }
+                  target.html(embed);
                 }
               });
               
