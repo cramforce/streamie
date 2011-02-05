@@ -176,6 +176,28 @@ require.def("stream/status",
         }
       },
       
+      // Send a direct message
+      newDirectMessage: {
+        func: function newDirectMessage (stream) {
+          var RE = streamPlugins.formatTweetText.GRUBERS_URL_RE;
+          
+          // listen to click on the shortenURLs buttons
+          $(document).delegate("form.status .directMessage", "click", function (e) {
+            e.preventDefault();
+            var form = $(this).closest("form.status");
+            var input = form.find("[name=status]");
+            
+            var text = input.val();
+            if(!text.match(/^d\s+/)) {
+              var prefix = 'd @';
+              text = prefix + (text ? ' ' + text : '');
+              setCaret(form, text, prefix.length, prefix.length);
+            }
+            
+          });
+        }
+      },
+      
       // Shorten URLs in statuses
       shortenURLs: {
         func: function shortenURLs (stream) {
