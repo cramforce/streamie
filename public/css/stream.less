@@ -5,7 +5,7 @@
 			position:relative;
 			clear:both;
 			margin:0 0 20px 0;
-			#client-transition-time > .short;
+			/*#client-transition-time > .short;*/
 			z-index: 0;
 			-webkit-transform-style: preserve-3d;
 			-webkit-transition-property: -webkit-transform;
@@ -90,6 +90,7 @@
 					position:absolute;
 					top:10px;
 					right:10px;
+					opacity:0;
 				}
 				.text.json{
 					overflow:auto;
@@ -144,7 +145,7 @@
 						line-height:15px;
 						cursor:pointer;
 						opacity:0;
-						#client-transition-time > .actions;
+						/*#client-transition-time > .actions;*/
 						&:hover{
 							opacity:1;
 							color:@client-red;
@@ -196,6 +197,9 @@
 					#client-shadow > .smalldark;
 					.actions li{
 						opacity:.7;
+					}
+					.time{
+					  opacity:1;
 					}
 				}
 				&:after{
