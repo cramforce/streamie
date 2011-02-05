@@ -6,7 +6,7 @@ require.def("stream/client",
   ["stream/tweetstream", "stream/tweet", "ext/cookie.js"], // socket.io is loaded from the page
   function(tweetstream, tweetModule) {
     
-    var transports             = ['websocket', 'htmlfile', 'xhr-multipart', 'xhr-polling'];
+    var transports             = ['websocket', 'htmlfile', 'xhr-polling'];
     var convervativeTransports = ['xhr-polling']; // xhr-polling should work even through the most evil proxies
     
     var connectFail  = 0;  // actual failed connects since last successfull connect
