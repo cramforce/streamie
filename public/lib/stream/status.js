@@ -205,13 +205,15 @@ require.def("stream/status",
                   $.getJSON(url, function (info, status) {
                     if(info) {
                       if(info.status_code != "200") {
+                        alert('URL shortening failed');
                         console.log("[BITLY] "+url);
                         console.log(info)
                       } else {
                         var text = input.val();
                         // replace actual status text
                         text = text.replace(longURL, info.data.url);
-                        input.val(text)
+                        input.val(text);
+                        input.focus();
                       }
                     }
                   })
