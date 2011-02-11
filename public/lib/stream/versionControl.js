@@ -10,7 +10,7 @@ require.def("stream/versionControl",
     var currentVersion = null;
     
     function check() {
-      $.get("/version.txt", function (data, status) {
+      $.get("/version.txt?bust="+(new Date).getTime(), function (data, status) {
         if(status == "success") {
           var version = data;
           if(version) {
