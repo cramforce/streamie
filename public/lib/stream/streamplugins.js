@@ -309,9 +309,24 @@ require.def("stream/streamplugins",
         HASH_TAG_RE:    /(^|\s)\#(\S+)/g,
         func: function formatTweetText (tweet, stream, plugin) {
           var text = tweet.textHTML;
-          
-          text = text.replace(plugin.GRUBERS_URL_RE, function(url){
-            return '<a href="'+((/^\w+\:\//.test(url)?'':'http://')+helpers.html(url))+'">'+helpers.html(url)+'</a>';
+          var urls;
+          if(tweet.data.entities) {
+            urls = tweet.data.entities.urls; // Twitter sends parsed URLs through the new tweet entities.
+          }
+          text = text.replace(plugin.GRUBERS_URL_RE, function(url) {
+            var displayURL = url;
+            var targetURL = (/^\w+\:\//.test(url)?'':'http://') + url;
+            urls.forEach(function(urlObj) {
+              if(urlObj.url == url) {
+                if(urlObj.display_url) {
+                  displayURL = urlObj.display_url;
+                }
+                if(urlObj.expanded_url) {
+                  targetURL = urlObj.expanded_url;
+                }
+              }
+            });
+            return '<a href="'+helpers.html(targetURL)+'">'+helpers.html(displayURL)+'</a>';
           })
 					
           // screen names

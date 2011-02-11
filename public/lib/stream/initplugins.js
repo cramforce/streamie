@@ -305,21 +305,21 @@ require.def("stream/initplugins",
                 }
                 if(oldest) {
                   // fetch other types of statuses since the last regular status
-                  rest.get("/1/statuses/retweeted_to_me.json?since_id="+oldest.id, handle);
-                  rest.get("/1/statuses/mentions.json?since_id="+oldest.id, handle);
+                  rest.get("/1/statuses/retweeted_to_me.json?include_entities=true&since_id="+oldest.id, handle);
+                  rest.get("/1/statuses/mentions.json?include_entities=true&since_id="+oldest.id, handle);
                 } else {
-                  rest.get("/1/statuses/retweeted_to_me.json?count=20", handle);
-                  rest.get("/1/statuses/mentions.json?count=50", handle);
+                  rest.get("/1/statuses/retweeted_to_me.json?include_entities=true&count=20", handle);
+                  rest.get("/1/statuses/mentions.json?include_entities=true&count=50", handle);
                 }
               }
               handle.apply(this, arguments);
             }
 
             // Make API calls
-            rest.get("/1/statuses/friends_timeline.json?count=100", handleSince);
-            rest.get("/1/favorites.json", handle);
-            rest.get("/1/direct_messages.json", handle);
-            rest.get("/1/direct_messages/sent.json", handle);
+            rest.get("/1/statuses/friends_timeline.json?include_entities=true&count=100", handleSince);
+            rest.get("/1/favorites.json?include_entities=true&", handle);
+            rest.get("/1/direct_messages.json?include_entities=true&", handle);
+            rest.get("/1/direct_messages/sent.json?include_entities=true&", handle);
             console.log("[prefil] prefilling timeline");
           }
 
