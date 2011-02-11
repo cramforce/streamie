@@ -150,10 +150,10 @@ require.def("stream/initplugins",
           $(document).bind("notify:tweet:unread", function () {
             redraw();
           });
-          $(document).bind("tweet:new", function () {
+          $(document).bind("tweet:new", function (e, tweet) {
             newCount++;
             if(dirty) {
-              $(document).trigger("tweet:unread", [newCount])
+              $(document).trigger("tweet:unread", [newCount, tweet.mentioned, tweet.direct_message])
             }
           })
         }
@@ -173,12 +173,12 @@ require.def("stream/initplugins",
               }
             }
           }, 60 * 1000) // turn this into a setting
-          $(document).bind("tweet:unread", function (e, count) {
+          $(document).bind("tweet:unread", function (e, count, isMention, isDirectMessage) {
             // disable via setting
             if(settings.get("notifications", "throttle")) {
               notifyCount = count;
             } else {
-              $(document).trigger("notify:tweet:unread", [count])
+              $(document).trigger("notify:tweet:unread", [count, isMention, isDirectMessage])
             }
           });
         }
@@ -229,11 +229,31 @@ require.def("stream/initplugins",
       // display state in the favicon
       favicon: {        
         func: function favicon (stream, plugin) {
-          $(document).bind("notify:tweet:unread", function (e, count) {
+          var importantActive = false;
+          $(document).bind("notify:tweet:unread", function (e, count, isMention, isDirectMessage) {
+            var url;
+            if(count > 0) {
+              url =  "images/streamie-unread.ico";
+              if(isMention) {
+                url = "images/streamie-mention.ico";
+                importantActive = true;
+              }
+              else if(isDirectMessage) {
+                url = "images/streamie-direct.ico"
+                importantActive = true;
+              } else {
+                if(importantActive) { // we should not change away
+                  return;
+                }
+              }
+            } else {
+              importantActive = false;
+              url = "images/streamie-empty.ico"; 
+            }
+            
             // remove the current favicon. Just changing the href doesnt work.
             var favicon = $("link[rel~=icon]")
-            favicon.remove()
-            url = count > 0 ? "images/streamie-full.ico" : "images/streamie-empty.ico";
+            favicon.remove();
 
             // put in a new favicon
             $("head").append($('<link rel="shortcut icon" type="image/x-icon" href="'+url+'" />'));
@@ -244,8 +264,8 @@ require.def("stream/initplugins",
       // Use the REST API to load the users's friends timeline, mentions and friends's retweets into the stream
       // this also happens when we detect that the user was offline for a while
       prefillTimeline: {
-        func: function prefillTimeline (stream) { 
-          
+        func: function prefillTimeline (stream) { 
+
           function prefill () {
             var all = [];
             var returns = 0;
@@ -294,7 +314,7 @@ require.def("stream/initplugins",
               }
               handle.apply(this, arguments);
             }
-            
+
             // Make API calls
             rest.get("/1/statuses/friends_timeline.json?count=100", handleSince);
             rest.get("/1/favorites.json", handle);
@@ -302,11 +322,11 @@ require.def("stream/initplugins",
             rest.get("/1/direct_messages/sent.json", handle);
             console.log("[prefil] prefilling timeline");
           }
-          
-          $(document).bind("awake", function (e, duration) { // when we awake, we might have lost some tweets
+
+          $(document).bind("awake", function (e, duration) { // when we awake, we might have lost some tweets
             setTimeout(prefill, 4000); // wait for network to come online
           });
-          
+
           prefill(); // do once at start
         }
       },
