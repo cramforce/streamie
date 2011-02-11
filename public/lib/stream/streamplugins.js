@@ -316,6 +316,7 @@ require.def("stream/streamplugins",
           text = text.replace(plugin.GRUBERS_URL_RE, function(url) {
             var displayURL = url;
             var targetURL = (/^\w+\:\//.test(url)?'':'http://') + url;
+            // Check if there is a URL entity for this. If yes, use its display and target URL.
             urls.forEach(function(urlObj) {
               if(urlObj.url == url) {
                 if(urlObj.display_url) {
