@@ -102,6 +102,18 @@ require.def("stream/streamplugins",
             }
             tweet.created_at = new Date(tweet.data.created_at);
             this();
+          } else {
+            if(tweet.data.delete) {
+              var del = tweet.data.delete;
+              var tweet = Tweets[del.status.id_str];
+              $(document).trigger("tweet:delete", [ del, tweet ]);
+              if(tweet) {
+                tweet.deleted = true;
+                if(tweet.node) {
+                  tweet.node.addClass('deleted');
+                }
+              }
+            }
           }
         }
       },

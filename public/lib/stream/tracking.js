@@ -18,6 +18,7 @@ require.def("stream/tracking",
       "state:starred",
       "state:direct",
       "status:retweet",
+      "status:delete",
       "status:favorite",
       "status:favoriteDestroy"
     ];

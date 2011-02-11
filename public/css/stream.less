@@ -67,6 +67,11 @@
 					#client-border-radius > .small;
 				}
 			}
+			&.deleted{
+			  p.text{
+			    text-decoration: line-through;
+			  }
+			}
 			div.status{
 				position:relative;
 				padding:8px 10px;
@@ -190,6 +195,12 @@
 								content:"✽";
 							}
 						}
+						&.delete{
+						  font-size:14px;
+  						&:after{
+								content:"Delete";
+							}
+  					}
 					}
 				}
 

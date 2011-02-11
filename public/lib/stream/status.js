@@ -388,6 +388,30 @@ require.def("stream/status",
         }
       },
       
+      // Click on delete button
+      deleteStatus: {
+        func: function deleteStatus (stream) {
+          $(document).delegate("#stream .actions .delete", "click", function (e) {
+            var button = $(this);
+            var li = button.parents("li");
+            var tweet = li.data("tweet");
+            var id = tweet.data.id;
+            
+            if(!tweet.deleted) {
+              if(confirm('Do you really want to delete this tweet?')) {
+                rest.post("/1/statuses/destroy/"+id+".json", function (tweetData, status) {
+                  if(status == "success") {
+                    $(document).trigger("status:delete");
+                    button.remove();
+                    // Everything else happens through the Streaming API delete event
+                  }
+                });
+              }
+            }
+          })
+        }
+      },
+      
       // Click on favorite button
       favorite: {
         func: function favorite (stream) {
