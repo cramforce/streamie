@@ -443,6 +443,15 @@ require.def("stream/streamplugins",
             settings.get('notifications', 'enableWebkitNotifications') &&
             window.webkitNotifications && 
             window.webkitNotifications.checkPermission() == 0) {
+              if(tweet.mentioned && !settings.get('notifications', 'mentions')) {
+                return
+              }
+              if(tweet.direct_message && !settings.get('notifications', 'direct')) {
+                return
+              }
+              if(!tweet.mentioned && !tweet.direct_message && !settings.get('notifications', 'tweets')) {
+                return
+              }
             try {
               var notification = 
                 window.webkitNotifications.createNotification(tweet.data.user.profile_image_url, 

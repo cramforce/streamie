@@ -10,8 +10,9 @@ require.def("stream/initplugins",
     settings.registerKey("general", "showTwitterBackground", "Show my background from Twitter",  false);
     
     settings.registerNamespace("notifications", "Notifications");
-    settings.registerKey("notifications", "favicon", "Highlight Favicon (Website icon)",  true);
-    settings.registerKey("notifications", "throttle", "Throttle (Only notify once per minute)", false);
+    settings.registerKey("notifications", "tweets", "Notify for new tweets (yellow icon)",  true);
+    settings.registerKey("notifications", "mentions", "Notify for new mentions (green icon)",  true);
+    settings.registerKey("notifications", "direct", "Notify for new direct messages (blue icon)",  true);
     
     return {
       
@@ -152,33 +153,31 @@ require.def("stream/initplugins",
           });
           $(document).bind("tweet:new", function (e, tweet) {
             newCount++;
-            if(dirty) {
-              $(document).trigger("tweet:unread", [newCount, tweet.mentioned, tweet.direct_message])
-            }
+            $(document).trigger("tweet:unread", [newCount, tweet.mentioned, tweet.direct_message])
           })
         }
       },      
       
-      // tranform "tweet:unread" events into "notify:tweet:unread" events
-      // depending on setting, only fire the latter once a minute
+      // Tranform "tweet:unread" events into "notify:tweet:unread" events
+      // Filter events based on setting.
       throttableNotifactions: {
         func: function throttableNotifactions () {
-          var notifyCount = null;
-          setInterval(function () {
-            // if throttled, only redraw every N seconds;
-            if(settings.get("notifications", "throttle")) {
-              if(notifyCount != null) {
-                $(document).trigger("notify:tweet:unread", [notifyCount]);
-                notifyCount = null;
-              }
-            }
-          }, 60 * 1000) // turn this into a setting
           $(document).bind("tweet:unread", function (e, count, isMention, isDirectMessage) {
-            // disable via setting
-            if(settings.get("notifications", "throttle")) {
-              notifyCount = count;
-            } else {
+            function notify() {
               $(document).trigger("notify:tweet:unread", [count, isMention, isDirectMessage])
+            }
+            if(isMention) {
+              if(settings.get("notifications", "mentions")) {
+                notify();
+              }
+            } else if(isDirectMessage) {
+              if(settings.get("notifications", "direct")) {
+                notify();
+              }
+            } else {
+              if(settings.get("notifications", "tweets")) {
+                notify();
+              }
             }
           });
         }
