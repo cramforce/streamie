@@ -75,7 +75,7 @@
 			div.status{
 				position:relative;
 				padding:8px 10px;
-				min-height:30px;
+				min-height:38px;
 				margin:0 0 0 65px;
 				display:block;
 				background:#fff;
@@ -84,6 +84,15 @@
 				#client-shadow > .small;
 				#client-transition-time > .short;
 				-webkit-transform: translate3d(0,0,0);
+				.header{
+				  #client-transition-time > .short;
+				  height:0px;
+				  overflow:hidden;
+				}
+				.conversation{
+				  #client-transition-time > .short;
+				  opacity:0;
+				}
 				.h{
 					float:left;
 					margin:0 0 10px 0;
@@ -92,6 +101,7 @@
 					}
 				}
 				.time{
+				  #client-transition-time > .short;
 					position:absolute;
 					top:10px;
 					right:10px;
@@ -150,6 +160,7 @@
 						line-height:15px;
 						cursor:pointer;
 						opacity:0;
+						#client-transition-time > .short;
 						/*#client-transition-time > .actions;*/
 						&:hover{
 							opacity:1;
@@ -206,6 +217,12 @@
 
 				&:hover{
 					#client-shadow > .smalldark;
+					.header{
+					  height:20px;
+					}
+					.conversation{
+  				  opacity:1;
+  				}
 					.actions li{
 						opacity:.7;
 					}
