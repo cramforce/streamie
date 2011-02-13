@@ -85,17 +85,17 @@
 				#client-transition-time > .short;
 				-webkit-transform: translate3d(0,0,0);
 				.header{
+				  line-height:16px;
 				  #client-transition-time > .short;
-				  height:0px;
-				  overflow:hidden;
+				  opacity:0;
 				}
 				.conversation{
 				  #client-transition-time > .short;
 				  opacity:0;
 				}
 				.h{
-					float:left;
-					margin:0 0 10px 0;
+					/*float:left;
+					margin:0 0 10px 0;*/
 					a{
 					font-weight:bold;
 					}
@@ -115,6 +115,7 @@
 					clear:both;
 					color:#111;
 					margin:0;
+					padding: 0 20px 0 0;
 					word-wrap:break-word;
 					a{
 						color:@client-red;
@@ -218,9 +219,10 @@
 				&:hover{
 					#client-shadow > .smalldark;
 					.header{
-					  height:20px;
+					  opacity:1;
 					}
 					.conversation{
+  				  #client-transition-time > .short;
   				  opacity:1;
   				}
 					.actions li{
