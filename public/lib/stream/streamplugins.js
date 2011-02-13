@@ -443,29 +443,27 @@ require.def("stream/streamplugins",
             settings.get('notifications', 'enableWebkitNotifications') &&
             window.webkitNotifications && 
             window.webkitNotifications.checkPermission() == 0) {
-              if(tweet.mentioned && !settings.get('notifications', 'mentions')) {
-                return
-              }
-              if(tweet.direct_message && !settings.get('notifications', 'direct')) {
-                return
-              }
-              if(!tweet.mentioned && !tweet.direct_message && !settings.get('notifications', 'tweets')) {
-                return
-              }
             try {
-              var notification = 
-                window.webkitNotifications.createNotification(tweet.data.user.profile_image_url, 
-                  tweet.data.user.name, 
-                  tweet.data.text);
-              notification.show();
+			  var tweetHash = {
+			    'name':tweet.data.user.screen_name,
+				'screen_name':tweet.data.user.screen_name,
+				'avatar':tweet.data.user.profile_image_url,
+				'text':tweet.data.text,
+				'created_at':tweet.data.created_at,
+				'source':tweet.data.source,
+				'entities':tweet.data.entities
+			  };
+			  if(tweet.data.retweeted_status)
+				  tweetHash.RTby = {
+					  'screen_name': tweet.data.retweeted_status.user.screen_name,
+					  'name': tweet.data.retweeted_status.user.name
+				  };
+			  var notification = window.webkitNotifications.createHTMLNotification("notification.html#"+JSON.stringify(tweetHash));
+			  notification.show();
               notification.onclose = function() {
                 --plugin.current;
               } //onclose
-              ++plugin.current;               
-              //hide after 5 seconds
-              setTimeout(function() {
-                notification.cancel();
-              }, 5000);
+              ++plugin.current;
             } catch(e) {
             }
           }

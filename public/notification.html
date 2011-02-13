@@ -1,0 +1,92 @@
+<html>
+<head>
+<script type="text/javascript" src="ext/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="ext/jquery.timeago.js"></script>
+<script type="text/javascript" src="ext/notification.js"></script>
+<style>
+body
+{
+	font: 84% Arial, sans-serif
+}
+#top
+{
+	width: 270px;
+}
+#avatar
+{
+	margin: 0px 5px 5px 0px;
+	padding-bottom: 5px;
+	float: left;
+	height: 48px;
+	width: 48px;
+}
+#img{
+	width: 48px;
+}
+a
+{
+    color: #2276BB;
+}
+a:link {text-decoration:none}
+a:visited {text-decoration:none}
+a:hover {text-decoration:underline}
+a:active {text-decoration:underline}
+a#user
+{
+    font-weight: bold;
+}
+a#user:link {color:#333}
+a#user:visited {color:#333}
+a#user:hover {color:#2276BB}
+a#user:active {color:#2276BB}
+span#rt
+{
+	color:#333;
+	font-size: 11px;
+	display: none;
+}
+#main
+{
+	width: 217px;
+	float: right;
+	padding-bottom: 5px;
+}
+#bottom
+{
+	color: #999 !important;
+	font-size: 11px;
+	padding-bottom: 5px;
+}
+#bottom a
+{
+	color: #999 !important;
+}
+.btext
+{
+	white-space:nowrap;
+}
+#tlogo
+{
+	float: right;
+	padding-bottom: 5px;
+	margin-right: 5px;
+}
+</style>
+</head>
+<body>
+<div id="container">
+	<div id="top">
+		<div id="img">
+			<a href="#"><img width="48" height="48" id="avatar"/></a>
+		</div>
+		<div id="main">
+			<a id="user" href="#"></a> <span id="rt">(Retweeted by <a id="rtby" href="#"></a>)</span> <span id="msg"></span><br/>
+		</div>
+	</div>
+	<div id="bottom">
+		<span class="btext"><a id="timestamp"></a> <span id="via">via web</span></span>
+		<a href="http://twitter.com/"><img id="tlogo" src="http://a0.twimg.com/a/1285890902/images/twitter_t_logo_outline.png" height="20" width="16"/></a>
+	</div>
+</div>
+</body>
+</html>
