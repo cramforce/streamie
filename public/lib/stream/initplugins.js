@@ -152,6 +152,9 @@ require.def("stream/initplugins",
             redraw();
           });
           $(document).bind("tweet:new", function (e, tweet) {
+            if(tweet.yourself) { // your own tweets are never unread
+              return;
+            }
             newCount++;
             $(document).trigger("tweet:unread", [newCount, tweet.mentioned, tweet.direct_message])
           })
