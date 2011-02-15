@@ -470,6 +470,9 @@ require.def("stream/status",
       age: {
         func: function age (tweet) {
           function update() {
+            if(window.Streamie_Just_Scrolled) { // never draw while scrolling
+              return;
+            }
             $('#stream').children().each(function() {
               var tweet = $(this).data('tweet');
             

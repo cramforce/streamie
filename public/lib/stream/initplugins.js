@@ -49,9 +49,16 @@ require.def("stream/initplugins",
           win.bind("hashchange", change); // who cares about old browsers?
           change();
           
+          var scrollTimer;
+          function scrollTimeout() {
+            window.Streamie_Just_Scrolled = false;
+          }
           win.bind("scroll", function () {
             plugin.ScrollState[location.hash.replace(/^\#/, "") || "all"] = win.scrollTop();
-          })
+            window.Streamie_Just_Scrolled = true;
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(scrollTimeout, 1000);
+          });
         }
       },
       
