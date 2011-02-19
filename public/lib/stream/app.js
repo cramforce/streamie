@@ -88,6 +88,13 @@ require.def("stream/app",
     return {
       start: function () {
         $(function () {
+          
+          $('#showMoreInfo').click(function(e) {
+            e.preventDefault();
+            $(this).remove();
+            $('#moreinfo').show();
+          })
+          
           stream.addPlugins(streamPlugins);
           stream.addLinkPlugins(linkPlugins);
           
