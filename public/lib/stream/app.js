@@ -121,7 +121,7 @@ require.def("stream/app",
                   plugin.func.call(function () {}, stream, plugin);
                 });
                 $(document).trigger("streamie:init:complete");
-                $(document).trigger("streamie:activeuse");
+                $(document).trigger("streamie:activeuse", [stream.user.screen_name]);
               }
             }
             else if(data.tweet) {
