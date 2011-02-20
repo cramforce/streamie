@@ -40,10 +40,10 @@ require.def("stream/tracking",
       $(document).bind(name, function (e, value) {
         track(name, value);
       });
-      $(document).bind("streamie:activeuse", function (e, screen_name) {
-        track("activeuse:" + screen_name);
-      });
-    })
+    });
+    $(document).bind("streamie:activeuse", function (e, screen_name) {
+      track("activeuse:" + screen_name);
+    });
         
     return {}
   }
