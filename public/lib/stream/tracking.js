@@ -20,8 +20,7 @@ require.def("stream/tracking",
       "status:retweet",
       "status:delete",
       "status:favorite",
-      "status:favoriteDestroy",
-      "streamie:activeuse"
+      "status:favoriteDestroy"
     ];
     
     function track(event, value) {
@@ -39,8 +38,11 @@ require.def("stream/tracking",
     
     events.forEach(function (name) {
       $(document).bind(name, function (e, value) {
-        track(name, value)
-      })
+        track(name, value);
+      });
+      $(document).bind("streamie:activeuse", function (e, screen_name) {
+        track("activeuse:" + screen_name);
+      });
     })
         
     return {}
