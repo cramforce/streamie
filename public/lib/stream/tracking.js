@@ -20,7 +20,8 @@ require.def("stream/tracking",
       "status:retweet",
       "status:delete",
       "status:favorite",
-      "status:favoriteDestroy"
+      "status:favoriteDestroy",
+      "streamie:activeuse"
     ];
     
     function track(event, value) {
