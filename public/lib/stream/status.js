@@ -7,6 +7,8 @@ require.def("stream/status",
     settings.registerKey("status", "autocompleteScreenNames", "As-you-type autocomplete for screen names",  true);
     settings.registerKey("status", "addLocation", "Add your current location to status updates",  true);
     
+    settings.registerKey("stream", "showJSON", "Show JSON representation of tweet on double click", false ); 
+    
     var TWEET_MAX_LENGTH = 140;
     
     // get (or make) a form the reply to a tweet
@@ -535,6 +537,9 @@ require.def("stream/status",
       showJSON: {
         func: function showJSON (stream) {
           $(document).delegate("#stream p.text", "dblclick", function (e) {
+            if(!settings.get("stream", "showJSON")) {
+              return;
+            }
             var target = $(this)
             var li = target.closest("li.tweet");
             var copy = li.clone(); // used to display the JSON
