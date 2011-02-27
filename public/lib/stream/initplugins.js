@@ -13,6 +13,7 @@ require.def("stream/initplugins",
     settings.registerKey("notifications", "tweets", "Notify for new tweets (yellow icon)",  true);
     settings.registerKey("notifications", "mentions", "Notify for new mentions (green icon)",  true);
     settings.registerKey("notifications", "direct", "Notify for new direct messages (blue icon)",  true);
+    settings.registerKey("notifications", "sound", "Play a sound for new tweets",  false);
     
     return {
       
@@ -174,7 +175,21 @@ require.def("stream/initplugins",
         func: function throttableNotifactions () {
           $(document).bind("tweet:unread", function (e, count, isMention, isDirectMessage) {
             function notify() {
-              $(document).trigger("notify:tweet:unread", [count, isMention, isDirectMessage])
+              $(document).trigger("notify:tweet:unread", [count, isMention, isDirectMessage]);
+              
+              if(settings.get('notifications', 'sound')) {
+                var audio = $('<audio />')
+                audio.attr({
+                  src: '/sounds/new_tweet.wav',
+                  autoplay: true
+                });
+                audio.hide();
+                audio.bind('ended', function() {
+                  audio.remove()
+                });
+                
+                $('body').append(audio)
+              }
             }
             if(isMention) {
               if(settings.get("notifications", "mentions")) {
