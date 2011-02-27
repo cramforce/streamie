@@ -5,7 +5,7 @@
 	<% settings.namespaces().forEach(function (ns) { %>
 	<fieldset>
 		<legend class="h4"><%=h(ns.name)%></legend>
-		<% ns.keys().forEach(function (key) { %>
+		<% ns.keys().sort(function(a,b) { return ns.settings[b].label < ns.settings[a].label  }).forEach(function (key) { %>
 		<% var value = settings.get(ns.name, key), name  = "settings."+ns.name+"."+key; %>
 		<% var values = ns.settings[key].values; %>
 		<div class="formrow">
