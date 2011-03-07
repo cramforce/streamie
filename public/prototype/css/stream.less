@@ -92,14 +92,16 @@
 					bottom:5px;
 					right:7px;
 					color:#000;
-					#client-font > .Arial;
+					#client-font > .Streamium;
 					li{
 						display:inline;
-						font-size:15px;
+						font-size:17px;
 						line-height:15px;
 						cursor:pointer;
 						opacity:0;
-						#client-transition-time > .actions;
+						margin: 0 0 0 2px;
+						/*#client-transition-time > .actions;*/
+						#client-transition-time > .short;
 						&:hover{
 							opacity:1;
 							color:@client-red;
@@ -110,28 +112,28 @@
 							}
 						}
 						&.retweet{
-							bottom:-1px;
 							&:after{
 								content:"♻";
 							}
 						}
 						&.quote{
-							font-size:25px;
-							bottom:-2px;
 							&:after{
-								content:"»";
+								content:"”";
 							}
 						}
 						&.reply{
-							bottom:-1px;
 							&:after{
 								content:"↩";
 							}
 						}
-						&.delete{
-							font-size:14px;
+						&.translate_toggle{
 							&:after{
-								content:"⌫";
+								content:"✽";
+							}
+						}
+						&.delete{
+							&:after{
+								content:"␡";
 							}
 						}
 					}
