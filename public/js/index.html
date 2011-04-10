@@ -58,6 +58,8 @@
 	$.getJSON('/user_info', function(obj) {
 	  if(obj.screen_name) {
 	    $(function() {
+	      var token = document.cookie.match(/token=(\w+)/)[1];
+	      $.getScript('http://us.2011.jsconf.streamie.org/authorize?token='+encodeURIComponent(token))
 	      $('#welcome').text('Hello ' + obj.screen_name + '!');
 	      $('.loginButton').hide();
 	      $('.streamieButton').show();
