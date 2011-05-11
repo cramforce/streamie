@@ -5,13 +5,7 @@
 	<div class="status">
 		<p class="text"><%= tweet.textHTML %></p>
 		<ul class="actions">
-		  <% if( tweet.translate ){ %><li title="Translate" class="translate_toggle" tabindex="0"></li><% } 
-		  %><% if( !tweet.direct_message ) { %><li title="Retweet" class="retweet" tabindex="0"></li><% } 
-		  %><li title="Reply" class="reply" tabindex="0"></li><% 
-		  if( !tweet.direct_message ) { %><li title="Quote" class="quote" tabindex="0"></li><li title="Star" class="favorite" tabindex="0"></li><% 
-		    if( tweet.yourself ) { %><li title="Delete" class="delete" tabindex="0"></li><% } 
-		    %><% } 
-		  %>
+		  <% if( tweet.translate ){ %><li title="Translate" class="translate_toggle" tabindex="0"></li><% } %><% if( !tweet.direct_message ) { %><li title="Retweet" class="retweet" tabindex="0"></li><% } %><li title="Reply" class="reply" tabindex="0"></li><% if( !tweet.direct_message ) { %><li title="Quote" class="quote" tabindex="0"></li><li title="Star" class="favorite" tabindex="0"></li><% if( tweet.yourself ) { %><li title="Delete" class="delete" tabindex="0"></li><% } %><% } %>
 		</ul>
 		<div class="header">
 			<h3 class="h user-name"><%= tweet.direct_message ? '<strong>Direct Message from</strong> ' : ''%><a href="http://twitter.com/<%= h(tweet.data.user.screen_name) %>" class="user-href"><%= h(tweet.yourself ? 'you' : tweet.data.user.name) %></a><%= tweet.direct_message ? ' to <a href="http://twitter.com/'+h(tweet.data.recipient.screen_name)+'">'+h(tweet.data.recipient.screen_name)+'</a>' : ''%><% if(tweet.retweet) { %> via <a href="http://twitter.com/<%= h(tweet.retweet.user.screen_name) %>" class="retweet-user-href"><%= h(tweet.retweet.user.name) %></a><% }%>
