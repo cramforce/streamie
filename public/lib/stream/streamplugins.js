@@ -207,6 +207,7 @@ require.def("stream/streamplugins",
         }
       },
       
+      
       // render the template (the underscore.js way)
       renderTemplate: {
         func: function renderTemplate (tweet, stream) {
@@ -295,6 +296,23 @@ require.def("stream/streamplugins",
           } else {
             stream.canvas().prepend(tweet.node);
           }
+          this();
+        }
+      },
+      
+      // Render image to canvas. This avoids animated gifs from being animated.
+      canvasImage: {
+        func: function canvasImage (tweet) {
+          tweet.node.find('canvas[data-src]').each(function() {
+            var canvas = this;
+            var src = canvas.getAttribute('data-src');
+            var ctx = canvas.getContext('2d');
+            var img = new Image;
+            img.src = src;
+            img.onload = function() {
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            }
+          });
           this();
         }
       },

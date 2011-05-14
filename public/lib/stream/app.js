@@ -36,6 +36,7 @@ require.def("stream/app",
       streamPlugin.filter,
       streamPlugin.renderTemplate,
       streamPlugin.prepend,
+      streamPlugin.canvasImage,
       streamPlugin.keepScrollState,
       streamPlugin.newTweetEvent,
       streamPlugin.webkitNotify
