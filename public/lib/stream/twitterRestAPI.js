@@ -33,6 +33,10 @@ require.def("stream/twitterRestAPI",
         }
       }
       
+      var token = cookie.get("token");
+      url += url.match(/\?/) ? '&' : '?';
+      url += '_token='+encodeURIComponent(token);
+      
       var success = function(data, status, xhr) {
         if(devCacheEnabled) {
           if(status == "success") {
