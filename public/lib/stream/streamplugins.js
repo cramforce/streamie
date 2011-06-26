@@ -8,7 +8,7 @@ require.def("stream/streamplugins",
   function(tweetModule, settings, rest, helpers, keyValue, templateText) {
     
     settings.registerNamespace("filter", "Filter");
-    settings.registerKey("filter", "longConversation", "Filter long (more than 3 tweets) conversations",  false);
+    settings.registerKey("filter", "longConversation", "Filter long (more than 3 tweets) conversations of others",  false);
     
     settings.registerNamespace("stream", "Stream");
     settings.registerKey("stream", "showRetweets", "Show Retweets",  true);
@@ -253,13 +253,15 @@ require.def("stream/streamplugins",
           } else {
             tweet.conversation = Conversations[id] = {
               index: ConversationCounter++,
-              tweets: 0
+              tweets: 0,
+              authors: {}
             };
             if(in_reply_to) {
               Conversations[in_reply_to] = tweet.conversation;
             }
           }
           tweet.conversation.tweets++;
+          tweet.conversation.authors[tweet.data.user.screen_name] = true;
           
           tweet.fetchNotInStream = function (cb) {
             var in_reply_to = tweet.data.in_reply_to_status_id;
@@ -411,9 +413,9 @@ require.def("stream/streamplugins",
       },
       
       filter: {
-        func: function filter (tweet) {
+        func: function filter (tweet, stream) {
           if(settings.get("filter", "longConversation")) {
-            if(tweet.conversation.tweets > 3) {
+            if(tweet.conversation.tweets > 3 && !tweet.conversation.authors[stream.user.screen_name]) {
               tweet.filtered = {
                 reason: "long-conversation"
               }
