@@ -1,0 +1,17 @@
+{
+  "locale": "de",
+  "text": {
+    "tweet": {
+      "from here ⌘": "von hier ⌘",
+      "via": "über",
+      "Show conversation": "Zeige Konversation",
+      "in a conversation with {name}": "in einer Konversation mit {name}"
+    },
+    "status": {
+      "Shorten URLs": "URLs Verkürzen",
+      "Attach an Image": "Bild Anhängen",
+      "Your Tweet…": "Dein Tweet…",
+      "Submit": "Senden"
+    }
+  }
+}

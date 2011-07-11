@@ -3,8 +3,8 @@
  */
 
 require.def("stream/settingsDialog",
-  ["stream/settings", "stream/helpers", "text!../templates/settingsDialog.ejs.html"],
-  function(settings, helpers, templateText) {
+  ["stream/text", "stream/settings", "stream/helpers", "text!../templates/settingsDialog.ejs.html"],
+  function(text, settings, helpers, templateText) {
     
     var template = _.template(templateText);
     
@@ -21,7 +21,8 @@ require.def("stream/settingsDialog",
     function draw() {
       $("#settings").html(template({
         settings: settings,
-        helpers: helpers
+        helpers: helpers,
+        text: text.get
       }));
     }
     

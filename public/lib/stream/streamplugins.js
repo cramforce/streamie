@@ -4,8 +4,8 @@
  */
 
 require.def("stream/streamplugins",
-  ["stream/tweet", "stream/settings", "stream/twitterRestAPI", "stream/helpers", "stream/keyValueStore", "text!../templates/tweet.ejs.html"],
-  function(tweetModule, settings, rest, helpers, keyValue, templateText) {
+  ["stream/tweet", "stream/settings", "stream/twitterRestAPI", "stream/text","stream/helpers", "stream/keyValueStore", "text!../templates/tweet.ejs.html"],
+  function(tweetModule, settings, rest, text, helpers, keyValue, templateText) {
     
     settings.registerNamespace("filter", "Filter");
     settings.registerKey("filter", "longConversation", "Filter long (more than 3 tweets) conversations of others",  false);
@@ -214,7 +214,8 @@ require.def("stream/streamplugins",
           tweet.html = tweet.template({
             stream: stream,
             tweet: tweet,
-            helpers: helpers
+            helpers: helpers,
+            text: text.get
           });
           this();
         }

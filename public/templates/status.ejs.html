@@ -6,14 +6,14 @@
   <input type="hidden" name="long" value="" />
   <input type="hidden" name="display_coordinates" value="" />
 	<fieldset class="addons">
-		<a href="#" class="shortenURLs">Shorten URLs</a>
-		<a href="#" class="attachImage">Attach an Image</a>
+		<a href="#" class="shortenURLs"><%= text('status', 'Shorten URLs') %></a>
+		<a href="#" class="attachImage"><%= text('status', 'Attach an Image') %></a>
 		<a class="close" title="Close">×</a>
 	</fieldset>
 	<fieldset>
-		<textarea name="status" rows="5" cols="40" placeholder="Your Tweet…"><%=tweet.direct_message ? 'd ' : ''  %><%= h(data.user ? "@"+data.user.screen_name+' ' : '' ) || '' %></textarea>
+		<textarea name="status" rows="5" cols="40" placeholder="<%= text('status', 'Your Tweet…') %>"><%=tweet.direct_message ? 'd ' : ''  %><%= h(data.user ? "@"+data.user.screen_name+' ' : '' ) || '' %></textarea>
 		<span class="characters">0</span>
-		<input type="submit" value="Submit" class="button" />
+		<input type="submit" value="<%= text('status', 'Submit') %>" class="button" />
 	</fieldset>
 	<!-- <div class="extra">
 		<label for="file">Image-Upload <input type="file" name="file" /></label>
