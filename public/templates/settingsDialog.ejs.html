@@ -4,7 +4,7 @@
 	<div class="namespaces">
 	<% settings.namespaces().forEach(function (ns) { %>
 	<fieldset>
-		<legend class="h4"><%=h(ns.name)%></legend>
+		<legend class="h4"><%=h(text('setting', ns.name))%></legend>
 		<% ns.keys().sort(function(a,b) { return ns.settings[b].label < ns.settings[a].label  }).forEach(function (key) { %>
 		<% var value = settings.get(ns.name, key), name  = "settings."+ns.name+"."+key; %>
 		<% var values = ns.settings[key].values; %>
@@ -15,7 +15,7 @@
 				<% }else if( jQuery.isPlainObject(values) ){ %>
 					<select name="<%=h(name)%>" id="<%=h(name)%>" class="setting">
 						<% _.keys(values).forEach(function(x){ %>
-							<option value="<%=h(x)%>"  <%= (x == value) ? 'selected' : ''  %> ><%=h(values[x])%></option>						
+							<option value="<%=h(x)%>"  <%= (x == value) ? 'selected' : ''  %> ><%=h(text('setting', values[x]))%></option>						
 						<% }); %>
 					</select>
 				<% }else{ %>

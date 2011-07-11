@@ -1,6 +1,6 @@
 require.def("stream/status",
-  ["stream/twitterRestAPI", "stream/streamplugins", "stream/helpers", "stream/popin", "stream/location", "stream/settings", "stream/keyValueStore", "text!../templates/status.ejs.html", "/ext/jquery.autocomplete.js"],
-  function(rest, streamPlugins, helpers, popin, location, settings, keyValue, replyFormTemplateText) {
+  ["stream/text", "stream/twitterRestAPI", "stream/streamplugins", "stream/helpers", "stream/popin", "stream/location", "stream/settings", "stream/keyValueStore", "text!../templates/status.ejs.html", "/ext/jquery.autocomplete.js"],
+  function(text, rest, streamPlugins, helpers, popin, location, settings, keyValue, replyFormTemplateText) {
     var replyFormTemplate = _.template(replyFormTemplateText);
     
     settings.registerNamespace("status", "Status");
@@ -17,7 +17,8 @@ require.def("stream/status",
       if(form.length == 0) { // no form yet, create it
         li.find("div.status").append(replyFormTemplate({
           tweet: li.data("tweet"),
-          helpers: helpers
+          helpers: helpers,
+          text: text.get
         }));
         form = li.find("form.status");
         var textarea = form.find("[name=status]");
