@@ -5,18 +5,18 @@
 require.def("stream/initplugins",
   ["stream/tweet", "stream/settings", "stream/twitterRestAPI", "stream/helpers", "text!../templates/tweet.ejs.html", "ext/cookie.js"],
   function(tweetModule, settings, rest, helpers, templateText) {
-    
+
     settings.registerNamespace("general", "General");
     settings.registerKey("general", "showTwitterBackground", "Show my background from Twitter",  false);
-    
+
     settings.registerNamespace("notifications", "Notifications");
     settings.registerKey("notifications", "tweets", "Notify for new tweets (yellow icon)",  true);
     settings.registerKey("notifications", "mentions", "Notify for new mentions (green icon)",  true);
     settings.registerKey("notifications", "direct", "Notify for new direct messages (blue icon)",  true);
     settings.registerKey("notifications", "sound", "Play a sound for new tweets",  false);
-    
+
     return {
-      
+
       // when location.hash changes we set the hash to be the class of our HTML body
       hashState: {
         ScrollState: {},
@@ -28,12 +28,12 @@ require.def("stream/initplugins",
             $("body").attr("class", val);
             // { custom-event: stat:XXX }
             $(document).trigger("state:"+val);
-            
+
             var scrollState = plugin.ScrollState[val || "all"];
             if(scrollState != null) {
               win.scrollTop(scrollState);
             }
-            
+
             if(!plugin.StyleAppended[val] && val != "all") {
               plugin.StyleAppended[val] = true;
               var className = val.replace(/[^\w-]/g, "");
@@ -42,14 +42,14 @@ require.def("stream/initplugins",
                 'body.'+className+' #content #stream li {display:none;}\n'+
                 'body.'+className+' #content #stream li.'+className+' {display:block;}\n'+
                 '</style>';
-            
+
               style = $(style);
               $("head").append(style);
             }
           }
           win.bind("hashchange", change); // who cares about old browsers?
           change();
-          
+
           var scrollTimer;
           function scrollTimeout() {
             window.Streamie_Just_Scrolled = false;
@@ -62,7 +62,7 @@ require.def("stream/initplugins",
           });
         }
       },
-      
+
       // change the background to the twitter background
       background: {
         func: function background (stream) {
@@ -79,18 +79,18 @@ require.def("stream/initplugins",
           });
         }
       },
-      
+
       // make the clicked nav item "active"
       navigation: {
         func: function navigation (stream) {
           var mainstatus = $("#mainstatus");
-          
+
           mainstatus.bind("close", function () {
             if(mainstatus.hasClass("show")) {
               mainstatus.removeClass("show");
             }
           });
-          
+
           // meta navigation
           // Logout button
           $("#meta").delegate(".logout", "click", function (e) {
@@ -98,13 +98,13 @@ require.def("stream/initplugins",
             cookie.set("token", ""); // delete cookie
             location.href = "/"; // reload page
           });
-          
+
           // main header
           $("#header").delegate("#mainnav a", "click", function (e) {
             var a = $(this);
             a.blur();
             var li = a.closest("li");
-            
+
             if(li.hasClass("add")) { // special case for new tweet
               e.preventDefault();
               if(mainstatus.hasClass("show")) {
@@ -115,7 +115,7 @@ require.def("stream/initplugins",
                 // delays the transition by about 2 seconds in Chrome.
                 setTimeout(function() {
                   mainstatus.find("[name=status]").focus();
-                }, 500); 
+                }, 500);
               }
             }
             if(li.hasClass("activatable")) { // special case for new tweet
@@ -123,29 +123,29 @@ require.def("stream/initplugins",
               li.addClass("active")
             }
           });
-          
+
           mainstatus.bind("status:send", function () {
             mainstatus.removeClass("show");
           });
-          
+
          //  $("#header").delegate("#mainnav li.add", "mouseenter mouseleave", function () {
 //             mainstatus.toggleClass("tease");
 //           })
         }
       },
-      
+
       // signals new tweets
       signalNewTweets: {
         func: function signalNewTweets () {
           var win = $(window);
           var dirty = win.scrollTop() > 0;
           var newCount = 0;
-          
+
           function redraw() {
             var signal = newCount > 0 ? "("+newCount+") " : "";
             document.title = document.title.replace(/^(?:\(\d+\) )*/, signal);
           }
-          
+
           win.bind("scroll", function () {
             dirty = win.scrollTop() > 0;
             if(!dirty) { // we scrolled to the top. Back to 0 unread
@@ -167,8 +167,8 @@ require.def("stream/initplugins",
             $(document).trigger("tweet:unread", [newCount, tweet.mentioned, tweet.direct_message])
           })
         }
-      },      
-      
+      },
+
       // Tranform "tweet:unread" events into "notify:tweet:unread" events
       // Filter events based on setting.
       throttableNotifactions: {
@@ -176,7 +176,7 @@ require.def("stream/initplugins",
           $(document).bind("tweet:unread", function (e, count, isMention, isDirectMessage) {
             function notify() {
               $(document).trigger("notify:tweet:unread", [count, isMention, isDirectMessage]);
-              
+
               if(settings.get('notifications', 'sound')) {
                 var audio = $('<audio />')
                 audio.attr({
@@ -187,7 +187,7 @@ require.def("stream/initplugins",
                 audio.bind('ended', function() {
                   audio.remove()
                 });
-                
+
                 $('body').append(audio)
               }
             }
@@ -207,15 +207,15 @@ require.def("stream/initplugins",
           });
         }
       },
-      
+
       // listen to keyboard events and translate them to semantic custom events
       keyboardShortCuts: {
         func: function keyboardShortCuts () {
-          
+
           function trigger(e, name) {
             $(e.target).trigger("key:"+name);
           }
-          
+
           $(document).keyup(function (e) {
             if(e.keyCode == 27) { // escape
               trigger(e, "escape")
@@ -223,17 +223,17 @@ require.def("stream/initplugins",
           })
         }
       },
-      
+
       personalizeForCurrentUser: {
         func: function personalizeForCurrentUser (stream) {
           $("#currentuser-screen_name").text("@"+stream.user.screen_name)
         }
       },
-      
+
       // sends an event after user
       notifyAfterPause: {
         func: function notifyAfterPause () {
-          
+
           function now() {
             return (new Date).getTime();
           }
@@ -249,9 +249,9 @@ require.def("stream/initplugins",
           }, 2000)
         }
       },
-      
+
       // display state in the favicon
-      favicon: {        
+      favicon: {
         func: function favicon (stream, plugin) {
           var importantActive = false;
           $(document).bind("notify:tweet:unread", function (e, count, isMention, isDirectMessage) {
@@ -272,9 +272,9 @@ require.def("stream/initplugins",
               }
             } else {
               importantActive = false;
-              url = "images/streamie-empty.ico"; 
+              url = "images/streamie-empty.ico";
             }
-            
+
             // remove the current favicon. Just changing the href doesnt work.
             var favicon = $("link[rel~=icon]")
             favicon.remove();
@@ -284,11 +284,11 @@ require.def("stream/initplugins",
           })
         }
       },
-      
+
       // Use the REST API to load the users's friends timeline, mentions and friends's retweets into the stream
       // this also happens when we detect that the user was offline for a while
       prefillTimeline: {
-        func: function prefillTimeline (stream) { 
+        func: function prefillTimeline (stream) {
 
           function prefill () {
             var all = [];
@@ -354,17 +354,17 @@ require.def("stream/initplugins",
           prefill(); // do once at start
         }
       },
-      
+
       registerWebkitNotifications: {
         func: function registerWebkitNotifications() {
           var permission = window.webkitNotifications &&
             window.webkitNotifications.checkPermission();
-        
+
           //- The user can only be asked for to allow webkitNotifications if she slicks
           //  something. If we requestPermission() without user interaction, it is ignored
           //  silently.
           //- callback() is called when the user clicks on the settings dialog
-        
+
           var callback = function(value, namespace, key) {
             var permission = window.webkitNotifications &&
               window.webkitNotifications.checkPermission();
@@ -378,19 +378,19 @@ require.def("stream/initplugins",
                   // after the user allowed or disallowed webkitNotification rights, change the
                   // gui accordingly
                   settings.set(namespace, key, window.webkitNotifications.checkPermission() == 0);
-                }); 
+                });
               } else if (permission == 2) {
                 // "blocked" -> tell the user how to unblock (it seems she wants to do that)
-                // todo: non-chrome users do what? 
+                // todo: non-chrome users do what?
                 // -> let's wait for the second browser to implement webkitNotifications
                 alert('To enable notifications, go to ' +
                   '"Preferences > Under the Hood > Content Settings > Notifications > Exceptions"' +
                   ' and remove blocking of "' + window.location.hostname + '"');
                 settings.set(namespace, key, false); //disable again
-              } 
+              }
             }
-          } 
-        
+          }
+
           if (window.webkitNotifications) {
             // only register settings if browser allows that
             settings.registerKey('notifications', 'enableWebkitNotifications', 'Chrome notifications',
@@ -402,7 +402,7 @@ require.def("stream/initplugins",
               // a js alert will be shown (see callback() above)
               settings.set('notifications', 'enableWebkitNotifications', false);
             }
-          } 
+          }
         }
       }
     }

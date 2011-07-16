@@ -6,9 +6,9 @@
 require.def("stream/linkplugins",
   ["stream/helpers", "/ext/parseUri.js"],
   function(helpers) {
-    
+
     return {
-      
+
       imagePreview: {
         transformations: {
           standard: function (url) {
@@ -48,6 +48,6 @@ require.def("stream/linkplugins",
         }
       },
     }
-      
+
   }
 );

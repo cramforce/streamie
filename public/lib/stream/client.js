@@ -5,16 +5,16 @@
 require.def("stream/client",
   ["stream/tweetstream", "stream/tweet", "ext/cookie.js"], // socket.io is loaded from the page
   function(tweetstream, tweetModule) {
-    
+
     var transports             = ['websocket', 'htmlfile', 'xhr-polling'];
     var convervativeTransports = ['xhr-polling']; // xhr-polling should work even through the most evil proxies
-    
+
     var connectFail  = 0;  // actual failed connects since last successfull connect
     var connectCount = 0;
     var streamFailCount = 0;
     var pingTimeout;
     var interval;
-    
+
     // Pick the right transport. Socket.IO does this for us, but if there are problems
     // we fall back not to use websockets
     function pickTransport() {
@@ -28,7 +28,7 @@ require.def("stream/client",
       }
       return transports;
     }
-    
+
     function connect(cb) {
       var wait = (connectFail < 0 ? 0 : connectFail) * 1000;
       var max  = 30 * 1000;
@@ -40,10 +40,10 @@ require.def("stream/client",
         _connect(cb)
       }, wait);
     }
-    
+
     function _connect(cb) {
       window.WEB_SOCKET_SWF_LOCATION = "/foobar"; // we do not use flash, but socket.io still complaints
-      var socket = io.connect("http://"+location.hostname, { 
+      var socket = io.connect("http://"+location.hostname, {
         transports: pickTransport()
       });
       var token = cookie.get("token") || "EMPTY"; // init auth token from cookie. Backend like to receive a value so we use "EMPTY"
@@ -52,7 +52,7 @@ require.def("stream/client",
         token: token
       }));
       socket.on('message', cb); // send all messages to our callback
-      
+
       var failed    = false;
       var connected = true;
       socket.on('message', function (msg) {
@@ -81,7 +81,7 @@ require.def("stream/client",
           }, 1000 * (++streamFailCount))
         }
       });
-      
+
       function ping() { // send a ping every N seconds
         connected = false;
         socket.send(JSON.stringify('ping'));
@@ -98,16 +98,16 @@ require.def("stream/client",
           }
         }, 3000)
       }
-      
+
       if(interval) {
         clearInterval(interval);
       }
       interval = setInterval(ping, 5000);
       ping();
-      
+
       return socket;
     }
-    
+
     return {
       connect: connect
     }

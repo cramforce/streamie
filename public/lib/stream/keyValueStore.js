@@ -6,9 +6,9 @@
 
 require.def("stream/keyValueStore",
   function() {
-    
+
     var Instances = {};
-    
+
     function Store(name) {
       this.name = name;
       this.storage = {};
@@ -16,16 +16,16 @@ require.def("stream/keyValueStore",
       setInterval(function () {
         self._persistSync();
       }, 1000);
-      
+
       Instances[name] = this;
       this._load();
     }
-    
+
     // get a key
     Store.prototype.get = function (key) {
       return this.storage[key];
     }
-    
+
     // set a key
     Store.prototype.set = function (key, val) {
       var cur = this.storage[key];
@@ -34,26 +34,26 @@ require.def("stream/keyValueStore",
         this.dirty = true;
       };
     }
-    
+
     // returns all keys in the store
     Store.prototype.keys = function (key, val) {
       return Object.keys(this.storage);
     }
-    
+
     Store.prototype._load = function () {
       var val =  window.localStorage["store:"+this.name];
       if(val) {
         this.storage = JSON.parse(val);
       }
     }
-    
+
     Store.prototype._persistSync = function () {
       if(this.dirty) {
         window.localStorage["store:"+this.name] = JSON.stringify(this.storage);
         this.dirty = false;
       }
     }
-    
+
     return {
       Store: function (name) {
         var cur = Instances[name];
@@ -61,6 +61,6 @@ require.def("stream/keyValueStore",
         return new Store(name);
       }
     }
-      
+
   }
 );

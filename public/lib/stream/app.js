@@ -14,7 +14,7 @@ if(typeof console == "undefined") {
 require.def("stream/app",
   ["stream/gTranslateProc", "stream/tweetstream", "stream/tweet", "stream/settings", "stream/streamplugins", "stream/initplugins", "stream/linkplugins", "stream/settingsDialog", "stream/client", "stream/status", "stream/versionControl", "stream/tracking", "stream/modernizr", "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"],
   function(gTranslateProc, tweetstream, tweetModule, settings, streamPlugin, initPlugin, linkPlugin, settingsDialog, client, status) {
-    
+
     // Stream plugins are called in the order defined here for each incoming tweet.
     // Important: Stream plugins have to call this() to continue the execution!
     // They receive two paramters. The tweet which is an instance of stream/tweet.Tweet
@@ -41,7 +41,7 @@ require.def("stream/app",
       streamPlugin.newTweetEvent,
       streamPlugin.webkitNotify
     ];
-    
+
     // initPlugins are loaded when the page is loaded and the backend web socket connection has been established
     // and the stream connection to Twitter was established without authorization problems
     var initPlugins = [
@@ -74,33 +74,33 @@ require.def("stream/app",
       status.translateToggle,
       settingsDialog.init
     ];
-    
+
     // linkPlugins are executed for each link in a tweet
     // they perform actions such as previewing images or expading short URLs
     var linkPlugins = [
       linkPlugin.imagePreview
     ];
-    
+
     var stream = new tweetstream.Stream(settings);
     window.streamie = stream; // make this globally accessible so we can see what is in it.
-    
+
     var initial = true;
-    
+
     return {
       start: function () {
         $(function () {
-          
+
           $('#showMoreInfo').click(function(e) {
             e.preventDefault();
             $(this).remove();
             $('#moreinfo').show();
           })
-          
+
           stream.addPlugins(streamPlugins);
           stream.addLinkPlugins(linkPlugins);
-          
+
           location.hash = ""; // start fresh, we dont maintain any important state
-          
+
           // connect to the backend system
           var connect = function(data) {
             data = JSON.parse(data); // data must always be JSON
