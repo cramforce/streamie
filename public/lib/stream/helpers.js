@@ -4,13 +4,13 @@
 
 require.def("stream/helpers",
   function() {
-    
+
     var EN_AMP_RE = /&/g;
     var EN_LT_RE  = /</g;
     var EN_GT_RE  = />/g;
     var EN_QUOT_RE = /"/g;
     var EN_SINGLE_RE = /'/g;
-  
+
     // encode text into HTML to avoid XSS attacks.
     // underscore templates do not auto encode. If in doubt, use this!
     function htmlEncode(text){
@@ -22,12 +22,12 @@ require.def("stream/helpers",
       text = text.replace(EN_SINGLE_RE, "&#39;");
       return text;
     }
-  
+
     var DE_GT_RE = /\&gt\;/g;
     var DE_LT_RE = /\&lt\;/g;
     var DE_QUOT_RE = /\&quot\;/g;
     var DE_SINGLE_RE = /\&#39\;/g;
-  
+
     function htmlDecode(text){
       text = ""+text;
       text = text.toString().replace(DE_GT_RE, ">");
@@ -37,7 +37,7 @@ require.def("stream/helpers",
       text = text.replace(DE_SINGLE_RE, '\'');
       return  text;
     }
-    
+
     return {
       // encode text into HTML to avoid XSS attacks.
       // underscore templates do not auto encode. If in doubt, use this!
@@ -46,6 +46,6 @@ require.def("stream/helpers",
       // backward compatibility API
       html: htmlEncode
     }
-      
+
   }
 );

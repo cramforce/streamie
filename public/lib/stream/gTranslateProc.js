@@ -37,9 +37,9 @@ var gTranslateProc	= function(srcText){
 			dstText	= dstText.replace(pattern, srcMatch[i]);
 		}
 		// return resulting text
-		return dstText;		
+		return dstText;
 	}
-	// preprocess srcText with the REs	
+	// preprocess srcText with the REs
 	var midText	= srcText;
 	for(var key in REs){
 		midText= preProcess(midText, key)
@@ -47,13 +47,13 @@ var gTranslateProc	= function(srcText){
 
 	// to process the result
 	var doProcessResult	= function(resText){
-		// postprocess resText with the REs	
+		// postprocess resText with the REs
 		var dstText	= resText;
 		for(var key in REs){
 			dstText	= postProcess(dstText, key)
 		}
 		// return resulting text
-		return dstText;		
+		return dstText;
 	}
 
 	return {
