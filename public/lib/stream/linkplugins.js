@@ -7,7 +7,51 @@ require.def("stream/linkplugins",
   ["stream/helpers", "/ext/parseUri.js"],
   function(helpers) {
     
+    var UntinyDomains = ["bit.ly"];
+    
+    $.get("/untiny/1.0/services/?format=json&bla=35", function(data, textStatus) {
+      if(textStatus == "success" && data) {
+        UntinyDomains.push.apply(UntinyDomains, Object.keys(data));
+      }
+    }, 'json');
+    
+    var index = 0;
+    
     return {
+      
+      id: {
+        func: function untiny(a, tweet, stream, plugin) {
+          a.attr('id', 'href' + index++);
+        }
+      },
+      
+      untiny: {
+        domains: UntinyDomains, // extended via API call,
+        func: function untiny(a, tweet, stream, plugin) {
+          var prefixLength = "http://".length;
+          var href = a.attr("href") || "";
+          var id = a.attr('id');
+          var domains = plugin.domains;
+          for(var i = 0, len = domains.length; i < len; ++i) {
+            var domain = domains[i];
+            if(href.indexOf(domain) === prefixLength) {
+              var url = "/untiny/1.0/extract/?url="+encodeURIComponent(href)+"&format=json";
+              $.get(url, function(data, textStatus) {
+                if(textStatus == "success") {
+                  if(data && data.org_url) {
+                    var a = $('#'+id);
+                    a.attr('data-tiny-href', href);
+                    a.attr('href', data.org_url);
+                  } else {
+                    console.log('Untiny error ', data)
+                  }
+                }
+              }, 'json');
+              break;
+            }
+          }
+        }
+      },
       
       imagePreview: {
         transformations: {
