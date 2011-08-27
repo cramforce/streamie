@@ -479,6 +479,9 @@ require.def("stream/streamplugins",
                 window.webkitNotifications.createNotification(tweet.data.user.profile_image_url, 
                   tweet.data.user.name, 
                   tweet.data.text);
+              notification.onclick = function() {
+                window.focus();
+              };
               notification.show();
               notification.onclose = function() {
                 --plugin.current;
