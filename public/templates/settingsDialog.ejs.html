@@ -1,6 +1,6 @@
 <% var h = helpers.html; %>
 <form id="settingsForm" action="#">
-	<h2 class="h3">about:config</h2>
+	<h2 class="h3"><%= h(text('setting', 'Settings')) %></h2>
 	<div class="namespaces">
 	<% settings.namespaces().forEach(function (ns) { %>
 	<fieldset>
@@ -15,18 +15,18 @@
 				<% }else if( jQuery.isPlainObject(values) ){ %>
 					<select name="<%=h(name)%>" id="<%=h(name)%>" class="setting">
 						<% _.keys(values).forEach(function(x){ %>
-							<option value="<%=h(x)%>"  <%= (x == value) ? 'selected' : ''  %> ><%=h(text('setting', values[x]))%></option>						
+							<option value="<%=h(x)%>"  <%= (x == value) ? 'selected' : ''  %> ><%=h(values[x])%></option>						
 						<% }); %>
 					</select>
 				<% }else{ %>
 					<% console.assert(false); %>
 				<% } %>
-				<%= h(ns.settings[key].label) %>
+				<%= h(text('setting', ns.settings[key].label)) %>
 			</label>			
 		</div>
 		<% });%>
 	</fieldset>
 	<% }); %>
 	</div>
-	<input type="button" value="Close" class="button close">
+	<input type="button" value="<%= h(text('setting', 'Close')) %>" class="button close">
 </form>

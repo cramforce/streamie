@@ -46,6 +46,26 @@ require.def("stream/text",
         });
       },
       
+      // Does some hacky i18n of the HTML page
+      replaceInPage: function() {
+        var module = this;
+        var tags = $('.i18n');
+        var attrs = ['title', 'placeholder'];
+        tags.each(function() {
+          var t = $(this)
+          if(this.innerHTML) {
+            this.innerHTML = module.get('page', this.innerHTML);
+          }
+          
+          attrs.forEach(function(name) {
+            var cur = t.attr(name);
+            if(cur) {
+              t.attr(name, module.get('page', cur));
+            }
+          });
+        })
+      },
+      
       get: function(group, text, data) {
         if(!Data[CurrentLocale]) Data[CurrentLocale] = {};
         var grp = Data[CurrentLocale][group];
