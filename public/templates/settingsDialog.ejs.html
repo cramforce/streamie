@@ -15,7 +15,7 @@
 				<% }else if( jQuery.isPlainObject(values) ){ %>
 					<select name="<%=h(name)%>" id="<%=h(name)%>" class="setting">
 						<% _.keys(values).forEach(function(x){ %>
-							<option value="<%=h(x)%>"  <%= (x == value) ? 'selected' : ''  %> ><%=h(text('setting', values[x]))%></option>						
+							<option value="<%=h(x)%>"  <%= (x == value) ? 'selected' : ''  %> ><%=h(values[x])%></option>						
 						<% }); %>
 					</select>
 				<% }else{ %>

@@ -492,13 +492,16 @@ require.def("stream/status",
                 month:  Math.round(millis/1000/60/60/24/30), // aproximately
                 year:   Math.round(millis/1000/60/60/24/365), // aproximately
               };
-              var text = "";
+              var txt = "";
               for(var unit in units) { // hopefully nobody extends Object :) Should use Object.keys instead.
                 var val = units[unit];
                 if(val > 0) {
-                  text = "";
-                  text += val + " " + unit;
-                  if(val > 1) text+="s "; // !i18n
+                  txt = "";
+                  var u = "{num} " + unit;
+                  if(val > 1) {
+                    u = u + "s";
+                  }
+                  txt = text.get("unit", u, {num: val});
                 }
               };
           
@@ -510,7 +513,7 @@ require.def("stream/status",
                 }
                 var cur = created_at.text();
                 if(cur != text) {
-                  created_at.text(text);
+                  created_at.text(txt);
                 }
               }
           
