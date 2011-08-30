@@ -1,0 +1,100 @@
+{
+  "locale": "ru",
+  "text": {
+    "#authors": [
+      {
+        "name": "Malte Ubl",
+        "screen-name": "cramforce"
+      }
+    ],
+    "tweet": {
+      "from here ⌘": "из ⌘",
+      "via": "с помощью",
+      "Show conversation": "Показать ответы",
+      "in a conversation with {name}": "отвечая {name}"
+    },
+    "status": {
+      "Shorten URLs": "Сократить URL",
+      "Attach an Image": "Прикрепить изображение",
+      "Your Tweet…": "Ваш твит...",
+      "Submit": "Отправить"
+    },
+    "unit": {
+      "{num} second": "{num} секунда",
+      "{num} minute": "{num} минута",
+      "{num} hour": "{num} час",
+      "{num} day": "{num} день",
+      "{num} week": "{num} неделя",
+      "{num} month": "{num} месяц",
+      "{num} year": "{num} год",
+      "{num} seconds": "{num} секунд(ы)",
+      "{num} minutes": "{num} минут(ы)",
+      "{num} hours": "{num} часа(ов)",
+      "{num} days": "{num} дня(ей)",
+      "{num} weeks": "{num} недель",
+      "{num} months": "{num} месяца(ев)",
+      "{num} years": "{num} года(лет)"
+    },
+    "setting": {
+      "filter": "Фильтр",
+      "general": "Общие",
+      "notifications": "Оповещения",
+      "status": "Статус",
+      "stream": "Stream",
+      "tracking": "Слежение",
+      "Filter long (more than 3 tweets) conversations of others": "Отфильтровывать длинные беседы (длиннее 3-х твитов)",
+      "Show my background from Twitter": "Использовать фоновое изображение из Twitter",
+      "Chrome notifications": "Использовать оповещения Chrome",
+      "Notify for new direct messages (blue icon)": "Оповещать о новых сообщениях (голубая иконка)",
+      "Notify for new mentions (green icon)": "Оповещать о новых @Упоминаниях (зеленая иконка)",
+      "Notify for new tweets (yellow icon)": "Оповещать о новых твитах (желтая иконка)",
+      "Play a sound for new tweets": "Звуковой сигнал при новых твитах",
+      "Add your current location to status updates": "Добавлять текущее местоположение в твиты",
+      "As-you-type autocomplete for screen names": "Автодополнение имен пользователей",
+      "Automatically translate to your preferred language": "Автоматически переводить в выбранных язык",
+      "Keep scroll level when new tweets come in": "При получении нового твита сохранять позицию на экране",
+      "Preferred language": "Предодчитаемый язык",
+      "Show JSON representation of tweet on double click": "Показывать JSON-содержимое твита по двойному клику",
+      "Show Retweets": "показывать ретвиты",
+      "Allow anonymous tracking of my usage of Streamie": "Позволить Streamie собирать анонимную статитстику использования",
+      "Settings": "Настройки",
+      "Close": "Закрыть"
+    },
+    "page": {
+      "Logout": "Выйти",
+      "Direct Message": "Сообщение",
+      "Shorten URLs": "Сократить URL",
+      "Attach an Image": "Прикрепить изображение",
+      "Your Tweet…": "Ваш твит...",
+      "\n\t\t\t\t\tStreamie is a realtime Twitter client that runs in your web browser.\n\t\t\t\t": "Streamie это Твиттер клиент, работающий в Вашем браузере в реальном времени",
+      "streamie beta for <span id=\"currentuser-screen_name\"></span>": "Бета-версия streamie для <span id=\"currentuser-screen_name\"></span>",
+      "\n\t\t\t\t\tStreamie is a <strong>realtime</strong> Twitter client that runs in your web browser.\n\t\t\t\t": "Streamie это Твиттер клиент, работающий в Вашем браузере в <strong>реальном времени</strong>",
+      "\n\t\t\t\t\tWe want you to <strong>enjoy</strong> reading your Twitter feed again!\n\t\t\t\t": "Мы хотим чтобы Вы снова получали <strong>удовольствие</strong> от чтения Вашей Ленты",
+      "\n\t\t\t\t\tWe only display Tweet text and avatars – <strong>Zero Distractions</strong>.\n\t\t\t\t": "Только твиты и аватарки - <strong>никаких помех</strong>.",
+      "\n\t\t\t\t\tWe hate bloat as much as you do!\n\t\t\t\t": "Мы ненавидим раздутый интерфейс так же сильно, как и Вы!",
+      "Yes, this is beta software.<br>\n\t\t\t\t\t<a href=\"#moreinfo\" target=\"_self\" id=\"showMoreInfo\">More Info</a><br>\n\t\t\t\t\t<a href=\"http://twitter.com/streamie\">Follow us on Twitter</a>": "Streamie пока в стадии Beta.<br>\n\t\t\t\t\t<a href=\"#moreinfo\" target=\"_self\" id=\"showMoreInfo\">Узнать больше</a><br>\n\t\t\t\t\t<a href=\"https://twitter.com/streamie\">Читать в Твиттер</a>",
+      "Cutting Edge Web Technology": "Cutting Edge Web Technology",
+      "\n\t\t\t\t\t\tWe take advantage of the latest web standards such as HTML5 and CSS3. We encourage you to update to the newest (even beta) versions \n\t\t\t\t\t\tof your <a href=\"http://www.google.com/landing/chrome/beta/\">favorite web browser</a> to use streamie. If you cannot do that, \n\t\t\t\t\t\tstreamie is not for you, if you can, the experience will be great.\n\t\t\t\t\t": "Мы используем новейшие стандарты HTML5 и CSS3, поэтому обновляйте Ваши<a href=\"http://www.google.com/landing/chrome/beta/\">любимые браузеры</a> до новейшей версии.",
+      "Hackability": "Hackability",
+      "\n\t\t\t\t\t\tStreamie was designed with extreme <b>\"hackability\"</b> in mind and it is <a href=\"http://github.com/cramforce/streamie\">fully open source</a>. \n\t\t\t\t\t\tIf you are a programmer you can make your own version of streamie. The cool thing is: You do not have to run your own server so you can \n\t\t\t\t\t\tconcentrate on actually building the features you want. The infrastructure is handled by us. \n\t\t\t\t\t\t<a href=\"http://www.nonblocking.io/2010/08/future-is-here-i-just-forked-running.html\">Learn how to make your own version of streamie.</a>\n\t\t\t\t\t": "Streamie задумывалась с учетом <b>\"hackability\"</b> и распространяется с <a href=\"http://github.com/cramforce/streamie\">открытым исходным кодом</a>. ",
+      "Beta": "Beta",
+      "\n\t\t\t\t\t  While Streamie does work quite well, it is still beta level software. If you're experiencing problems, please \n\t\t\t\t\t  <a href=\"http://github.com/cramforce/streamie/issues\">report them.</a>\n\t\t\t\t\t": "И хотя Streamie уже отлично работает, но все же это beta. В случае проблем пожалуйста \n\t\t\t\t\t  <a href=\"http://github.com/cramforce/streamie/issues\">дайте нам знать.</a>",
+      "Timeline": "Лента",
+      "Image Upload": "Добавить изображение",
+      "@": "@",
+      "Mentions": "@Упоминания",
+      "⚛": "⚛",
+      "Show All": "Показать все",
+      "♻": "♻",
+      "Retweets": "Ретвиты",
+      "★": "★",
+      "Favorites": "Избранное",
+      "✉": "✉",
+      "Direct Messages": "Сообщения",
+      "⚙": "⚙",
+      "Settings": "Настройки",
+      "✍": "✍",
+      "New Tweet": "Новый твит"
+    }
+  }
+}
