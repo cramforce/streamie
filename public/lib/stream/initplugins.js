@@ -96,7 +96,7 @@ require.def("stream/initplugins",
           $("#meta").delegate(".logout", "click", function (e) {
             e.preventDefault();
             cookie.set("token", ""); // delete cookie
-            location.href = "/"; // reload page
+            location.reload(); // reload page
           });
           
           // main header
