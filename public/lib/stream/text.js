@@ -5,8 +5,14 @@
   var Streamie_Default_Locale = "en";
   
   var KnownLocales = {
+    ar: true,
     de: true,
-    ru: true
+    fr: true,
+    lv: true,
+    nl: true,
+    pt: true,
+    ru: true,
+    bg: true
   };
   
   var getLangFromPara = function() {
@@ -37,7 +43,11 @@
       var Record = !!location.href.match(/\#record/);
     
       function processLocaleFile(locale, data) {
-        Data[locale] = JSON.parse(data).text;
+        try {
+          Data[locale] = JSON.parse(data).text;
+        } catch(e) {
+          alert('Error loading locale ' + CurrentLocale + ': ' + e);
+        }
       }
     
       processLocaleFile(CurrentLocale, defaultData);
