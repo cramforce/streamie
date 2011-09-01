@@ -1,0 +1,100 @@
+{
+  "locale": "ar",
+  "text": {
+    "#authors": [
+      {
+        "name": "Muhammad Fawwaz Orabi",
+        "screen-name": "forabi"
+      }
+    ],
+    "tweet": {
+      "from here ⌘": "من هنا ⌘",
+      "via": "باستخدام",
+      "Show conversation": "عرض المحادثة",
+      "in a conversation with {name}": "ضمن محادثة مع {name}"
+    },
+    "status": {
+      "Shorten URLs": "اختزال الرّوابط",
+      "Attach an Image": "ارفاق صورة",
+      "Your Tweet…": "تغريدتك...",
+      "Submit": "إرسال"
+    },
+    "unit": {
+      "{num} second": "{num} ثانية",
+      "{num} minute": "{num} دقيقة",
+      "{num} hour": "{num} ساعة",
+      "{num} day": "{num} يوم",
+      "{num} week": "{num} أسبوع",
+      "{num} month": "{num} شهر",
+      "{num} year": "{num} سنة",
+      "{num} seconds": "{num} ثوانٍ",
+      "{num} minutes": "{num} دقائق",
+      "{num} hours": "{num} ساعات",
+      "{num} days": "{num} أيّام",
+      "{num} weeks": "{num} أسابيع",
+      "{num} months": "{num} شهور",
+      "{num} years": "{num} سنين"
+    },
+    "setting": {
+      "filter": "تصفية",
+      "general": "عامّ",
+      "notifications": "التنبيهات",
+      "status": "الحالة",
+      "stream": "ساحة المشاركات",
+      "tracking": "تتبّع",
+      "Filter long (more than 3 tweets) conversations of others": "تصفية محادثات الآخرين الطّويلة (إذا كانت أكثر من 3 تغريدات)",
+      "Show my background from Twitter": "إظهار الخلفية الّتي أستخدمها في Twitter",
+      "Chrome notifications": "تنبيهات Chrome",
+      "Notify for new direct messages (blue icon)": "تنبيهي بوجود رسائل خاصّة جديدة (الرّمز الأزرق)",
+      "Notify for new mentions (green icon)": "تنبيهي بوجود ردود جديدة (الرّمز الأخضر)",
+      "Notify for new tweets (yellow icon)": "تنبيهي بوجود تغريدات جديدة (الرّمز الأصفر)",
+      "Play a sound for new tweets": "تشغيل صوت عند وجود تغريدات جديدة",
+      "Add your current location to status updates": "إضافة موقعي الجغرافيّ للتغريدات",
+      "As-you-type autocomplete for screen names": "تكملة تلقائيّة لأسماء المستخدمين عند البدء بكتابتها.",
+      "Automatically translate to your preferred language": "التّرجمة التّلقائيّة للغتي المفضّلة",
+      "Keep scroll level when new tweets come in": "أبقَ شريط التّمرير حيث هو عند ورود تغريدات جديدة",
+      "Preferred language": "اللّغة المفضّلة:",
+      "Show JSON representation of tweet on double click": "إظهار تمثيل JSON للتغريدة عند النقر المزدوج",
+      "Show Retweets": "إظهار الريتويتات:",
+      "Allow anonymous tracking of my usage of Streamie": "السّماح لـStreamie بتتبع نشاطي بشكل مجهول",
+      "Settings": "الإعدادات",
+      "Close": "إغلاق"
+    },
+    "page": {
+      "Logout": "خروج",
+      "Direct Message": "رسالة خاصّة",
+      "Shorten URLs": "اختزال الرّوابط",
+      "Attach an Image": "إرفاق صورة",
+      "Your Tweet…": "تغريدتك...",
+      "\n\t\t\t\t\tStreamie is a realtime Twitter client that runs in your web browser.\n\t\t\t\t": "\n\t\t\t\t\tStreamie تطبيق لـTwitter يعمل في متصفحك وبالوقت الفعليّ.\n\t\t\t\t",
+      "streamie beta for <span id=\"currentuser-screen_name\"></span>": "Streamie نسخة تجريبيّة للمستخدم <span id=\"currentuser-screen_name\"></span>",
+      "\n\t\t\t\t\tStreamie is a <strong>realtime</strong> Twitter client that runs in your web browser.\n\t\t\t\t": "Streamie هو تطبيق Twitter في <strong>الوقت الفعليّ</strong>, يعمل في متصفّحك.",
+      "\n\t\t\t\t\tWe want you to <strong>enjoy</strong> reading your Twitter feed again!\n\t\t\t\t": "نريد لك أن <strong>تستمتع</strong> بقراءة التّغريدات من جديد!",
+      "\n\t\t\t\t\tWe only display Tweet text and avatars – <strong>Zero Distractions</strong>.\n\t\t\t\t": "نعرض فقط الصور والنصّ! - <strong>لا تعقيدات ولا تشويش!</strong>",
+      "\n\t\t\t\t\tWe hate bloat as much as you do!\n\t\t\t\t": "نكره التعقيدات كما تكرهها أنت!",
+      "Yes, this is beta software.<br>\n\t\t\t\t\t<a href=\"#moreinfo\" target=\"_self\" id=\"showMoreInfo\">More Info</a><br>\n\t\t\t\t\t<a href=\"http://twitter.com/streamie\">Follow us on Twitter</a>": "هذه نسخة تجريبيّة غير مكتملة.<br>\n\t\t\t\t\t<a href=\"#moreinfo\" target=\"_self\" id=\"showMoreInfo\">المزيد من المعلومات</a><br>\n\t\t\t\t\t<a href=\"https://twitter.com/streamie\">تابعنا على تويتر</a>",
+      "Cutting Edge Web Technology": "تقنيّات الويب الحديثة",
+      "\n\t\t\t\t\t\tWe take advantage of the latest web standards such as HTML5 and CSS3. We encourage you to update to the newest (even beta) versions \n\t\t\t\t\t\tof your <a href=\"http://www.google.com/landing/chrome/beta/\">favorite web browser</a> to use streamie. If you cannot do that, \n\t\t\t\t\t\tstreamie is not for you, if you can, the experience will be great.\n\t\t\t\t\t": "Wir nutzen die neuesten Web-Standards wie HTML5 und CSS3. Nutzt bitte Die neuesten Versionen Eurer <a href=\"http://www.google.com/landing/chrome/beta/\">lieblings Web-Browser</a>.",
+      "Hackability": "قابليّة الاختراق",
+      "\n\t\t\t\t\t\tStreamie was designed with extreme <b>\"hackability\"</b> in mind and it is <a href=\"http://github.com/cramforce/streamie\">fully open source</a>. \n\t\t\t\t\t\tIf you are a programmer you can make your own version of streamie. The cool thing is: You do not have to run your own server so you can \n\t\t\t\t\t\tconcentrate on actually building the features you want. The infrastructure is handled by us. \n\t\t\t\t\t\t<a href=\"http://www.nonblocking.io/2010/08/future-is-here-i-just-forked-running.html\">Learn how to make your own version of streamie.</a>\n\t\t\t\t\t": "Streamie wurde für <b>\"hackability\"</b> designed und ist komplett <a href=\"http://github.com/cramforce/streamie\">Open Source</a>. ",
+      "Beta": "نسخة تجريبيّة",
+      "\n\t\t\t\t\t  While Streamie does work quite well, it is still beta level software. If you're experiencing problems, please \n\t\t\t\t\t  <a href=\"http://github.com/cramforce/streamie/issues\">report them.</a>\n\t\t\t\t\t": "Streamie يعمل بشكل جيّد، لكنّه لا يزال في المرحلة التّجريبيّة. إذا واجهت مشكلة، رجاء \n\t\t\t\t\t  <a href=\"http://github.com/cramforce/streamie/issues\">rأبلغ عنها</a>\n\t\t\t\t\t",
+      "Timeline": "الخطّ الزّمنيّ",
+      "Image Upload": "رفع صورة",
+      "@": "@",
+      "Mentions": "مواضع الذّكر",
+      "⚛": "⚛",
+      "Show All": "إظهار الكل",
+      "♻": "♻",
+      "Retweets": "الريتويتات",
+      "★": "★",
+      "Favorites": "المفضّلة",
+      "✉": "✉",
+      "Direct Messages": "الرّسائل الخاصّة",
+      "⚙": "⚙",
+      "Settings": "الإعدادات",
+      "✍": "✍",
+      "New Tweet": "تغريدة جديدة"
+    }
+  }
+}

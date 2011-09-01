@@ -1,0 +1,100 @@
+{
+  "locale": "bg",
+  "text": {
+    "#authors": [
+      {
+        "name": "Милен Милев",
+        "screen-name": "fanfolet"
+      }
+    ],
+    "tweet": {
+      "from here ⌘": "От тук ⌘",
+      "via": "чрез",
+      "Show conversation": "Покажи разговор",
+      "in a conversation with {name}": "в разговор с {name}"
+    },
+    "status": {
+      "Shorten URLs": "Съкрати адреса",
+      "Attach an Image": "Прикачи снимка",
+      "Your Tweet…": "Твоят Tweet…",
+      "Submit": "Изпрати"
+    },
+    "unit": {
+      "{num} second": "{num} секунда",
+      "{num} minute": "{num} минута",
+      "{num} hour": "{num} час",
+      "{num} day": "{num} ден",
+      "{num} week": "{num} седмица",
+      "{num} month": "{num} месец",
+      "{num} year": "{num} година",
+      "{num} seconds": "{num} секунди",
+      "{num} minutes": "{num} минути",
+      "{num} hours": "{num} часа",
+      "{num} days": "{num} дни",
+      "{num} weeks": "{num} седмици",
+      "{num} months": "{num} месеца",
+      "{num} years": "{num} години"
+    },
+    "setting": {
+      "filter": "Филтър",
+      "general": "Общи",
+      "notifications": "Известия",
+      "status": "Статус",
+      "stream": "Поток",
+      "tracking": "Проследяване",
+      "Filter long (more than 3 tweets) conversations of others": "Филтрирай продължителните (повече от 3 туита) разговори",
+      "Show my background from Twitter": "Покажи тапета ми от Twitter",
+      "Chrome notifications": "Известия в Chrome",
+      "Notify for new direct messages (blue icon)": "Известявай за лични съобщения (синя икона)",
+      "Notify for new mentions (green icon)": "Известявай за нови споменавания (зелена икона)",
+      "Notify for new tweets (yellow icon)": "Известявай за нови съобщения (жълта икона)",
+      "Play a sound for new tweets": "Известявай за нови съобщения със звук",
+      "Add your current location to status updates": "Добави местоположението си към туитовете",
+      "As-you-type autocomplete for screen names": "Автоматично дописване на имената",
+      "Automatically translate to your preferred language": "Автоматично превеждане на предпочитания език",
+      "Keep scroll level when new tweets come in": "Задръж скрола при нови съобщения",
+      "Preferred language": "Предпочитан език",
+      "Show JSON representation of tweet on double click": "Покажи JSON представянето на туита при двоен клик",
+      "Show Retweets": "Покажи ретуитовете",
+      "Allow anonymous tracking of my usage of Streamie": "Позволи анонимно следене на дейността ми в Streamie",
+      "Settings": "Настройки",
+      "Close": "Затвори"
+    },
+    "page": {
+      "Logout": "Изход",
+      "Direct Message": "Лично съобщение",
+      "Shorten URLs": "Съкрати адреса",
+      "Attach an Image": "Добави снимка",
+      "Your Tweet…": "Твоят Tweet…",
+      "\n\t\t\t\t\tStreamie is a realtime Twitter client that runs in your web browser.\n\t\t\t\t": "Streamie е Twitter клиент, за който ви е необходим само браузър.",
+      "streamie beta for <span id=\"currentuser-screen_name\"></span>": "streamie beta за <span id=\"currentuser-screen_name\"></span>",
+      "\n\t\t\t\t\tStreamie is a <strong>realtime</strong> Twitter client that runs in your web browser.\n\t\t\t\t": "Streamie е <strong>Twitter клиент</strong>, за който ви е необходим само браузър",
+      "\n\t\t\t\t\tWe want you to <strong>enjoy</strong> reading your Twitter feed again!\n\t\t\t\t": "Искаме да се <strong>забавлявате</strong> с Twitter отново",
+      "\n\t\t\t\t\tWe only display Tweet text and avatars – <strong>Zero Distractions</strong>.\n\t\t\t\t": "Показваме Ви само чист текст и аватари - <strong>не се разсейвате</strong>.",
+      "\n\t\t\t\t\tWe hate bloat as much as you do!\n\t\t\t\t": "Мразим шаренията, колкото и Вие!",
+      "Yes, this is beta software.<br>\n\t\t\t\t\t<a href=\"#moreinfo\" target=\"_self\" id=\"showMoreInfo\">More Info</a><br>\n\t\t\t\t\t<a href=\"http://twitter.com/streamie\">Follow us on Twitter</a>": "Streamie е бета софтуер.<br>\n\t\t\t\t\t<a href=\"#moreinfo\" target=\"_self\" id=\"showMoreInfo\">Повече инфо</a><br>\n\t\t\t\t\t<a href=\"https://twitter.com/streamie\">Следвайте ни в Twitter</a>",
+      "Cutting Edge Web Technology": "Cutting Edge Web Technologie",
+      "\n\t\t\t\t\t\tWe take advantage of the latest web standards such as HTML5 and CSS3. We encourage you to update to the newest (even beta) versions \n\t\t\t\t\t\tof your <a href=\"http://www.google.com/landing/chrome/beta/\">favorite web browser</a> to use streamie. If you cannot do that, \n\t\t\t\t\t\tstreamie is not for you, if you can, the experience will be great.\n\t\t\t\t\t": "Използваме последните уеб стандарти като HTML5 и CSS3. Съветваме Ви, да си ъпдейтвате до най-новите(дори и бета) версии <a href=\"http://www.google.com/landing/chrome/beta/\">любимият си браузър</a>, за да използвате Streamie. Ако не можете, Streamie не е за Вас, но ако можете Ви очаква страхотно преживяване.",
+      "Hackability": "Hackability",
+      "\n\t\t\t\t\t\tStreamie was designed with extreme <b>\"hackability\"</b> in mind and it is <a href=\"http://github.com/cramforce/streamie\">fully open source</a>. \n\t\t\t\t\t\tIf you are a programmer you can make your own version of streamie. The cool thing is: You do not have to run your own server so you can \n\t\t\t\t\t\tconcentrate on actually building the features you want. The infrastructure is handled by us. \n\t\t\t\t\t\t<a href=\"http://www.nonblocking.io/2010/08/future-is-here-i-just-forked-running.html\">Learn how to make your own version of streamie.</a>\n\t\t\t\t\t": "Streamie е с <b>\"hackability\"</b> дизайн и е напълно <a href=\"http://github.com/cramforce/streamie\">Open Source</a>. ",
+      "Beta": "Бета",
+      "\n\t\t\t\t\t  While Streamie does work quite well, it is still beta level software. If you're experiencing problems, please \n\t\t\t\t\t  <a href=\"http://github.com/cramforce/streamie/issues\">report them.</a>\n\t\t\t\t\t": "Streamie работи добре, но все пак е бета софтуер. Ако имате проблеми,\n\t\t\t\t\t  <a href=\"http://github.com/cramforce/streamie/issues\">съобщете ги.</a>",
+      "Timeline": "Поток",
+      "Image Upload": "Качи снимка",
+      "@": "@",
+      "Mentions": "Споменавания",
+      "⚛": "⚛",
+      "Show All": "Всичко",
+      "♻": "♻",
+      "Retweets": "Ретуитове",
+      "★": "★",
+      "Favorites": "Любими",
+      "✉": "✉",
+      "Direct Messages": "Лични съобщения",
+      "⚙": "⚙",
+      "Settings": "Настройки",
+      "✍": "✍",
+      "New Tweet": "Нов Tweet"
+    }
+  }
+}

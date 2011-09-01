@@ -1,0 +1,100 @@
+{
+  "locale": "lv",
+  "text": {
+    "#authors": [
+      {
+        "name": "Malte Ubl",
+        "screen-name": "cramforce"
+      }
+    ],
+    "tweet": {
+      "from here ⌘": "no ⌘",
+      "via": "izmantojot",
+      "Show conversation": "Parādīt saraksti",
+      "in a conversation with {name}": "atbildot {name}"
+    },
+    "status": {
+      "Shorten URLs": "Saīsināt URL",
+      "Attach an Image": "Pievienot attēlu",
+      "Your Tweet…": "Jūsu tvīts…",
+      "Submit": "Nosūtīt"
+    },
+    "unit": {
+      "{num} second": "{num} sekunde",
+      "{num} minute": "{num} minūte",
+      "{num} hour": "{num} stunda",
+      "{num} day": "{num} diena",
+      "{num} week": "{num} nedēļa",
+      "{num} month": "{num} mēnesis",
+      "{num} year": "{num} gads",
+      "{num} seconds": "{num} sekundes",
+      "{num} minutes": "{num} minūtes",
+      "{num} hours": "{num} stundas",
+      "{num} days": "{num} dienas",
+      "{num} weeks": "{num} nedēļas",
+      "{num} months": "{num} mēneši",
+      "{num} years": "{num} gadi"
+    },
+    "setting": {
+      "filter": "Filtrs",
+      "general": "Galvenie",
+      "notifications": "Paziņojumi",
+      "status": "Statuss",
+      "stream": "Straume",
+      "tracking": "Izsekošana",
+      "Filter long (more than 3 tweets) conversations of others": "Filtrēt citu garās (vairāk nekā 3 tvītu) sarakstes",
+      "Show my background from Twitter": "Rādīt manu Twitter fonu",
+      "Chrome notifications": "Chrome paziņojumi",
+      "Notify for new direct messages (blue icon)": "Tiešo ziņu paziņojums (zila ikona)",
+      "Notify for new mentions (green icon)": "Pieminējumu paziņojums (zaļa ikona)",
+      "Notify for new tweets (yellow icon)": "Jaunu tvītu paziņojums (dzeltena ikona)",
+      "Play a sound for new tweets": "Skaņas signāls, saņemot jaunus tvītus",
+      "Add your current location to status updates": "Pievienot tvītiem jūsu pašreizējo atrašanās vietu",
+      "As-you-type autocomplete for screen names": "Automātiska lietotājvārdu pabeigšana",
+      "Automatically translate to your preferred language": "Automātiski tulkot jums vēlamajā valodā",
+      "Keep scroll level when new tweets come in": "Saglabāt ritjoslas stāvokli, saņemot jaunus tvītus",
+      "Preferred language": "Vēlamā valoda",
+      "Show JSON representation of tweet on double click": "Rādīt JSON tvīta datu attēlojumu pēc dubultklikšķa",
+      "Show Retweets": "Rādīt retvītus",
+      "Allow anonymous tracking of my usage of Streamie": "Atļaut anonīmu Streamie klienta lietošanas izsekošanu",
+      "Settings": "Iestatījumi",
+      "Close": "Aizvērt"
+    },
+    "page": {
+      "Logout": "Atslēgties",
+      "Direct Message": "Tiešā ziņa",
+      "Shorten URLs": "Saīsināt URL",
+      "Attach an Image": "Pievienot attēlu",
+      "Your Tweet…": "Jūsu tvīts…",
+      "\n\t\t\t\t\tStreamie is a realtime Twitter client that runs in your web browser.\n\t\t\t\t": "Streamie ir reāllaika tvitera klients, kas darbojas jūsu pārlūkprogrammā.",
+      "streamie beta for <span id=\"currentuser-screen_name\"></span>": "streamie beta lietotājam <span id=\"currentuser-screen_name\"></span>",
+      "\n\t\t\t\t\tStreamie is a <strong>realtime</strong> Twitter client that runs in your web browser.\n\t\t\t\t": "Streamie ir <strong>reāllaika tvitera klients</strong>, kas darbojas jūsu pārlūkprogrammā.",
+      "\n\t\t\t\t\tWe want you to <strong>enjoy</strong> reading your Twitter feed again!\n\t\t\t\t": "Mēs vēlamies, lai jūs <strong>izbaudāt</strong> savas tvitera straumes lasīšanu!",
+      "\n\t\t\t\t\tWe only display Tweet text and avatars – <strong>Zero Distractions</strong>.\n\t\t\t\t": "Mēs attēlojam tikai tvītu un tā autora fotoattēlu - <strong>nekā lieka</strong>.",
+      "\n\t\t\t\t\tWe hate bloat as much as you do!\n\t\t\t\t": "Mēs neciešam nekārtību tik pat daudz, cik jūs!",
+      "Yes, this is beta software.<br>\n\t\t\t\t\t<a href=\"#moreinfo\" target=\"_self\" id=\"showMoreInfo\">More Info</a><br>\n\t\t\t\t\t<a href=\"http://twitter.com/streamie\">Follow us on Twitter</a>": "Jā, Streamie ir beta programmatūra.<br>\n\t\t\t\t\t<a href=\"#moreinfo\" target=\"_self\" id=\"showMoreInfo\">Vairāk informācijas</a><br>\n\t\t\t\t\t<a href=\"https://twitter.com/streamie\">Sekojiet mums tviterī</a>",
+      "Cutting Edge Web Technology": "Satriecoša tīmekļa tehnoloģija",
+      "\n\t\t\t\t\t\tWe take advantage of the latest web standards such as HTML5 and CSS3. We encourage you to update to the newest (even beta) versions \n\t\t\t\t\t\tof your <a href=\"http://www.google.com/landing/chrome/beta/\">favorite web browser</a> to use streamie. If you cannot do that, \n\t\t\t\t\t\tstreamie is not for you, if you can, the experience will be great.\n\t\t\t\t\t": "Mēs aizgūstam labākās īpašības no jaunākajiem tīmekļa standartiem, kā piemēram, HTML5 un CSS3. Mēs iedrošinām jūs atjaunināt (pat līdz beta versijām) <a href=\"http://www.google.com/landing/chrome/beta/\">savas iemīļotākās pārlūkprogrammas</a>, lai izmantotu Streamie. Ja jūs to nevarat izdarīt, Streamie nav domāts jums; ja varat - lietošana būs lieliska",
+      "Hackability": "Uzlaužamība",
+      "\n\t\t\t\t\t\tStreamie was designed with extreme <b>\"hackability\"</b> in mind and it is <a href=\"http://github.com/cramforce/streamie\">fully open source</a>. \n\t\t\t\t\t\tIf you are a programmer you can make your own version of streamie. The cool thing is: You do not have to run your own server so you can \n\t\t\t\t\t\tconcentrate on actually building the features you want. The infrastructure is handled by us. \n\t\t\t\t\t\t<a href=\"http://www.nonblocking.io/2010/08/future-is-here-i-just-forked-running.html\">Learn how to make your own version of streamie.</a>\n\t\t\t\t\t": "Streamie tika izstrādāts, paturot prātā <b>\"uzlaužamību\"</b>, un šis <a href=\"http://github.com/cramforce/streamie\">pilnībā ir atvērtā koda projekts</a>. Ja jūs esat programmētājs, jūs varat izveidot pats savu Streamie versiju. Visforšākā lieta: Jums nav nepieciešamas pašam savs serveris, tādēļ jūs pilnībā varat koncentrēties uz klienta veidošanu un vēlamajām funkcijām. Infrastruktūru nodrošinām mēs. <a href=\"http://www.nonblocking.io/2010/08/future-is-here-i-just-forked-running.html\">Iemācieties kā izveidot pašam savu Streamie klientu.</a>",
+      "Beta": "Beta",
+      "\n\t\t\t\t\t  While Streamie does work quite well, it is still beta level software. If you're experiencing problems, please \n\t\t\t\t\t  <a href=\"http://github.com/cramforce/streamie/issues\">report them.</a>\n\t\t\t\t\t": "Lai gan Streamie darbojas samērā labi, tas tomēr ir beta izstrādes stadijā. Ja jums nākas saskarties ar problēmām, lūdzu, \n\t\t\t\t\t <a href=\"http://github.com/cramforce/streamie/issues\">ziņojiet par tām.</a>",
+      "Timeline": "Laika līnija",
+      "Image Upload": "Attēla augšupielāde",
+      "@": "@",
+      "Mentions": "Pieminējumi",
+      "⚛": "⚛",
+      "Show All": "Rādīt visus",
+      "♻": "♻",
+      "Retweets": "Retvīti",
+      "★": "★",
+      "Favorites": "Izlase",
+      "✉": "✉",
+      "Direct Messages": "Tiešās ziņas",
+      "⚙": "⚙",
+      "Settings": "Iestatījumi",
+      "✍": "✍",
+      "New Tweet": "Jauns tvīts"
+    }
+  }
+}

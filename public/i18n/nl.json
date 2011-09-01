@@ -1,0 +1,100 @@
+{
+  "locale": "nl",
+  "text": {
+    "#authors": [
+      {
+        "name": "Malte Ubl",
+        "screen-name": "cramforce"
+      }
+    ],
+    "tweet": {
+      "from here ⌘": "vanaf hier ⌘",
+      "via": "via:",
+      "Show conversation": "laat gesprek zien",
+      "in a conversation with {name}": "in gesprek met {name}"
+    },
+    "status": {
+      "Shorten URLs": "URLs verkleind",
+      "Attach an Image": "Voeg afbeelding toe",
+      "Your Tweet…": "Jou tweet...",
+      "Submit": "zend"
+    },
+    "unit": {
+      "{num} second": "{num} seconde",
+      "{num} minute": "{num} minuut",
+      "{num} hour": "{num} uur",
+      "{num} day": "{num} dag",
+      "{num} week": "{num} week",
+      "{num} month": "{num} maand",
+      "{num} year": "{num} jaar",
+      "{num} seconds": "{num} seconden",
+      "{num} minutes": "{num} minuten",
+      "{num} hours": "{num} uur",
+      "{num} days": "{num} dagen",
+      "{num} weeks": "{num} week",
+      "{num} months": "{num} maand",
+      "{num} years": "{num} jaar"
+    },
+    "setting": {
+      "filter": "Filter",
+      "general": "Algemeen",
+      "notifications": "notificaties",
+      "status": "Status",
+      "stream": "Stream",
+      "tracking": "Tracking",
+      "Filter long (more than 3 tweets) conversations of others": "Filter lange gesprekken (meer dan 3 tweets) van anderen",
+      "Show my background from Twitter": "Gebruik mijn twitter achtergrond",
+      "Chrome notifications": "Chrome Notificaties",
+      "Notify for new direct messages (blue icon)": "Geef direct messages aan (blauw icoon)",
+      "Notify for new mentions (green icon)": "Geef mentions aan (groen icoon)",
+      "Notify for new tweets (yellow icon)": "Geef nieuwe tweets aan (geel icoon)",
+      "Play a sound for new tweets": "Speel een geluid bij nieuwe tweets",
+      "Add your current location to status updates": "Voeg huidige locatie toe aan tweets.",
+      "As-you-type autocomplete for screen names": "Tijdens het typen afmaken van twitter namen",
+      "Automatically translate to your preferred language": "Vertaal tweets automatisch naar mijn taal",
+      "Keep scroll level when new tweets come in": "Houd scroll positie als er nieuwe tweets verschijnen",
+      "Preferred language": "Taal",
+      "Show JSON representation of tweet on double click": "Laat JSON representatie van tweet zien bij dubbel click",
+      "Show Retweets": "Laat retweets zien",
+      "Allow anonymous tracking of my usage of Streamie": "Sta anoniem volgen van mijn streamie gebruik toe.",
+      "Settings": "Instellingen",
+      "Close": "Sluit"
+    },
+    "page": {
+      "Logout": "Loguit",
+      "Direct Message": "Direct message",
+      "Shorten URLs": "URLs verkort",
+      "Attach an Image": "Afbeelding toevoegen",
+      "Your Tweet…": "Jou Tweet…",
+      "\n\t\t\t\t\tStreamie is a realtime Twitter client that runs in your web browser.\n\t\t\t\t": "Streamie is een realtime twitter cliedraaibrug je browser draait.",
+      "streamie beta for <span id=\"currentuser-screen_name\"></span>": "streamie beta voor <span id=\"currentuser-screen_name\"></span>",
+      "\n\t\t\t\t\tStreamie is a <strong>realtime</strong> Twitter client that runs in your web browser.\n\t\t\t\t": "Streamie is een <strong>realtime</strong> twitter client die in je browser draait.",
+      "\n\t\t\t\t\tWe want you to <strong>enjoy</strong> reading your Twitter feed again!\n\t\t\t\t": "We willen dat jij weer <strong>plezier</strong> hebt in het lezen van je twitter!",
+      "\n\t\t\t\t\tWe only display Tweet text and avatars – <strong>Zero Distractions</strong>.\n\t\t\t\t": "We laten alleen tweets en avatars - <strong>Geen afleiding</strong>",
+      "\n\t\t\t\t\tWe hate bloat as much as you do!\n\t\t\t\t": "Wir hassen aufgeblasene Software genau wie Du!",
+      "Yes, this is beta software.<br>\n\t\t\t\t\t<a href=\"#moreinfo\" target=\"_self\" id=\"showMoreInfo\">More Info</a><br>\n\t\t\t\t\t<a href=\"http://twitter.com/streamie\">Follow us on Twitter</a>": "Streamie is beta software.<br>\n\t\t\t\t\t<a href=\"#moreinfo\" target=\"_self\" id=\"showMoreInfo\">meer info</a><br>\n\t\t\t\t\t<a href=\"https://twitter.com/streamie\">volg ons op twitter</a>",
+      "Cutting Edge Web Technology": "Cutting-Edge Web-Technologie",
+      "\n\t\t\t\t\t\tWe take advantage of the latest web standards such as HTML5 and CSS3. We encourage you to update to the newest (even beta) versions \n\t\t\t\t\t\tof your <a href=\"http://www.google.com/landing/chrome/beta/\">favorite web browser</a> to use streamie. If you cannot do that, \n\t\t\t\t\t\tstreamie is not for you, if you can, the experience will be great.\n\t\t\t\t\t": "wij gebruiken de laatste web standaarden zoals HTML5 en CSS3. Nutzt bitte Die neuesten Versionen Eurer <a href=\"http://www.google.com/landing/chrome/beta/\">lieblings Web-Browser</a>.",
+      "Hackability": "Hackability",
+      "\n\t\t\t\t\t\tStreamie was designed with extreme <b>\"hackability\"</b> in mind and it is <a href=\"http://github.com/cramforce/streamie\">fully open source</a>. \n\t\t\t\t\t\tIf you are a programmer you can make your own version of streamie. The cool thing is: You do not have to run your own server so you can \n\t\t\t\t\t\tconcentrate on actually building the features you want. The infrastructure is handled by us. \n\t\t\t\t\t\t<a href=\"http://www.nonblocking.io/2010/08/future-is-here-i-just-forked-running.html\">Learn how to make your own version of streamie.</a>\n\t\t\t\t\t": "Streamie wurde für <b>\"hackability\"</b> designed und ist komplett <a href=\"http://github.com/cramforce/streamie\">Open Source</a>. ",
+      "Beta": "Beta",
+      "\n\t\t\t\t\t  While Streamie does work quite well, it is still beta level software. If you're experiencing problems, please \n\t\t\t\t\t  <a href=\"http://github.com/cramforce/streamie/issues\">report them.</a>\n\t\t\t\t\t": "Streamie ist recht stabil aber trotzdem Beta-Software. Wenn Ihr Probleme habt,\n\t\t\t\t\t  <a href=\"http://github.com/cramforce/streamie/issues\">meldet sie bitte.</a>",
+      "Timeline": "Zeitleiste",
+      "Image Upload": "Bilder-Upload",
+      "@": "@",
+      "Mentions": "@-Erwähnungen",
+      "⚛": "⚛",
+      "Show All": "Alle Zeigen",
+      "♻": "♻",
+      "Retweets": "Retweets",
+      "★": "★",
+      "Favorites": "Favoriten",
+      "✉": "✉",
+      "Direct Messages": "Direkt-Nachrichten",
+      "⚙": "⚙",
+      "Settings": "Einstellungen",
+      "✍": "✍",
+      "New Tweet": "Neuer Tweet"
+    }
+  }
+}

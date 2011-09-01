@@ -1,0 +1,100 @@
+{
+  "locale": "pt",
+  "text": {
+    "#authors": [
+      {
+        "name": "André Esteves",
+        "screen-name": "RedRoserade"
+      }
+    ],
+    "tweet": {
+      "from here ⌘": "a partir daqui ⌘",
+      "via": "através",
+      "Show conversation": "Mostrar conversa",
+      "in a conversation with {name}": "numa conversa com {name}"
+    },
+    "status": {
+      "Shorten URLs": "Encurtar URLs",
+      "Attach an Image": "Anexar uma Imagem",
+      "Your Tweet…": "O seu Tweet...",
+      "Submit": "Enviar"
+    },
+    "unit": {
+      "{num} second": "{num} segundo",
+      "{num} minute": "{num} minuto",
+      "{num} hour": "{num} hora",
+      "{num} day": "{num} dia",
+      "{num} week": "{num} semana",
+      "{num} month": "{num} mês",
+      "{num} year": "{num} ano",
+      "{num} seconds": "{num} segundos",
+      "{num} minutes": "{num} minutos",
+      "{num} hours": "{num} horas",
+      "{num} days": "{num} dias",
+      "{num} weeks": "{num} semanas",
+      "{num} months": "{num} meses",
+      "{num} years": "{num} anos"
+    },
+    "setting": {
+      "filter": "Filtrar",
+      "general": "Geral",
+      "notifications": "Notificações",
+      "status": "Estado",
+      "stream": "Stream",
+      "tracking": "Análise",
+      "Filter long (more than 3 tweets) conversations of others": "Filtrar conversas longas de outros (com mais de 3 Tweets)",
+      "Show my background from Twitter": "Mostrar o meu fundo do Twitter",
+      "Chrome notifications": "Notificações do Chrome",
+      "Notify for new direct messages (blue icon)": "Notificar as novas mensagens directas (ícone azul)",
+      "Notify for new mentions (green icon)": "Notificar as novas menções (ícone verde)",
+      "Notify for new tweets (yellow icon)": "Notificar os novos Tweets (ícone amarelo)",
+      "Play a sound for new tweets": "Reproduzir um som para novos Tweets",
+      "Add your current location to status updates": "Adicionar a sua localização às suas mensagens de estado",
+      "As-you-type autocomplete for screen names": "Completar automaticamente nomes de utilizadores",
+      "Automatically translate to your preferred language": "Traduzir mensagens automaticamente para a sua língua",
+      "Keep scroll level when new tweets come in": "Manter o deslocamento quando chegam novos Tweets",
+      "Preferred language": "Idioma pregerido",
+      "Show JSON representation of tweet on double click": "Mostrar representação JSON do Tweet ao fazer duplo-clique",
+      "Show Retweets": "Mostrar Retweets",
+      "Allow anonymous tracking of my usage of Streamie": "Permitir a análise anónima da minha utilização do Streamie",
+      "Settings": "Definições",
+      "Close": "Fechar"
+    },
+    "page": {
+      "Logout": "Terminar Sessão",
+      "Direct Message": "Mensagem Directa",
+      "Shorten URLs": "Encurtar URLs",
+      "Attach an Image": "Anexar uma Imagem",
+      "Your Tweet…": "O seu Tweet…",
+      "\n\t\t\t\t\tStreamie is a realtime Twitter client that runs in your web browser.\n\t\t\t\t": "Streamie ist ein Echtzeit-Twitter-Client, der in Deinem Browser läuft.",
+      "streamie beta for <span id=\"currentuser-screen_name\"></span>": "streamie beta für <span id=\"currentuser-screen_name\"></span>",
+      "\n\t\t\t\t\tStreamie is a <strong>realtime</strong> Twitter client that runs in your web browser.\n\t\t\t\t": "O Streamie é um cliente de Twitter <strong>em tempo real</strong>, que funciona no seu navegador.",
+      "\n\t\t\t\t\tWe want you to <strong>enjoy</strong> reading your Twitter feed again!\n\t\t\t\t": "Nós queremos que volte a <strong>disfrutar</strong> de ler o seu feed do Twitter novamente!",
+      "\n\t\t\t\t\tWe only display Tweet text and avatars – <strong>Zero Distractions</strong>.\n\t\t\t\t": "Só mostramos o texto do Tweet e os avatares - <strong>Sem distrações</strong>",
+      "\n\t\t\t\t\tWe hate bloat as much as you do!\n\t\t\t\t": "Wir hassen aufgeblasene Software genau wie Du!",
+      "Yes, this is beta software.<br>\n\t\t\t\t\t<a href=\"#moreinfo\" target=\"_self\" id=\"showMoreInfo\">More Info</a><br>\n\t\t\t\t\t<a href=\"http://twitter.com/streamie\">Follow us on Twitter</a>": "O streamie é um software em estado Beta.<br>\n\t\t\t\t\t<a href=\"#moreinfo\" target=\"_self\" id=\"showMoreInfo\">Mais informações</a><br>\n\t\t\t\t\t<a href=\"https://twitter.com/streamie\">Siga-nos no Twitter</a>",
+      "Cutting Edge Web Technology": "Tecnologia de Ponta da Internet",
+      "\n\t\t\t\t\t\tWe take advantage of the latest web standards such as HTML5 and CSS3. We encourage you to update to the newest (even beta) versions \n\t\t\t\t\t\tof your <a href=\"http://www.google.com/landing/chrome/beta/\">favorite web browser</a> to use streamie. If you cannot do that, \n\t\t\t\t\t\tstreamie is not for you, if you can, the experience will be great.\n\t\t\t\t\t": "Nós utilizamos tecnologias como HTML5 e CSS3. Nós encorajamo-lo a actualizar para a versão mais recente (mesmo que seja Beta) <a href=\"http://www.google.com/landing/chrome/beta/\">do seu navegador.</a>.",
+      "Hackability": "Modificabilidade",
+      "\n\t\t\t\t\t\tStreamie was designed with extreme <b>\"hackability\"</b> in mind and it is <a href=\"http://github.com/cramforce/streamie\">fully open source</a>. \n\t\t\t\t\t\tIf you are a programmer you can make your own version of streamie. The cool thing is: You do not have to run your own server so you can \n\t\t\t\t\t\tconcentrate on actually building the features you want. The infrastructure is handled by us. \n\t\t\t\t\t\t<a href=\"http://www.nonblocking.io/2010/08/future-is-here-i-just-forked-running.html\">Learn how to make your own version of streamie.</a>\n\t\t\t\t\t": "O Streamie foi concebido com elevada <b>\"modificabilidade\"</b> e é completamente <a href=\"http://github.com/cramforce/streamie\">Open Source (código-aberto)</a>. ",
+      "Beta": "Beta",
+      "\n\t\t\t\t\t  While Streamie does work quite well, it is still beta level software. If you're experiencing problems, please \n\t\t\t\t\t  <a href=\"http://github.com/cramforce/streamie/issues\">report them.</a>\n\t\t\t\t\t": "O Streamie ainda é software em estado Beta. Se encontrar problemas,\n\t\t\t\t\t  <a href=\"http://github.com/cramforce/streamie/issues\">informe-nos.</a>",
+      "Timeline": "Linha do Tempo",
+      "Image Upload": "Carregar Imagem",
+      "@": "@",
+      "Mentions": "Menções",
+      "⚛": "⚛",
+      "Show All": "Mostrar Tudo",
+      "♻": "♻",
+      "Retweets": "Retweets",
+      "★": "★",
+      "Favorites": "Favoritos",
+      "✉": "✉",
+      "Direct Messages": "Mensagens Directas",
+      "⚙": "⚙",
+      "Settings": "Definições",
+      "✍": "✍",
+      "New Tweet": "Novo Tweet"
+    }
+  }
+}
