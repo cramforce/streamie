@@ -31,7 +31,7 @@
       "{num} minutes": "{num} минут(ы)",
       "{num} hours": "{num} часа(ов)",
       "{num} days": "{num} дня(ей)",
-      "{num} weeks": "{num} недель",
+      "{num} weeks": "{num} недели(ь)",
       "{num} months": "{num} месяца(ев)",
       "{num} years": "{num} года(лет)"
     },
@@ -55,7 +55,7 @@
       "Keep scroll level when new tweets come in": "При получении нового твита сохранять позицию на экране",
       "Preferred language": "Предпочитаемый язык",
       "Show JSON representation of tweet on double click": "Показывать JSON-содержимое твита по двойному клику",
-      "Show Retweets": "показывать ретвиты",
+      "Show Retweets": "Показывать ретвиты",
       "Allow anonymous tracking of my usage of Streamie": "Позволить Streamie собирать анонимную статистику использования",
       "Settings": "Настройки",
       "Close": "Закрыть"
