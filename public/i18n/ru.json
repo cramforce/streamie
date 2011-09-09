@@ -11,7 +11,8 @@
       "from here ⌘": "из ⌘",
       "via": "через",
       "Show conversation": "Показать ответы",
-      "in a conversation with {name}": "отвечая {name}"
+      "in a conversation with {name}": "отвечая {name}",
+      "using" : "с помощью"
     },
     "status": {
       "Shorten URLs": "Сократить URL",
