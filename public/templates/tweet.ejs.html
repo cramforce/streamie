@@ -9,8 +9,8 @@
 		</ul>
 		<div class="header">
 			<h3 class="h user-name"><%= tweet.direct_message ? '<strong>Direct Message from</strong> ' : ''%><a href="http://twitter.com/<%= h(tweet.data.user.screen_name) %>" class="user-href"><%= h(tweet.yourself ? 'you' : '@'+tweet.data.user.screen_name+' ('+tweet.data.user.name+')') %></a><%= tweet.direct_message ? ' to <a href="http://twitter.com/'+h(tweet.data.recipient.screen_name)+'">'+h(tweet.data.recipient.screen_name)+'</a>' : ''%><% if(tweet.retweet) { %> <%= text('tweet', 'via') %> <a href="http://twitter.com/<%= h(tweet.retweet.user.screen_name) %>" class="retweet-user-href">@<%= h(tweet.retweet.user.screen_name) %> (<%= h(tweet.retweet.user.name) %>)</a><% }%>
-                            <% if(tweet.data.geo && tweet.data.geo.coordinates) { %> <a class="status-geo" href="http://maps.google.com/maps?q=<%= h(tweet.data.geo.coordinates.join(',')) %>"><%= text('tweet', 'from here ⌘') %></a><% } %>
                             <% if(tweet.data.source) { %> <%= text('tweet', 'using ' + tweet.data.source) %><% } %>
+                            <% if(tweet.data.geo && tweet.data.geo.coordinates) { %> <a class="status-geo" href="http://maps.google.com/maps?q=<%= h(tweet.data.geo.coordinates.join(',')) %>"><%= text('tweet', 'from here ⌘') %></a><% } %>
                         </h3>
 			<div class="time created_at"><a href="<%= h(tweet.direct_message ? 'http://twitter.com/direct_messages/create/'+tweet.data.sender.screen_name : 'http://twitter.com/'+tweet.data.user.screen_name+'/status/'+tweet.data.id) %>"></a></div>
 			<% if(tweet.data.in_reply_to_status_id) { %>
