@@ -1,6 +1,6 @@
 <% var h = helpers.html; %>
 <li class="tweet<%= tweet.filtered ? ' collapsed' : '' %><%= tweet.yourself ? ' yourself' : '' %><%= tweet.mentioned ? ' mention' : ''%><%= tweet.conversation ? ' conversation'+tweet.conversation.index : ''%><%= tweet.retweet ? ' retweet' : ''%><%= tweet.direct_message ? ' direct' : ''%><%= !tweet.prefill ? ' new' : ''%><%= tweet.data.favorited ? ' starred' : ''%><%= tweet.data._missingTweets ? ' gap' : '' %><%= ' '+tweet.hashTags.map(function (tag) { return 'hash-'+h(tag)  }).join(' ')%>">
-	<a href="http://twitter.com/<%= h(tweet.data.user.screen_name) %>" class="user-href"><canvas data-src="<%= h(tweet.data.user.profile_image_url) %>" alt="<%= h(tweet.data.user.name) %>" width="48" height="48" class="profile_image_url" /></a>
+	<a href="http://twitter.com/<%= h(tweet.data.user.screen_name) %>" class="user-href"><canvas data-src="<%= h(tweet.data.user.profile_image_url_https) %>" alt="<%= h(tweet.data.user.name) %>" width="48" height="48" class="profile_image_url" /></a>
 	<% if(tweet.retweet) { %><a href="http://twitter.com/<%= h(tweet.retweet.user.screen_name) %>" class="retweet-user-href-icon"><canvas data-src="<%= h(tweet.retweet.user.profile_image_url) %>" alt="<%= h(tweet.retweet.user.name) %>" width="24" height="24" class="profile_image_url" /></a><% } %>
 	<div class="status">
 		<p class="text"><%= tweet.textHTML %></p>

@@ -69,8 +69,8 @@ require.def("stream/initplugins",
           settings.subscribe("general", "showTwitterBackground", function (bool) {
             if(bool) {
               stream.userInfo(function (user) {
-                if(user.profile_background_image_url) {
-                  $("body").css("backgroundImage", "url("+user.profile_background_image_url+")")
+                if(user.profile_background_image_url_https) {
+                  $("body").css("backgroundImage", "url("+user.profile_background_image_url_https+")")
                 }
               })
             } else {
