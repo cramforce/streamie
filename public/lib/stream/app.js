@@ -12,7 +12,7 @@ if(typeof console == "undefined") {
   }
 }
 require.def("stream/app",
-  ["stream/text", "stream/gTranslateProc", "stream/tweetstream", "stream/tweet", "stream/settings", "stream/streamplugins", "stream/initplugins", "stream/linkplugins", "stream/settingsDialog", "stream/client", "stream/status", "stream/versionControl", "stream/tracking", "stream/modernizr", "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"],
+  ["stream/text", "stream/gTranslateProc", "stream/tweetstream", "stream/tweet", "stream/settings", "stream/streamplugins", "stream/initplugins", "stream/linkplugins", "stream/settingsDialog", "stream/client", "stream/status", "stream/versionControl", "stream/tracking", "stream/modernizr", "//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"],
   function(text, gTranslateProc, tweetstream, tweetModule, settings, streamPlugin, initPlugin, linkPlugin, settingsDialog, client, status) {
     
     text.replaceInPage();
