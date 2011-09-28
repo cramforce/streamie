@@ -5,5 +5,6 @@
   "port": 8888,
   "imgurKey": "sdfgsdfgsdfgsdfgsdfg",
   "staticFilesExpireSeconds": 0,
-  "siteStreamOAuthToken": "asdasdfasd"
+  "siteStreamOAuthToken": "asdasdfasd",
+	"useSSL": false
 }
