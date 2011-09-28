@@ -43,8 +43,10 @@ require.def("stream/client",
     
     function _connect(cb) {
       window.WEB_SOCKET_SWF_LOCATION = "/foobar"; // we do not use flash, but socket.io still complaints
+      var secure = location.protocol == 'https' ? true : false;
       var socket = new io.Socket(location.hostname, { 
-        port: location.port || 80,
+        port: location.port || (secure ? 443 : 80),
+        secure: secure,
         transports: pickTransport()
       });
       socket.connect();
