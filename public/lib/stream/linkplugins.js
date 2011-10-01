@@ -28,6 +28,7 @@ require.def("stream/linkplugins",
       untiny: {
         domains: UntinyDomains, // extended via API call,
         func: function untiny(a, tweet, stream, plugin) {
+          return; // disable for JSConf
           var prefixLength = "http://".length;
           var href = a.attr("href") || "";
           var id = a.attr('id');

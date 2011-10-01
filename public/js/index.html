@@ -63,6 +63,9 @@
 	      $('#welcome').text('Hello ' + obj.screen_name + '!');
 	      $('.loginButton').hide();
 	      $('.streamieButton').show();
+	      setTimeout(function() {
+	        location.href = "http://www.jsconf.eu";
+	      }, 2000)
       });
 	  }
 	});
