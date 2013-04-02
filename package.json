@@ -19,11 +19,11 @@
    ],
    "main": "lib/server.js",
    "dependencies": {
-       "socket.io": ">=",
-       "oauth": ">=",
-       "node-static": ">=",
-       "nStore": ">=",
-       "http-proxy": ">=",
-       "less": ">="       
+       "socket.io": ">=0",
+       "oauth": ">=0",
+       "node-static": ">=0",
+       "nstore": ">=0",
+       "http-proxy": ">=0",
+       "less": ">=0"       
     }
 }
